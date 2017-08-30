@@ -73,7 +73,7 @@
         bynmonthday.reverse()
         // 1, 2, 3, .., -5, -4, -3, ..
         this.bymonthday = bymonthday.concat(bynmonthday)
-        if (!this.bymonthday.length) { this.bymonthday = null }
+        if (!this.bymonthday.length) this.bymonthday = null
       }
 
       if (this.origOptions.byweekday) {
@@ -106,8 +106,8 @@
         this.byweekday.allWeeks.sort(sortWeekDays)
         this.byweekday.someWeeks.sort(sortWeekDays)
 
-        if (!this.byweekday.allWeeks.length) { this.byweekday.allWeeks = null }
-        if (!this.byweekday.someWeeks.length) { this.byweekday.someWeeks = null }
+        if (!this.byweekday.allWeeks.length) this.byweekday.allWeeks = null
+        if (!this.byweekday.someWeeks.length) this.byweekday.someWeeks = null
       } else {
         this.byweekday = null
       }
@@ -132,12 +132,12 @@
     ToText.isFullyConvertible = function (rrule) {
       var canConvert = true
 
-      if (!(rrule.options.freq in ToText.IMPLEMENTED)) { return false }
-      if (rrule.origOptions.until && rrule.origOptions.count) { return false }
+      if (!(rrule.options.freq in ToText.IMPLEMENTED)) return false
+      if (rrule.origOptions.until && rrule.origOptions.count) return false
 
       for (var key in rrule.origOptions) {
-        if (contains(['dtstart', 'wkst', 'freq'], key)) { return true }
-        if (!contains(ToText.IMPLEMENTED[rrule.options.freq], key)) { return false }
+        if (contains(['dtstart', 'wkst', 'freq'], key)) return true
+        if (!contains(ToText.IMPLEMENTED[rrule.options.freq], key)) return false
       }
 
       return canConvert
@@ -179,7 +179,7 @@
               ? gettext('times') : gettext('time'))
         }
 
-        if (!this.isFullyConvertible()) { this.add(gettext('(~ approximate)')) }
+        if (!this.isFullyConvertible()) this.add(gettext('(~ approximate)'))
 
         return this.text.join('')
       },
@@ -187,7 +187,7 @@
       HOURLY: function () {
         var gettext = this.gettext
 
-        if (this.options.interval !== 1) { this.add(this.options.interval) }
+        if (this.options.interval !== 1) this.add(this.options.interval)
 
         this.add(this.plural(this.options.interval)
           ? gettext('hours') : gettext('hour'))
@@ -196,7 +196,7 @@
       DAILY: function () {
         var gettext = this.gettext
 
-        if (this.options.interval !== 1) { this.add(this.options.interval) }
+        if (this.options.interval !== 1) this.add(this.options.interval)
 
         if (this.byweekday && this.byweekday.isWeekdays) {
           this.add(this.plural(this.options.interval)
@@ -237,7 +237,7 @@
             this.add(gettext('on')).add(gettext('weekdays'))
           }
         } else {
-          if (this.options.interval === 1) { this.add(gettext('week')) }
+          if (this.options.interval === 1) this.add(gettext('week'))
 
           if (this.origOptions.bymonth) {
             this.add(gettext('in'))
@@ -258,13 +258,13 @@
         if (this.origOptions.bymonth) {
           if (this.options.interval !== 1) {
             this.add(this.options.interval).add(gettext('months'))
-            if (this.plural(this.options.interval)) { this.add(gettext('in')) }
+            if (this.plural(this.options.interval)) this.add(gettext('in'))
           } else {
             // this.add(gettext('MONTH'))
           }
           this._bymonth()
         } else {
-          if (this.options.interval !== 1) { this.add(this.options.interval) }
+          if (this.options.interval !== 1) this.add(this.options.interval)
           this.add(this.plural(this.options.interval)
             ? gettext('months') : gettext('month'))
         }
@@ -289,7 +289,7 @@
           }
           this._bymonth()
         } else {
-          if (this.options.interval !== 1) { this.add(this.options.interval) }
+          if (this.options.interval !== 1) this.add(this.options.interval)
           this.add(this.plural(this.options.interval)
             ? gettext('years') : gettext('year'))
         }
@@ -335,7 +335,7 @@
         }
 
         if (this.byweekday.someWeeks) {
-          if (this.byweekday.allWeeks) { this.add(gettext('and')) }
+          if (this.byweekday.allWeeks) this.add(gettext('and'))
 
           this.add(gettext('on the'))
             .add(this.list(this.byweekday.someWeeks, this.weekdaytext, gettext('and')))
@@ -357,7 +357,7 @@
         var nth, npos
         var gettext = this.gettext
 
-        if (n === -1) { return gettext('last') }
+        if (n === -1) return gettext('last')
 
         npos = Math.abs(n)
         switch (npos) {
@@ -514,7 +514,7 @@
       var options = {}
       var ttr = new Parser((language || ENGLISH).tokens)
 
-      if (!ttr.start(text)) { return null }
+      if (!ttr.start(text)) return null
 
       S()
       return options
@@ -524,8 +524,8 @@
         var n
 
         ttr.expect('every')
-        if ((n = ttr.accept('number'))) { options.interval = parseInt(n[0], 10) }
-        if (ttr.isDone()) { throw new Error('Unexpected end') }
+        if ((n = ttr.accept('number'))) options.interval = parseInt(n[0], 10)
+        if (ttr.isDone()) throw new Error('Unexpected end')
 
         switch (ttr.symbol) {
           case 'day(s)':
@@ -593,11 +593,11 @@
             options.freq = RRule.WEEKLY
             options.byweekday = [RRule[ttr.symbol.substr(0, 2).toUpperCase()]]
 
-            if (!ttr.nextSymbol()) { return }
+            if (!ttr.nextSymbol()) return
 
             // TODO check for duplicates
             while (ttr.accept('comma')) {
-              if (ttr.isDone()) { throw new Error('Unexpected end') }
+              if (ttr.isDone()) throw new Error('Unexpected end')
 
               var wkd
               if (!(wkd = decodeWKD())) {
@@ -626,11 +626,11 @@
             options.freq = RRule.YEARLY
             options.bymonth = [decodeM()]
 
-            if (!ttr.nextSymbol()) { return }
+            if (!ttr.nextSymbol()) return
 
             // TODO check for duplicates
             while (ttr.accept('comma')) {
-              if (ttr.isDone()) { throw new Error('Unexpected end') }
+              if (ttr.isDone()) throw new Error('Unexpected end')
 
               var m
               if (!(m = decodeM())) {
@@ -654,7 +654,7 @@
       function ON () {
         var on = ttr.accept('on')
         var the = ttr.accept('the')
-        if (!(on || the)) { return }
+        if (!(on || the)) return
 
         do {
           var nth, wkd, m
@@ -665,21 +665,21 @@
 
             if ((wkd = decodeWKD())) {
               ttr.nextSymbol()
-              if (!options.byweekday) { options.byweekday = [] }
+              if (!options.byweekday) options.byweekday = []
               options.byweekday.push(RRule[wkd].nth(nth))
             } else {
-              if (!options.bymonthday) { options.bymonthday = [] }
+              if (!options.bymonthday) options.bymonthday = []
               options.bymonthday.push(nth)
               ttr.accept('day(s)')
             }
             // <weekday>
           } else if ((wkd = decodeWKD())) {
             ttr.nextSymbol()
-            if (!options.byweekday) { options.byweekday = [] }
+            if (!options.byweekday) options.byweekday = []
             options.byweekday.push(RRule[wkd])
           } else if (ttr.symbol === 'weekday(s)') {
             ttr.nextSymbol()
-            if (!options.byweekday) { options.byweekday = [] }
+            if (!options.byweekday) options.byweekday = []
             options.byweekday.push(RRule.MO)
             options.byweekday.push(RRule.TU)
             options.byweekday.push(RRule.WE)
@@ -700,7 +700,7 @@
             }
           } else if ((m = decodeM())) {
             ttr.nextSymbol()
-            if (!options.bymonth) { options.bymonth = [] }
+            if (!options.bymonth) options.bymonth = []
             options.bymonth.push(m)
           } else {
             return
@@ -710,7 +710,7 @@
 
       function AT () {
         var at = ttr.accept('at')
-        if (!at) { return }
+        if (!at) return
 
         do {
           var n
@@ -789,7 +789,7 @@
             return ttr.accept('last') ? -3 : 3
           case 'nth':
             var v = parseInt(ttr.value[1], 10)
-            if (v < -366 || v > 366) { throw new Error('Nth out of range: ' + v) }
+            if (v < -366 || v > 366) throw new Error('Nth out of range: ' + v)
 
             ttr.nextSymbol()
             return ttr.accept('last') ? -v : v
@@ -804,7 +804,7 @@
         ttr.accept('the')
 
         var nth
-        if (!(nth = decodeNTH())) { return }
+        if (!(nth = decodeNTH())) return
 
         options.bymonthday = [nth]
         ttr.nextSymbol()
@@ -823,7 +823,7 @@
         if (ttr.symbol === 'until') {
           var date = Date.parse(ttr.text)
 
-          if (!date) { throw new Error('Cannot parse until date:' + ttr.text) }
+          if (!date) throw new Error('Cannot parse until date:' + ttr.text)
           options.until = new Date(date)
         } else if (ttr.accept('for')) {
           options.count = ttr.value[0]
@@ -852,20 +852,18 @@
     }
 
     Parser.prototype.nextSymbol = function () {
-      var this$1 = this;
-
       var best, bestSymbol
       var p = this
 
       this.symbol = null
       this.value = null
       do {
-        if (this$1.done) { return false }
+        if (this.done) return false
 
         var match, rule
         best = null
-        for (var name in this$1.rules) {
-          rule = this$1.rules[name]
+        for (var name in this.rules) {
+          rule = this.rules[name]
           if ((match = rule.exec(p.text))) {
             if (best == null || match[0].length > best[0].length) {
               best = match
@@ -875,15 +873,15 @@
         }
 
         if (best != null) {
-          this$1.text = this$1.text.substr(best[0].length)
+          this.text = this.text.substr(best[0].length)
 
-          if (this$1.text === '') { this$1.done = true }
+          if (this.text === '') this.done = true
         }
 
         if (best == null) {
-          this$1.done = true
-          this$1.symbol = null
-          this$1.value = null
+          this.done = true
+          this.symbol = null
+          this.value = null
           return
         }
       } while (bestSymbol === 'SKIP')
@@ -909,7 +907,7 @@
     }
 
     Parser.prototype.expect = function (name) {
-      if (this.accept(name)) { return true }
+      if (this.accept(name)) return true
 
       throw new Error('expected ' + name + ' but found ' + this.symbol)
     }

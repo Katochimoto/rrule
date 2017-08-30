@@ -17,9 +17,16 @@
     "url": "git://github.com/jakubroztocil/rrule.git"
   },
   "scripts": {
-    "test": "standard && mocha"
+    "test": "mocha",
+    "build": "babel src/rrule.js -o lib/rrule.js",
+    "dev": "babel src/rrule.js -w -o lib/rrule.js"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "datetime2": "^2.0.1",
     "mocha": "^2.3.4",
     "standard": "^5.4.1"
   },
