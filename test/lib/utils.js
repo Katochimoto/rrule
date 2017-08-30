@@ -62,7 +62,7 @@ exports.parse = function (str) {
   return new Date(y, m, d, h, i, s)
 }
 
-exports.testRecurring = function (msg, testObj, expectedDates) {
+function testRecurring (msg, testObj, expectedDates, uit = it) {
   var rule, method, args
 
   if (typeof testObj === 'function') {
@@ -88,7 +88,7 @@ exports.testRecurring = function (msg, testObj, expectedDates) {
     msg = msg + ' ' + rule.toString()
   }
 
-  it(msg, function () {
+  uit(msg, function () {
     var ctx = this.test.ctx
     var time = Date.now()
     var actualDates = rule[method].apply(rule, args)
@@ -180,8 +180,14 @@ exports.testRecurring = function (msg, testObj, expectedDates) {
   })
 }
 
-exports.testRecurring.skip = function () {
-  it.skip.apply(it, arguments)
+exports.testRecurring = testRecurring;
+
+exports.testRecurring.skip = function (...args) {
+  testRecurring(...args, it.skip)
+}
+
+exports.testRecurring.only = function (...args) {
+  testRecurring(...args, it.only)
 }
 
 exports.assertStrType = function (msg, obj, type) {
