@@ -17,7 +17,7 @@ var assertDatesEqual = function (actual, expected, msg) {
   for (var exp, act, i = 0; i < expected.length; i++) {
     act = actual[i]
     exp = expected[i]
-    assert.strictEqual(exp instanceof Date ? exp.toString() : exp,
+    assert.strictEqual(exp instanceof RRule.DateTime ? exp.toString() : exp,
       act.toString(), msg + (i + 1) + '/' + expected.length)
   }
 }
@@ -33,14 +33,14 @@ exports.datetime = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new Date(y, m - 1, d, h, i, s)
+  return new RRule.DateTime(y, m - 1, d, h, i, s)
 }
 
 exports.datetimeUTC = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new Date(Date.UTC(y, m - 1, d, h, i, s))
+  return new RRule.DateTime(RRule.DateTime.UTC(y, m - 1, d, h, i, s))
 }
 
 /**
@@ -59,7 +59,7 @@ exports.parse = function (str) {
   h = h[0] === '0' ? h[1] : h
   i = i[0] === '0' ? i[1] : i
   s = s[0] === '0' ? s[1] : s
-  return new Date(y, m, d, h, i, s)
+  return new RRule.DateTime(y, m, d, h, i, s)
 }
 
 function testRecurring (msg, testObj, expectedDates, uit = it) {
@@ -90,9 +90,9 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
 
   uit(msg, function () {
     var ctx = this.test.ctx
-    var time = Date.now()
+    var time = RRule.DateTime.now()
     var actualDates = rule[method].apply(rule, args)
-    time = Date.now() - time
+    time = RRule.DateTime.now() - time
 
     assert.strictEqual(time < 100, true,
       rule + '\' method "' + method + '" should finish in 100 ms, but ' + time + ' ms')

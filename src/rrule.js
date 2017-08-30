@@ -40,8 +40,24 @@
   var dateutil = {};
 
   dateutil.DateTime = function (...args) {
-    return new Date(...args);
+    this._date = new Date(...args);
   }
+
+  dateutil.DateTime.prototype = {
+    constructor: dateutil.DateTime
+  };
+
+  [
+    'getTimezoneOffset', 'getTime', 'getDay', 'toString', 'valueOf',
+    'getUTCFullYear', 'getUTCMonth', 'getUTCDate', 'getUTCHours', 'getUTCMinutes', 'getUTCSeconds',
+    'getFullYear', 'getMonth', 'getDate', 'getHours', 'getMinutes', 'getSeconds'
+  ].forEach(function (name) {
+    Object.defineProperty(dateutil.DateTime.prototype, name, {
+      value: function (...args) {
+        return this._date[name](...args);
+      }
+    });
+  });
 
   dateutil.DateTime.UTC = function (...args) {
     return Date.UTC(...args);
@@ -50,6 +66,35 @@
   dateutil.DateTime.parse = function (...args) {
     return Date.parse(...args);
   }
+
+  dateutil.DateTime.now = function () {
+    return Date.now();
+  }
+
+
+  var ppp = {
+    'getDate': '',
+    'getDay': '',
+    'getFullYear': '',
+    'getHours': '',
+    'getMinutes': '',
+    'getMonth': '',
+    'getSeconds': '',
+    'getTime': '',
+    'getTimezoneOffset': '',
+    'getUTCDate': '',
+    'getUTCFullYear': '',
+    'getUTCHours': '',
+    'getUTCMinutes': '',
+    'getUTCMonth': '',
+    'getUTCSeconds': '',
+    'toString': '',
+    'valueOf': ''
+  };
+
+
+
+
 
   dateutil.Time = function (hour, minute, second, millisecond) {
     this.hour = hour
@@ -98,7 +143,7 @@
      * want to confuse the JS engine with milliseconds > Number.MAX_NUMBER,
      * therefore we use 1-Jan-1970 instead
      */
-    ORDINAL_BASE: new Date(1970, 0, 1),
+    ORDINAL_BASE: new dateutil.DateTime(1970, 0, 1),
 
     /**
      * Python: MO-SU: 0 - 6
@@ -110,14 +155,14 @@
      * py_date.timetuple()[7]
      */
     getYearDay: function (date) {
-      var dateNoTime = new Date(
+      var dateNoTime = new dateutil.DateTime(
         date.getFullYear(), date.getMonth(), date.getDate())
       return Math.ceil(
-        (dateNoTime - new Date(date.getFullYear(), 0, 1)) / dateutil.ONE_DAY) + 1
+        (dateNoTime - new dateutil.DateTime(date.getFullYear(), 0, 1)) / dateutil.ONE_DAY) + 1
     },
 
     isLeapYear: function (year) {
-      if (year instanceof Date) year = year.getFullYear()
+      if (year instanceof dateutil.DateTime) year = year.getFullYear()
       return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)
     },
 
@@ -154,17 +199,17 @@
      */
     fromOrdinal: function (ordinal) {
       var millisecsFromBase = ordinal * dateutil.ONE_DAY
-      return new Date(dateutil.ORDINAL_BASE.getTime() -
+      return new dateutil.DateTime(dateutil.ORDINAL_BASE.getTime() -
         dateutil.tzOffset(dateutil.ORDINAL_BASE) +
         millisecsFromBase +
-        dateutil.tzOffset(new Date(millisecsFromBase)))
+        dateutil.tzOffset(new dateutil.DateTime(millisecsFromBase)))
     },
 
     /**
      * @see: <http://docs.python.org/library/calendar.html#calendar.monthrange>
      */
     monthRange: function (year, month) {
-      var date = new Date(year, month, 1)
+      var date = new dateutil.DateTime(year, month, 1)
       return [dateutil.getWeekday(date), dateutil.getMonthDays(date)]
     },
 
@@ -186,14 +231,14 @@
      */
     combine: function (date, time) {
       time = time || date
-      return new Date(
+      return new dateutil.DateTime(
         date.getFullYear(), date.getMonth(), date.getDate(),
         time.getHours(), time.getMinutes(), time.getSeconds(),
         time.getMilliseconds())
     },
 
     clone: function (date) {
-      var dolly = new Date(date.getTime())
+      var dolly = new dateutil.DateTime(date.getTime())
       return dolly
     },
 
@@ -216,7 +261,7 @@
 
     timeToUntilString: function (time) {
       var comp
-      var date = new Date(time)
+      var date = new dateutil.DateTime(time)
       var comps = [
         date.getUTCFullYear(),
         date.getUTCMonth() + 1,
@@ -239,7 +284,7 @@
       var re = /^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})Z)?$/
       var bits = re.exec(until)
       if (!bits) throw new Error('Invalid UNTIL value: ' + until)
-      return new Date(Date.UTC(
+      return new dateutil.DateTime(dateutil.DateTime.UTC(
         bits[1],
         bits[2] - 1,
         bits[3],
@@ -483,7 +528,7 @@
     var opts = this.options = options
 
     if (opts.byeaster !== null) opts.freq = RRule.YEARLY
-    if (!opts.dtstart) opts.dtstart = new Date()
+    if (!opts.dtstart) opts.dtstart = new dateutil.DateTime()
 
     var millisecondModulo = opts.dtstart.getTime() % 1000
     if (opts.wkst === null) {
@@ -879,14 +924,14 @@
 
     /**
      * @param {String} what - all/before/after/between
-     * @param {Array,Date} value - an array of dates, one date, or null
+     * @param {Array,dateutil.DateTime} value - an array of dates, one date, or null
      * @param {Object?} args - _iter arguments
      */
     _cacheAdd: function (what, value, args) {
       if (!this._cache) return
 
       if (value) {
-        value = (value instanceof Date)
+        value = (value instanceof dateutil.DateTime)
           ? dateutil.clone(value) : dateutil.cloneDates(value)
       }
 
@@ -1407,8 +1452,8 @@
     var m = Math.floor((a + 11 * h + 22 * l) / 451)
     var month = Math.floor((h + l - 7 * m + 114) / 31)
     var day = (h + l - 7 * m + 114) % 31 + 1
-    var date = Date.UTC(y, month - 1, day + offset)
-    var yearStart = Date.UTC(y, 0, 1)
+    var date = dateutil.DateTime.UTC(y, month - 1, day + offset)
+    var yearStart = dateutil.DateTime.UTC(y, 0, 1)
 
     return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))]
   }
@@ -1419,12 +1464,12 @@
     if (year !== this.lastyear) {
       this.yearlen = dateutil.isLeapYear(year) ? 366 : 365
       this.nextyearlen = dateutil.isLeapYear(year + 1) ? 366 : 365
-      var firstyday = new Date(year, 0, 1)
+      var firstyday = new dateutil.DateTime(year, 0, 1)
 
       this.yearordinal = dateutil.toOrdinal(firstyday)
       this.yearweekday = dateutil.getWeekday(firstyday)
 
-      var wday = dateutil.getWeekday(new Date(year, 0, 1))
+      var wday = dateutil.getWeekday(new dateutil.DateTime(year, 0, 1))
 
       if (this.yearlen === 365) {
         this.mmask = [].concat(M365MASK)
@@ -1505,7 +1550,7 @@
           // this year.
           var lnumweeks
           if (!contains(rr.options.byweekno, -1)) {
-            var lyearweekday = dateutil.getWeekday(new Date(year - 1, 0, 1))
+            var lyearweekday = dateutil.getWeekday(new dateutil.DateTime(year - 1, 0, 1))
             var lno1wkst = pymod(7 - lyearweekday + rr.options.wkst, 7)
             var lyearlen = dateutil.isLeapYear(year - 1) ? 366 : 365
             if (lno1wkst >= 4) {
@@ -1588,7 +1633,7 @@
   Iterinfo.prototype.wdayset = function (year, month, day) {
     // We need to handle cross-year weeks here.
     var set = repeat(null, this.yearlen + 7)
-    var i = dateutil.toOrdinal(new Date(year, month - 1, day)) - this.yearordinal
+    var i = dateutil.toOrdinal(new dateutil.DateTime(year, month - 1, day)) - this.yearordinal
     var start = i
     for (var j = 0; j < 7; j++) {
       set[i] = i
@@ -1600,7 +1645,7 @@
 
   Iterinfo.prototype.ddayset = function (year, month, day) {
     var set = repeat(null, this.yearlen)
-    var i = dateutil.toOrdinal(new Date(year, month - 1, day)) - this.yearordinal
+    var i = dateutil.toOrdinal(new dateutil.DateTime(year, month - 1, day)) - this.yearordinal
     set[i] = i
     return [set, i, i + 1]
   }
@@ -1656,13 +1701,13 @@
 
       if (method === 'between') {
         this.maxDate = args.inc
-          ? args.before : new Date(args.before.getTime() - 1)
+          ? args.before : new dateutil.DateTime(args.before.getTime() - 1)
         this.minDate = args.inc
-          ? args.after : new Date(args.after.getTime() + 1)
+          ? args.after : new dateutil.DateTime(args.after.getTime() + 1)
       } else if (method === 'before') {
-        this.maxDate = args.inc ? args.dt : new Date(args.dt.getTime() - 1)
+        this.maxDate = args.inc ? args.dt : new dateutil.DateTime(args.dt.getTime() - 1)
       } else if (method === 'after') {
-        this.minDate = args.inc ? args.dt : new Date(args.dt.getTime() + 1)
+        this.minDate = args.inc ? args.dt : new dateutil.DateTime(args.dt.getTime() + 1)
       }
     },
 
@@ -1694,7 +1739,7 @@
 
     /**
      *
-     * @param {Date} date that is part of the result.
+     * @param {dateutil.DateTime} date that is part of the result.
      * @return {Boolean} whether we are interested in more values.
      */
     add: function (date) {
@@ -1705,7 +1750,7 @@
     /**
      * 'before' and 'after' return only one date, whereas 'all'
      * and 'between' an array.
-     * @return {Date,Array?}
+     * @return {dateutil.DateTime,Array?}
      */
     getValue: function () {
       var res = this._result
@@ -1786,7 +1831,7 @@
     * @param {Date}
     */
     rdate: function (date) {
-      if (!(date instanceof Date)) {
+      if (!(date instanceof dateutil.DateTime)) {
         throw new TypeError(String(date) + ' is not Date instance')
       }
       if (!contains(this._rdate.map(Number), Number(date))) {
@@ -1811,7 +1856,7 @@
     * @param {Date}
     */
     exdate: function (date) {
-      if (!(date instanceof Date)) {
+      if (!(date instanceof dateutil.DateTime)) {
         throw new TypeError(String(date) + ' is not Date instance')
       }
       if (!contains(this._exdate.map(Number), Number(date))) {
@@ -1873,7 +1918,7 @@
       iterResult.accept = function (date) {
         var dt = Number(date)
         if (!_exdateHash[dt]) {
-          evalExdate(new Date(dt - 1), new Date(dt + 1))
+          evalExdate(new dateutil.DateTime(dt - 1), new dateutil.DateTime(dt + 1))
           if (!_exdateHash[dt]) {
             _exdateHash[dt] = true
             return _accept.call(this, date)
@@ -1895,7 +1940,7 @@
       }
 
       for (var i = 0; i < this._rdate.length; i++) {
-        if (!iterResult.accept(new Date(this._rdate[i]))) break
+        if (!iterResult.accept(new dateutil.DateTime(this._rdate[i]))) break
       }
 
       this._rrule.forEach(function (rrule) {
@@ -1927,13 +1972,13 @@
         rrs.rrule(this._rrule[i].clone())
       }
       for (i = 0; i < this._rdate.length; i++) {
-        rrs.rdate(new Date(this._rdate[i]))
+        rrs.rdate(new dateutil.DateTime(this._rdate[i]))
       }
       for (i = 0; i < this._exrule.length; i++) {
         rrs.exrule(this._exrule[i].clone())
       }
       for (i = 0; i < this._exdate.length; i++) {
-        rrs.exdate(new Date(this._exdate[i]))
+        rrs.exdate(new dateutil.DateTime(this._exdate[i]))
       }
       return rrs
     }
@@ -2278,6 +2323,7 @@
   RRule.RRule = RRule
     RRule.RRuleSet = RRuleSet
     RRule.rrulestr = rrulestr
+    RRule.DateTime = dateutil.DateTime
     return RRule
 
   function getnlp () {

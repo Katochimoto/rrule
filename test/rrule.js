@@ -85,14 +85,14 @@ describe('RRule', function () {
   testRecurring('missing Feb 28 https://github.com/jakubroztocil/rrule/issues/21',
     new RRule({
       freq: RRule.MONTHLY,
-      dtstart: new Date(2013, 0, 1),
+      dtstart: new RRule.DateTime(2013, 0, 1),
       count: 3,
       bymonthday: [28]
     }),
     [
-      new Date(2013, 0, 28),
-      new Date(2013, 1, 28),
-      new Date(2013, 2, 28)
+      new RRule.DateTime(2013, 0, 28),
+      new RRule.DateTime(2013, 1, 28),
+      new RRule.DateTime(2013, 2, 28)
     ]
   )
 
@@ -3460,10 +3460,10 @@ describe('RRule', function () {
     new RRule({
       freq: RRule.YEARLY,
       count: 1,
-      dtstart: new Date(1420063200001)
+      dtstart: new RRule.DateTime(1420063200001)
     }),
     [
-      new Date(1420063200001)
+      new RRule.DateTime(1420063200001)
     ]
   )
 
@@ -3472,16 +3472,16 @@ describe('RRule', function () {
       freq: RRule.MONTHLY,
       count: 1,
       bysetpos: [-1, 1],
-      dtstart: new Date(1356991200001)
+      dtstart: new RRule.DateTime(1356991200001)
     }),
     [
-      new Date(1356991200001)
+      new RRule.DateTime(1356991200001)
     ]
   )
 
   it('testAfterBefore', function () {
     'YEARLY,MONTHLY,DAILY,HOURLY,MINUTELY,SECONDLY'.split(',').forEach(function (freq_str) {
-      var date = new Date(1356991200001)
+      var date = new RRule.DateTime(1356991200001)
       var rr = new RRule({
         freq: RRule[freq_str],
         dtstart: date
