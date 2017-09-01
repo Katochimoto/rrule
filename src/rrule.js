@@ -40,61 +40,76 @@
   var dateutil = {};
 
   dateutil.DateTime = function (...args) {
-    this._date = new Date(...args);
+    if (args.length === 1 && args[0] instanceof dateutil.DateTime) {
+      this._date = new dateutil.DateTime.strategy(args[0]._date);
+    } else {
+      this._date = new dateutil.DateTime.strategy(...args);
+    }
   }
+
+  dateutil.DateTime.strategy = Date;
+
+  dateutil.DateTime.interface = [
+    'getDate',
+    'getDay',
+    'getFullYear',
+    'getHours',
+    'getMinutes',
+    'getMonth',
+    'getSeconds',
+    'getTime',
+    'getTimezoneOffset',
+    'getUTCDate',
+    'getUTCFullYear',
+    'getUTCHours',
+    'getUTCMinutes',
+    'getUTCMonth',
+    'getUTCSeconds',
+    'toString',
+    'valueOf'
+  ].reduce(function (data, name) {
+    data[name] = {
+      value: function (...args) {
+        return this._date[name](...args);
+      }
+    };
+    return data;
+  }, {});
 
   dateutil.DateTime.prototype = {
     constructor: dateutil.DateTime
   };
 
-  [
-    'getTimezoneOffset', 'getTime', 'getDay', 'toString', 'valueOf',
-    'getUTCFullYear', 'getUTCMonth', 'getUTCDate', 'getUTCHours', 'getUTCMinutes', 'getUTCSeconds',
-    'getFullYear', 'getMonth', 'getDate', 'getHours', 'getMinutes', 'getSeconds'
-  ].forEach(function (name) {
-    Object.defineProperty(dateutil.DateTime.prototype, name, {
-      value: function (...args) {
-        return this._date[name](...args);
-      }
-    });
-  });
+  Object.defineProperties(dateutil.DateTime.prototype, dateutil.DateTime.interface);
 
   dateutil.DateTime.UTC = function (...args) {
-    return Date.UTC(...args);
+    return dateutil.DateTime.strategy.UTC(...args);
   }
 
   dateutil.DateTime.parse = function (...args) {
-    return Date.parse(...args);
+    return dateutil.DateTime.strategy.parse(...args);
   }
 
   dateutil.DateTime.now = function () {
-    return Date.now();
+    return dateutil.DateTime.strategy.now();
   }
 
+  dateutil.DateTime.setStrategy = function (strategy) {
+    var instance = new strategy();
+    for (var name in dateutil.DateTime.interface) {
+      if (typeof instance[name] !== 'function') {
+        throw new Error(`Method "${name}" is not defined in prototype`);
+      }
+    }
 
-  var ppp = {
-    'getDate': '',
-    'getDay': '',
-    'getFullYear': '',
-    'getHours': '',
-    'getMinutes': '',
-    'getMonth': '',
-    'getSeconds': '',
-    'getTime': '',
-    'getTimezoneOffset': '',
-    'getUTCDate': '',
-    'getUTCFullYear': '',
-    'getUTCHours': '',
-    'getUTCMinutes': '',
-    'getUTCMonth': '',
-    'getUTCSeconds': '',
-    'toString': '',
-    'valueOf': ''
-  };
+    ['UTC', 'parse', 'now'].forEach(function (name) {
+      if (typeof strategy[name] !== 'function') {
+        throw new Error(`Method "${name}" is not defined`);
+      }
+    });
 
-
-
-
+    dateutil.DateTime.strategy = strategy;
+  }
 
   dateutil.Time = function (hour, minute, second, millisecond) {
     this.hour = hour
@@ -1148,7 +1163,9 @@
               return iterResult.getValue()
             } else if (res >= dtstart) {
               ++total
-              if (!iterResult.accept(res)) return iterResult.getValue()
+              if (!iterResult.accept(res)) {
+                return iterResult.getValue()
+              }
               if (count) {
                 --count
                 if (!count) {
@@ -1171,7 +1188,9 @@
                   return iterResult.getValue()
                 } else if (res >= dtstart) {
                   ++total
-                  if (!iterResult.accept(res)) return iterResult.getValue()
+                  if (!iterResult.accept(res)) {
+                    return iterResult.getValue()
+                  }
                   if (count) {
                     --count
                     if (!count) {

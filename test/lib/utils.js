@@ -2,6 +2,7 @@
 
 var assert = require('assert')
 var RRule = require('../../')
+var DT = require('../dt')
 
 var assertDatesEqual = function (actual, expected, msg) {
   msg = msg ? ' [' + msg + '] ' : ''
@@ -59,7 +60,14 @@ exports.parse = function (str) {
   h = h[0] === '0' ? h[1] : h
   i = i[0] === '0' ? i[1] : i
   s = s[0] === '0' ? s[1] : s
-  return new RRule.DateTime(y, m, d, h, i, s)
+  return new RRule.DateTime(
+    Number(y),
+    Number(m),
+    Number(d),
+    Number(h),
+    Number(i),
+    Number(s)
+  )
 }
 
 function testRecurring (msg, testObj, expectedDates, uit = it) {
@@ -90,9 +98,9 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
 
   uit(msg, function () {
     var ctx = this.test.ctx
-    var time = RRule.DateTime.now()
+    var time = Date.now()
     var actualDates = rule[method].apply(rule, args)
-    time = RRule.DateTime.now() - time
+    time = Date.now() - time
 
     assert.strictEqual(time < 100, true,
       rule + '\' method "' + method + '" should finish in 100 ms, but ' + time + ' ms')
