@@ -3,8 +3,6 @@ var RRule = require('../')
 
 DateTime.setTzdata(require('./tzdata.json'));
 DateTime.setDefaultTimezone('Europe/Moscow');
-//DateTime.setLocale('ru');
-//DateTime.setNow()
 
 function DT (...args) {
   if (args.length > 1) {

@@ -2,7 +2,6 @@
 
 var utils = require('./lib/utils')
 var RRule = require('../')
-var DT = require('./dt')
 
 var RRuleSet = RRule.RRuleSet
 

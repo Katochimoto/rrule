@@ -3,7 +3,6 @@
 var assert = require('assert')
 var utils = require('./lib/utils')
 var RRule = require('../')
-var DT = require('./dt')
 
 var parse = utils.parse
 var datetime = utils.datetime
