@@ -7,7 +7,7 @@ import {contains} from './utils'
  * @param {*} method
  * @param {*} args
  */
-export default function IterResult(method, args) {
+export default function IterResult (method, args) {
   this.init(method, args)
 }
 
@@ -37,7 +37,7 @@ IterResult.prototype = {
    *
    * @param {Date} date - the date isn't necessarly added to the result
    *                      list (if it is too late/too early)
-   * @return {Boolean} true if it makes sense to continue the iteration
+   * @returns {Boolean} true if it makes sense to continue the iteration
    *                   false if we're done.
    */
   accept: function (date) {
@@ -69,7 +69,7 @@ IterResult.prototype = {
   /**
    *
    * @param {DateTime} date that is part of the result.
-   * @return {Boolean} whether we are interested in more values.
+   * @returns {boolean} whether we are interested in more values.
    */
   add: function (date) {
     this._result.push(date)
@@ -77,9 +77,8 @@ IterResult.prototype = {
   },
 
   /**
-   * 'before' and 'after' return only one date, whereas 'all'
-   * and 'between' an array.
-   * @return {DateTime,Array?}
+   * 'before' and 'after' return only one date, whereas 'all' and 'between' an array.
+   * @returns {DateTime|array|null}
    */
   getValue: function () {
     var res = this._result

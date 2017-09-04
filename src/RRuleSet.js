@@ -31,7 +31,7 @@ RRuleSet.prototype = {
   constructor: RRuleSet,
 
   /**
-   * @param {RRule}
+   * @param {RRule} rrule
    */
   rrule: function (rrule) {
     if (!(rrule instanceof RRule)) {
@@ -43,7 +43,7 @@ RRuleSet.prototype = {
   },
 
   /**
-   * @param {Date}
+   * @param {Date} date
    */
   rdate: function (date) {
     if (!(date instanceof DateTime)) {
@@ -56,7 +56,7 @@ RRuleSet.prototype = {
   },
 
   /**
-   * @param {RRule}
+   * @param {RRule} rrule
    */
   exrule: function (rrule) {
     if (!(rrule instanceof RRule)) {
@@ -68,7 +68,7 @@ RRuleSet.prototype = {
   },
 
   /**
-   * @param {Date}
+   * @param {Date} date
    */
   exdate: function (date) {
     if (!(date instanceof DateTime)) {
@@ -108,6 +108,7 @@ RRuleSet.prototype = {
   /**
    * to generate recurrence field sush as:
    *   ["RRULE:FREQ=YEARLY;COUNT=2;BYDAY=TU;DTSTART=19970902T010000Z","RRULE:FREQ=YEARLY;COUNT=1;BYDAY=TH;DTSTART=19970902T010000Z"]
+   * @returns {string}
    */
   toString: function () {
     return JSON.stringify(this.valueOf())
@@ -118,7 +119,7 @@ RRuleSet.prototype = {
     var _exrule = this._exrule
     var _accept = iterResult.accept
 
-    function evalExdate(after, before) {
+    function evalExdate (after, before) {
       _exrule.forEach(function (rrule) {
         rrule.between(after, before, true).forEach(function (date) {
           _exdateHash[Number(date)] = true
@@ -181,9 +182,10 @@ RRuleSet.prototype = {
 
   /**
    * Create a new RRuleSet Object completely base on current instance
+   * @returns {RRuleSet}
    */
   clone: function () {
-    var rrs = new RRuleSet(!!this._cache)
+    var rrs = new RRuleSet(Boolean(this._cache))
     var i
     for (i = 0; i < this._rrule.length; i++) {
       rrs.rrule(this._rrule[i].clone())

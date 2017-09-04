@@ -64,9 +64,6 @@
         "eslint:recommended",
         "yandex"
     ],
-    "ecmaFeatures": {
-        "experimentalObjectRestSpread": true
-    },
     "globals": {
         "module": false,
         "exports": false,

@@ -5,6 +5,7 @@ import Time from './Time'
 import DateTime from './DateTime'
 import IterResult, {CallbackIterResult} from './IterResult'
 import Iterinfo from './Iterinfo'
+
 import {
   contains,
   pymod,
@@ -13,10 +14,10 @@ import {
 } from './utils'
 
 /**
- *
- * @param {Object?} options - see <http://labix.org/python-dateutil/#head-cf004ee9a75592797e076752b2a889c10f445418>
- *        The only required option is `freq`, one of RRule.YEARLY, RRule.MONTHLY, ...
+ * @see <http://labix.org/python-dateutil/#head-cf004ee9a75592797e076752b2a889c10f445418>
  * @constructor
+ * @param {Object} options The only required option is `freq`, one of RRule.YEARLY, RRule.MONTHLY, ...
+ * @param {*} noCache
  */
 export default function RRule (options, noCache) {
   options = options || {}
@@ -39,10 +40,14 @@ export default function RRule (options, noCache) {
   // Shallow copy for origOptions and check for invalid
   keys.forEach(function (key) {
     this.origOptions[key] = options[key]
-    if (!contains(defaultKeys, key)) invalid.push(key)
+    if (!contains(defaultKeys, key)) {
+      invalid.push(key)
+    }
   }, this)
 
-  if (invalid.length) throw new Error('Invalid options: ' + invalid.join(', '))
+  if (invalid.length) {
+    throw new Error('Invalid options: ' + invalid.join(', '))
+  }
 
   if (!RRule.FREQUENCIES[options.freq] && options.byeaster === null) {
     throw new Error('Invalid frequency: ' + String(options.freq))
@@ -50,13 +55,19 @@ export default function RRule (options, noCache) {
 
   // Merge in default options
   defaultKeys.forEach(function (key) {
-    if (!contains(keys, key)) options[key] = RRule.DEFAULT_OPTIONS[key]
+    if (!contains(keys, key)) {
+      options[key] = RRule.DEFAULT_OPTIONS[key]
+    }
   })
 
   var opts = this.options = options
 
-  if (opts.byeaster !== null) opts.freq = RRule.YEARLY
-  if (!opts.dtstart) opts.dtstart = new DateTime()
+  if (opts.byeaster !== null) {
+    opts.freq = RRule.YEARLY
+  }
+  if (!opts.dtstart) {
+    opts.dtstart = new DateTime()
+  }
 
   var millisecondModulo = opts.dtstart.getTime() % 1000
   if (opts.wkst === null) {
@@ -68,7 +79,9 @@ export default function RRule (options, noCache) {
   }
 
   if (opts.bysetpos !== null) {
-    if (typeof opts.bysetpos === 'number') opts.bysetpos = [opts.bysetpos]
+    if (typeof opts.bysetpos === 'number') {
+      opts.bysetpos = [opts.bysetpos]
+    }
 
     for (var i = 0; i < opts.bysetpos.length; i++) {
       var v = opts.bysetpos[i]
@@ -79,8 +92,13 @@ export default function RRule (options, noCache) {
     }
   }
 
-  if (!(plb(opts.byweekno) || plb(opts.byyearday) || plb(opts.bymonthday) ||
-      opts.byweekday !== null || opts.byeaster !== null)) {
+  if (!(
+    plb(opts.byweekno) ||
+    plb(opts.byyearday) ||
+    plb(opts.bymonthday) ||
+    opts.byweekday !== null ||
+    opts.byeaster !== null
+  )) {
     switch (opts.freq) {
     case RRule.YEARLY:
       if (!opts.bymonth) {
@@ -269,19 +287,25 @@ RRule.fromText = function (text, language) {
 }
 
 RRule.optionsToString = function (options) {
-  var key, value, strValues
+  var key
+  var value
+  var strValues
   var pairs = []
   var keys = Object.keys(options)
   var defaultKeys = Object.keys(RRule.DEFAULT_OPTIONS)
 
   for (var i = 0; i < keys.length; i++) {
-    if (!contains(defaultKeys, keys[i])) continue
+    if (!contains(defaultKeys, keys[i])) {
+      continue
+    }
 
     key = keys[i].toUpperCase()
     value = options[keys[i]]
     strValues = []
 
-    if (value === null || value instanceof Array && !value.length) continue
+    if (value === null || value instanceof Array && !value.length) {
+      continue
+    }
 
     switch (key) {
     case 'FREQ':
@@ -326,7 +350,9 @@ RRule.optionsToString = function (options) {
       break
     default:
       if (value instanceof Array) {
-        for (j = 0; j < value.length; j++) strValues[j] = String(value[j])
+        for (j = 0; j < value.length; j++) {
+          strValues[j] = String(value[j])
+        }
         value = strValues
       } else {
         value = String(value)
@@ -347,10 +373,10 @@ RRule.prototype = {
   constructor: RRule,
 
   /**
-   * @param {Function} iterator - optional function that will be called
+   * @param {function} iterator - optional function that will be called
    *                   on each date that is added. It can return false
    *                   to stop the iteration.
-   * @return Array containing all recurrences.
+   * @returns {array} containing all recurrences.
    */
   all: function (iterator) {
     if (iterator) {
@@ -370,7 +396,11 @@ RRule.prototype = {
    * The inc keyword defines what happens if after and/or before are
    * themselves occurrences. With inc == True, they will be included in the
    * list, if they are found in the recurrence set.
-   * @return Array
+   * @param {*} after
+   * @param {*} before
+   * @param {*} inc
+   * @param {*} iterator
+   * @returns {array}
    */
   between: function (after, before, inc, iterator) {
     var args = {
@@ -394,7 +424,9 @@ RRule.prototype = {
    * Returns the last recurrence before the given datetime instance.
    * The inc keyword defines what happens if dt is an occurrence.
    * With inc == True, if dt itself is an occurrence, it will be returned.
-   * @return Date or null
+   * @param {*} dt
+   * @param {*} inc
+   * @returns {Date|null}
    */
   before: function (dt, inc) {
     var args = {
@@ -413,7 +445,9 @@ RRule.prototype = {
    * Returns the first recurrence after the given datetime instance.
    * The inc keyword defines what happens if dt is an occurrence.
    * With inc == True, if dt itself is an occurrence, it will be returned.
-   * @return Date or null
+   * @param {*} dt
+   * @param {*} inc
+   * @returns {Date|null}
    */
   after: function (dt, inc) {
     var args = {
@@ -431,6 +465,7 @@ RRule.prototype = {
   /**
    * Returns the number of recurrences in this set. It will have go trough
    * the whole recurrence, if this hasn't been done before.
+   * @returns {number}
    */
   count: function () {
     return this.all().length
@@ -439,7 +474,7 @@ RRule.prototype = {
   /**
    * Converts the rrule into its string representation
    * @see <http://www.ietf.org/rfc/rfc2445.txt>
-   * @return String
+   * @returns {string}
    */
   toString: function () {
     return RRule.optionsToString(this.origOptions)
@@ -448,19 +483,25 @@ RRule.prototype = {
   /**
    * Will convert all rules described in nlp:ToText
    * to text.
+   * @param {*} gettext
+   * @param {*} language
+   * @returns {string}
    */
   toText: function (gettext, language) {
     return getnlp(RRule).toText(this, gettext, language)
   },
 
+  /**
+   * @returns {boolean}
+   */
   isFullyConvertibleToText: function () {
     return getnlp(RRule).isFullyConvertible(this)
   },
 
   /**
    * @param {String} what - all/before/after/between
-   * @param {Array,DateTime} value - an array of dates, one date, or null
-   * @param {Object?} args - _iter arguments
+   * @param {Array|DateTime} value - an array of dates, one date, or null
+   * @param {?Object} args - _iter arguments
    */
   _cacheAdd: function (what, value, args) {
     if (!this._cache) {
@@ -481,7 +522,9 @@ RRule.prototype = {
   },
 
   /**
-   * @return false - not in the cache
+   * @param {*} what
+   * @param {*} args
+   * @returns {boolean|null|Date|array} false - not in the cache
    *         null  - cached, but zero occurrences (before/after)
    *         Date  - cached (before/after)
    *         []    - cached, but zero occurrences (all/between)
@@ -524,7 +567,9 @@ RRule.prototype = {
       // so we can find the correct dates from the cached ones.
       var iterResult = new IterResult(what, args)
       for (i = 0; i < this._cache.all.length; i++) {
-        if (!iterResult.accept(this._cache.all[i])) break
+        if (!iterResult.accept(this._cache.all[i])) {
+          break
+        }
       }
       cached = iterResult.getValue()
       this._cacheAdd(what, cached, args)
@@ -536,8 +581,7 @@ RRule.prototype = {
   },
 
   /**
-   * @return a RRule instance with the same freq and options
-   *          as this one (cache is not cloned)
+   * @returns {RRule} a RRule instance with the same freq and options as this one (cache is not cloned)
    */
   clone: function () {
     return new RRule(this.origOptions)
@@ -611,9 +655,21 @@ RRule.prototype = {
 
     var total = 0
     var count = this.options.count
-    var i, j, k, dm, div, mod, tmp, pos, dayset, start, end, fixday, filtered
+    var i
+    var j
+    var k
+    var dm
+    var div
+    var mod
+    var tmp
+    var pos
+    var dayset
+    var start
+    var end
+    var fixday
+    var filtered
 
-    while (true) {
+    while (true) { // eslint-disable-line no-constant-condition
       // Get dayset with the right frequency
       tmp = getdayset.call(ii, year, month, day)
       dayset = tmp[0]
@@ -641,7 +697,9 @@ RRule.prototype = {
                 !contains(byyearday, i + 1 - ii.yearlen) &&
                 !contains(byyearday, -ii.nextyearlen + i - ii.yearlen))))
 
-        if (filtered) dayset[i] = null
+        if (filtered) {
+          dayset[i] = null
+        }
       }
 
       // Output results
@@ -781,7 +839,7 @@ RRule.prototype = {
           // Jump to one iteration before next day
           hour += Math.floor((23 - hour) / interval) * interval
         }
-        while (true) {
+        while (true) { // eslint-disable-line no-constant-condition
           hour += interval
           dm = divmod(hour, 24)
           div = dm.div
@@ -803,7 +861,7 @@ RRule.prototype = {
             (1439 - (hour * 60 + minute)) / interval) * interval
         }
 
-        while (true) {
+        while (true) { // eslint-disable-line no-constant-condition
           minute += interval
           dm = divmod(minute, 60)
           div = dm.div
@@ -833,7 +891,7 @@ RRule.prototype = {
           second += Math.floor(
             (86399 - (hour * 3600 + minute * 60 + second)) / interval) * interval
         }
-        while (true) {
+        while (true) { // eslint-disable-line no-constant-condition
           second += interval
           dm = divmod(second, 60)
           div = dm.div
@@ -890,6 +948,10 @@ RRule.prototype = {
 
 }
 
+/**
+ * @param {string} rfcString
+ * @returns {Object}
+ */
 RRule.parseString = function (rfcString) {
   rfcString = rfcString.replace(/^\s+|\s+$/, '')
   if (!rfcString.length) {
@@ -975,6 +1037,10 @@ RRule.parseString = function (rfcString) {
   return options
 }
 
+/**
+ * @param {string} string
+ * @returns {RRule}
+ */
 RRule.fromString = function (string) {
   return new RRule(RRule.parseString(string))
 }

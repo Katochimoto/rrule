@@ -58,8 +58,8 @@ Iterinfo.prototype.easter = function (y, offset) {
   var m = Math.floor((a + 11 * h + 22 * l) / 451)
   var month = Math.floor((h + l - 7 * m + 114) / 31)
   var day = (h + l - 7 * m + 114) % 31 + 1
-  var date = DateTime.UTC(y, month - 1, day + offset)
-  var yearStart = DateTime.UTC(y, 0, 1)
+  var date = DateTime.UTC(y, month - 1, day + offset) // eslint-disable-line new-cap
+  var yearStart = DateTime.UTC(y, 0, 1) // eslint-disable-line new-cap
 
   return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))]
 }
@@ -240,7 +240,7 @@ Iterinfo.prototype.rebuild = function (year, month) {
   }
 }
 
-Iterinfo.prototype.ydayset = function (year /* , month, day */) {
+Iterinfo.prototype.ydayset = function (/* year, month, day */) {
   return [range(this.yearlen), 0, this.yearlen]
 }
 

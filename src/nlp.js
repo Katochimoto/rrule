@@ -18,22 +18,17 @@
  *
  */
 
-// =============================================================================
-// Helper functions
-// =============================================================================
-
 /**
  * Return true if a value is in an array
+ * @param {*} arr
+ * @param {*} val
+ * @returns {boolean}
  */
 var contains = function (arr, val) {
   return arr.indexOf(val) !== -1
 }
 
 export default function (RRule) {
-  // =============================================================================
-  // ToText
-  // =============================================================================
-
   /**
    *
    * @param {RRule} rrule
@@ -75,7 +70,7 @@ export default function (RRule) {
 
       this.byweekday = {
         allWeeks: byweekday.filter(function (weekday) {
-          return !Boolean(weekday.n)
+          return !Boolean(weekday.n) // eslint-disable-line
         }),
         someWeeks: byweekday.filter(function (weekday) {
           return Boolean(weekday.n)
@@ -123,7 +118,7 @@ export default function (RRule) {
   /**
    * Test whether the rrule can be fully converted to text.
    * @param {RRule} rrule
-   * @return {Boolean}
+   * @returns {Boolean}
    */
   ToText.isFullyConvertible = function (rrule) {
     var canConvert = true
@@ -158,7 +153,7 @@ export default function (RRule) {
      * Perform the conversion. Only some of the frequencies are supported.
      * If some of the rrule's options aren't supported, they'll
      * be omitted from the output an "(~ approximate)" will be appended.
-     * @return {*}
+     * @returns {*}
      */
     toString: function () {
       var gettext = this.gettext
@@ -458,9 +453,6 @@ export default function (RRule) {
     }
   }
 
-  // =============================================================================
-  // fromText
-  // =============================================================================
   /**
    * Will be able to convert some of the below described rules from
    * text format to a rule object.
@@ -526,8 +518,9 @@ export default function (RRule) {
    *
    * [yearday]: first, 1., 2., 1st, 2nd, second, ... 366th, last day, 2nd last day, ..
    *
-   * @param {String} text
-   * @return {Object, Boolean} the rule, or null.
+   * @param {string} text
+   * @param {*} language
+   * @returns {Object|boolean} the rule, or null.
    */
   var fromText = function (text, language) {
     return new RRule(parseText(text, language))
@@ -541,10 +534,10 @@ export default function (RRule) {
       return null
     }
 
-    S()
+    parseOptions()
     return options
 
-    function S () {
+    function parseOptions () {
       // every [n]
       var n
 
@@ -560,8 +553,8 @@ export default function (RRule) {
       case 'day(s)':
         options.freq = RRule.DAILY
         if (ttr.nextSymbol()) {
-          AT()
-          F()
+          parseAt()
+          parseForUntil()
         }
         break
 
@@ -577,38 +570,38 @@ export default function (RRule) {
           RRule.FR
         ]
         ttr.nextSymbol()
-        F()
+        parseForUntil()
         break
 
       case 'week(s)':
         options.freq = RRule.WEEKLY
         if (ttr.nextSymbol()) {
-          ON()
-          F()
+          parseOnThe()
+          parseForUntil()
         }
         break
 
       case 'hour(s)':
         options.freq = RRule.HOURLY
         if (ttr.nextSymbol()) {
-          ON()
-          F()
+          parseOnThe()
+          parseForUntil()
         }
         break
 
       case 'month(s)':
         options.freq = RRule.MONTHLY
         if (ttr.nextSymbol()) {
-          ON()
-          F()
+          parseOnThe()
+          parseForUntil()
         }
         break
 
       case 'year(s)':
         options.freq = RRule.YEARLY
         if (ttr.nextSymbol()) {
-          ON()
-          F()
+          parseOnThe()
+          parseForUntil()
         }
         break
 
@@ -640,8 +633,8 @@ export default function (RRule) {
           options.byweekday.push(RRule[wkd])
           ttr.nextSymbol()
         }
-        MDAYs()
-        F()
+        parseMDAYs()
+        parseForUntil()
         break
 
       case 'january':
@@ -678,8 +671,8 @@ export default function (RRule) {
           ttr.nextSymbol()
         }
 
-        ON()
-        F()
+        parseOnThe()
+        parseForUntil()
         break
 
       default:
@@ -687,7 +680,7 @@ export default function (RRule) {
       }
     }
 
-    function ON () {
+    function parseOnThe () {
       var on = ttr.accept('on')
       var the = ttr.accept('the')
       if (!(on || the)) {
@@ -758,7 +751,7 @@ export default function (RRule) {
       } while (ttr.accept('comma') || ttr.accept('the') || ttr.accept('on'))
     }
 
-    function AT () {
+    function parseAt () {
       var at = ttr.accept('at')
       if (!at) {
         return
@@ -853,7 +846,7 @@ export default function (RRule) {
       }
     }
 
-    function MDAYs () {
+    function parseMDAYs () {
       ttr.accept('on')
       ttr.accept('the')
 
@@ -875,7 +868,7 @@ export default function (RRule) {
       }
     }
 
-    function F () {
+    function parseForUntil () {
       if (ttr.symbol === 'until') {
         var date = Date.parse(ttr.text)
 

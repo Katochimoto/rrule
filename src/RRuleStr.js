@@ -25,7 +25,7 @@ RRuleStr.DEFAULT_OPTIONS = {
   tzinfos: null
 }
 
-RRuleStr._freq_map = {
+RRuleStr._freqMap = {
   'YEARLY': RRule.YEARLY,
   'MONTHLY': RRule.MONTHLY,
   'WEEKLY': RRule.WEEKLY,
@@ -35,7 +35,7 @@ RRuleStr._freq_map = {
   'SECONDLY': RRule.SECONDLY
 }
 
-RRuleStr._weekday_map = {
+RRuleStr._weekdayMap = {
   'MO': 0,
   'TU': 1,
   'WE': 2,
@@ -48,21 +48,21 @@ RRuleStr._weekday_map = {
 RRuleStr.prototype = {
   constructor: RRuleStr,
 
-  _handle_int: function (rrkwargs, name, value, options) {
+  _handleInt: function (rrkwargs, name, value /* , options */) {
     rrkwargs[name.toLowerCase()] = parseInt(value, 10)
   },
 
-  _handle_int_list: function (rrkwargs, name, value, options) {
+  _handleIntList: function (rrkwargs, name, value /* , options */) {
     rrkwargs[name.toLowerCase()] = value.split(',').map(function (x) {
       return parseInt(x, 10)
     })
   },
 
-  _handle_FREQ: function (rrkwargs, name, value, options) {
-    rrkwargs['freq'] = RRuleStr._freq_map[value]
+  _handleFREQ: function (rrkwargs, name, value /* , options */) {
+    rrkwargs['freq'] = RRuleStr._freqMap[value]
   },
 
-  _handle_UNTIL: function (rrkwargs, name, value, options) {
+  _handleUNTIL: function (rrkwargs, name, value /* , options */) {
     try {
       rrkwargs['until'] = dateutil.untilStringToDate(value)
     } catch (error) {
@@ -70,13 +70,18 @@ RRuleStr.prototype = {
     }
   },
 
-  _handle_WKST: function (rrkwargs, name, value, options) {
-    rrkwargs['wkst'] = RRuleStr._weekday_map[value]
+  _handleWKST: function (rrkwargs, name, value /* , options */) {
+    rrkwargs['wkst'] = RRuleStr._weekdayMap[value]
   },
 
-  _handle_BYWEEKDAY: function (rrkwargs, name, value, options) {
+  _handleBYWEEKDAY: function (rrkwargs, name, value /* , options */) {
     // Two ways to specify this: +1MO or MO(+1)
-    var splt, i, j, n, w, wday
+    var splt
+    var i
+    var j
+    var n
+    var w
+    var wday
     var l = []
     var wdays = value.split(',')
 
@@ -90,15 +95,19 @@ RRuleStr.prototype = {
       } else {
         // # If it's of the form +1MO
         for (j = 0; j < wday.length; j++) {
-          if ('+-0123456789'.indexOf(wday[j]) === -1) break
+          if ('+-0123456789'.indexOf(wday[j]) === -1) {
+            break
+          }
         }
         n = wday.slice(0, j) || null
         w = wday.slice(j)
 
-        if (n) n = parseInt(n, 10)
+        if (n) {
+          n = parseInt(n, 10)
+        }
       }
 
-      var weekday = new Weekday(RRuleStr._weekday_map[w], n)
+      var weekday = new Weekday(RRuleStr._weekdayMap[w], n)
       l.push(weekday)
     }
     rrkwargs['byweekday'] = l
@@ -111,13 +120,17 @@ RRuleStr.prototype = {
     options.ignoretz = options.ignoretz || false
     options.tzinfos = options.tzinfos || null
 
-    var name, value, parts
+    var name
+    var value
+    var parts
     if (line.indexOf(':') !== -1) {
       parts = line.split(':')
       name = parts[0]
       value = parts[1]
 
-      if (name !== 'RRULE') throw new Error('unknown parameter name')
+      if (name !== 'RRULE') {
+        throw new Error('unknown parameter name')
+      }
     } else {
       value = line
     }
@@ -132,12 +145,12 @@ RRuleStr.prototype = {
       value = parts[1].toUpperCase()
 
       try {
-        this['_handle_' + name](rrkwargs, name, value, {
+        this['_handle' + name](rrkwargs, name, value, {
           ignoretz: options.ignoretz,
           tzinfos: options.tzinfos
         })
       } catch (error) {
-        throw new Error("unknown parameter '" + name + "':" + value)
+        throw new Error(`unknown parameter '${name}':${value}`)
       }
     }
     rrkwargs.dtstart = rrkwargs.dtstart || options.dtstart
@@ -151,10 +164,13 @@ RRuleStr.prototype = {
     }
 
     s = s && s.toUpperCase().trim()
-    if (!s) throw new Error('Invalid empty string')
+    if (!s) {
+      throw new Error('Invalid empty string')
+    }
 
     var i = 0
-    var line, lines
+    var line
+    var lines
 
     // More info about 'unfold' option
     // Go head to http://www.ietf.org/rfc/rfc2445.txt
@@ -180,7 +196,17 @@ RRuleStr.prototype = {
     var rdatevals = []
     var exrulevals = []
     var exdatevals = []
-    var name, value, parts, parms, parm, dtstart, rset, j, k, datestrs, datestr
+    var name
+    var value
+    var parts
+    var parms
+    var parm
+    var dtstart
+    var rset
+    var j
+    var k
+    var datestrs
+    var datestr
 
     if (!options.forceset && lines.length === 1 && (s.indexOf(':') === -1 ||
         s.indexOf('RRULE:') === 0)) {
@@ -193,7 +219,9 @@ RRuleStr.prototype = {
     } else {
       for (i = 0; i < lines.length; i++) {
         line = lines[i]
-        if (!line) continue
+        if (!line) {
+          continue
+        }
         if (line.indexOf(':') === -1) {
           name = 'RRULE'
           value = line
@@ -203,7 +231,9 @@ RRuleStr.prototype = {
           value = parts[1]
         }
         parms = name.split(';')
-        if (!parms) throw new Error('empty property name')
+        if (!parms) {
+          throw new Error('empty property name')
+        }
         name = parms[0]
         parms = parms.slice(1)
 
@@ -274,7 +304,9 @@ RRuleStr.prototype = {
           }
         }
 
-        if (options.campatiable && options.dtstart) rset.rdate(dtstart)
+        if (options.campatiable && options.dtstart) {
+          rset.rdate(dtstart)
+        }
         return rset
       } else {
         return this._parseRfcRRule(rrulevals[0], {
@@ -295,33 +327,38 @@ RRuleStr.prototype = {
     var defaultKeys = Object.keys(RRuleStr.DEFAULT_OPTIONS)
 
     keys.forEach(function (key) {
-      if (!contains(defaultKeys, key)) invalid.push(key)
+      if (!contains(defaultKeys, key)) {
+        invalid.push(key)
+      }
     }, this)
 
-    if (invalid.length) throw new Error('Invalid options: ' + invalid.join(', '))
+    if (invalid.length) {
+      throw new Error('Invalid options: ' + invalid.join(', '))
+    }
 
     // Merge in default options
     defaultKeys.forEach(function (key) {
-      if (!contains(keys, key)) options[key] = RRuleStr.DEFAULT_OPTIONS[key]
+      if (!contains(keys, key)) {
+        options[key] = RRuleStr.DEFAULT_OPTIONS[key]
+      }
     })
 
     return this._parseRfc(s, options)
   }
 }
 
-RRuleStr.prototype._handle_DTSTART = function (rrkwargs, name, value, options) {
+RRuleStr.prototype._handleDTSTART = function (rrkwargs, name, value /* , options */) {
   rrkwargs[name.toLowerCase()] = dateutil.untilStringToDate(value)
 }
 
-RRuleStr.prototype._handle_BYDAY = RRuleStr.prototype._handle_BYWEEKDAY
-RRuleStr.prototype._handle_INTERVAL = RRuleStr.prototype._handle_int
-RRuleStr.prototype._handle_COUNT = RRuleStr.prototype._handle_int
+RRuleStr.prototype._handleBYDAY = RRuleStr.prototype._handleBYWEEKDAY
+RRuleStr.prototype._handleINTERVAL = RRuleStr.prototype._handleInt
+RRuleStr.prototype._handleCOUNT = RRuleStr.prototype._handleInt
 
-;
-[
-  '_handle_BYSETPOS', '_handle_BYMONTH', '_handle_BYMONTHDAY',
-  '_handle_BYYEARDAY', '_handle_BYEASTER', '_handle_BYWEEKNO',
-  '_handle_BYHOUR', '_handle_BYMINUTE', '_handle_BYSECOND'
+;[
+  '_handleBYSETPOS', '_handleBYMONTH', '_handleBYMONTHDAY',
+  '_handleBYYEARDAY', '_handleBYEASTER', '_handleBYWEEKNO',
+  '_handleBYHOUR', '_handleBYMINUTE', '_handleBYSECOND'
 ].forEach(function (method) {
-  RRuleStr.prototype[method] = RRuleStr.prototype._handle_int_list
+  RRuleStr.prototype[method] = RRuleStr.prototype._handleIntList
 })

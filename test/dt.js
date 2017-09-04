@@ -4,7 +4,7 @@ import RRule from '../lib/rrule'
 DateTime.setTzdata(require('./tzdata.json'))
 DateTime.setDefaultTimezone('Europe/Moscow')
 
-function DT (...args) {
+export default function DT (...args) {
   if (args.length > 1) {
     if (typeof args[1] === 'number') {
       args[1] = args[1] + 1
@@ -25,7 +25,7 @@ function DT (...args) {
 }
 
 DT.UTC = function (...args) {
-  return Date.UTC(...args)
+  return Date.UTC(...args) // eslint-disable-line
 }
 
 DT.parse = function (...args) {
@@ -38,7 +38,7 @@ DT.now = function () {
 
 DT.prototype = {
   constructor: DT
-};
+}
 
 var isWeekDayDiff = new DateTime().getDayOfWeek() !== new Date().getDay()
 
@@ -70,20 +70,18 @@ var actions = {
   'getUTCSeconds': null,
   'toString': null,
   'valueOf': null
-};
+}
 
-for (var name in actions) {
-  (function (name, iname) {
-    actions[name] = {
+for (let name in actions) {
+  (function (actionName, iname) {
+    actions[actionName] = {
       value: typeof iname === 'function' ? iname : function (...args) {
         return this._date[iname](...args)
       }
-    };
+    }
   }(name, actions[name] || name))
 }
 
 Object.defineProperties(DT.prototype, actions)
 
 RRule.DateTime.setStrategy(DT)
-
-module.exports = DT

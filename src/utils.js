@@ -1,32 +1,51 @@
 /**
  * Simplified version of python's range()
+ * @param {*} start
+ * @param {*} end
+ * @returns {array}
  */
-export function range(start, end) {
+export function range (start, end) {
   if (arguments.length === 1) {
     end = start
     start = 0
   }
   var rang = []
-  for (var i = start; i < end; i++) rang.push(i)
+  for (var i = start; i < end; i++) {
+    rang.push(i)
+  }
   return rang
 }
 
-export function repeat(value, times) {
+/**
+ *
+ * @param {*} value
+ * @param {*} times
+ * @returns {array}
+ */
+export function repeat (value, times) {
   var i = 0
   var array = []
 
   if (value instanceof Array) {
-    for (; i < times; i++) array[i] = [].concat(value)
+    for (; i < times; i++) {
+      array[i] = [].concat(value)
+    }
   } else {
-    for (; i < times; i++) array[i] = value
+    for (; i < times; i++) {
+      array[i] = value
+    }
   }
   return array
 }
 
 /**
- * Python like split
+ *
+ * @param {*} str
+ * @param {*} sep
+ * @param {*} num
+ * @returns {array}
  */
-export function split(str, sep, num) {
+export function split (str, sep, num) {
   var splits = str.split(sep)
   return num ?
     splits.slice(0, num).concat([splits.slice(num).join(sep)]) : splits
@@ -44,10 +63,10 @@ export function split(str, sep, num) {
  *
  * @param {number} a The dividend.
  * @param {number} b The divisor.
- * @return {number} a % b where the result is between 0 and b (either 0 <= x < b
+ * @returns {number} a % b where the result is between 0 and b (either 0 <= x < b
  *     or b < x <= 0, depending on the sign of b).
  */
-export function pymod(a, b) {
+export function pymod (a, b) {
   var r = a % b
   // If r and b differ in sign, add b to wrap the result to the correct sign.
   return (r * b < 0) ? r + b : r
@@ -55,8 +74,11 @@ export function pymod(a, b) {
 
 /**
  * @see: <http://docs.python.org/library/functions.html#divmod>
+ * @param {*} a
+ * @param {*} b
+ * @returns {Object}
  */
-export function divmod(a, b) {
+export function divmod (a, b) {
   return {
     div: Math.floor(a / b),
     mod: pymod(a, b)
@@ -65,18 +87,22 @@ export function divmod(a, b) {
 
 /**
  * Python-like boolean
- * @return {Boolean} value of an object/primitive, taking into account
+ * @param {Object} obj
+ * @returns {boolean} value of an object/primitive, taking into account
  * the fact that in Python an empty list's/tuple's
  * boolean value is False, whereas in JS it's true
  */
-export function plb(obj) {
+export function plb (obj) {
   return (obj instanceof Array && obj.length === 0) ?
     false : Boolean(obj)
 }
 
 /**
  * Return true if a value is in an array
+ * @param {array} arr
+ * @param {*} val
+ * @returns {boolean}
  */
-export function contains(arr, val) {
+export function contains (arr, val) {
   return arr.indexOf(val) !== -1
 }

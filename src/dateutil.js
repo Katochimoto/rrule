@@ -219,7 +219,7 @@ export function untilStringToDate (until) {
   if (!bits) {
     throw new Error('Invalid UNTIL value: ' + until)
   }
-  return new DateTime(DateTime.UTC(
+  return new DateTime(DateTime.UTC( // eslint-disable-line new-cap
     bits[1],
     bits[2] - 1,
     bits[3],

@@ -42,7 +42,7 @@ DateTime.prototype = {
 Object.defineProperties(DateTime.prototype, DateTime.interface)
 
 DateTime.UTC = function (...args) {
-  return DateTime.Strategy.UTC(...args)
+  return DateTime.Strategy.UTC(...args) // eslint-disable-line new-cap
 }
 
 DateTime.parse = function (...args) {

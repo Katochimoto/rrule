@@ -31,9 +31,6 @@ var extractTime = function (date) {
   return date !== null ? date.getTime() : void 0
 }
 
-/**
- * datetime.datetime
- */
 exports.datetime = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
@@ -45,11 +42,13 @@ exports.datetimeUTC = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new RRule.DateTime(RRule.DateTime.UTC(y, m - 1, d, h, i, s))
+  return new RRule.DateTime(RRule.DateTime.UTC(y, m - 1, d, h, i, s)) // eslint-disable-line new-cap
 }
 
 /**
  * dateutil.parser.parse
+ * @param {string} str
+ * @returns {RRule.DateTime}
  */
 exports.parse = function (str) {
   var parts = str.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/)
