@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "webpack",
+    "demo": "webpack --output-path=demo",
     "test": "eslint . --color; mocha --compilers js:babel-register"
   },
   "devDependencies": {

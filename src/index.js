@@ -26,12 +26,14 @@ function rrulestr (...args) {
   return rruleStr.parse(...args)
 }
 
+RRule.RRule = RRule
 RRule.DateTime = DateTime
 RRule.RRuleSet = RRuleSet
 RRule.rrulestr = rrulestr
 
 export {
   RRule as default,
+  RRule,
   DateTime,
   RRuleSet,
   rrulestr
