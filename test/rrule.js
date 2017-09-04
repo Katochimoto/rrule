@@ -1,8 +1,8 @@
 /* global describe, it */
 
-var assert = require('assert')
-var utils = require('./lib/utils')
-var RRule = require('../')
+import assert from 'assert'
+import utils from './lib/utils'
+import RRule from '../lib/rrule'
 
 var parse = utils.parse
 var datetime = utils.datetime
@@ -489,7 +489,7 @@ describe('RRule', function () {
   )
 
   testRecurring('testYearlyByEaster',
-    new RRule({ count: 3,
+    new RRule({count: 3,
       byeaster: 0,
       dtstart: parse('19970902T090000')
     }),
@@ -3491,7 +3491,9 @@ describe('RRule', function () {
         'the supplied dtstart differs from RRule.options.dtstart')
       var res = rr.before(rr.after(rr.options.dtstart))
 
-      if (res != null) res = res.getTime()
+      if (res !== null) {
+        res = res.getTime()
+      }
       assert.strictEqual(res, rr.options.dtstart.getTime(),
         'after dtstart , followed by before does not return dtstart')
     })

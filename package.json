@@ -18,21 +18,23 @@
   },
   "scripts": {
     "start": "webpack",
-    "test": "mocha",
-    "build": "babel src/rrule.js -o lib/rrule.js",
-    "dev": "babel src/rrule.js -w -o lib/rrule.js"
+    "test": "mocha --compilers js:babel-register"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.26.0",
     "datetime2": "^2.0.1",
-    "mocha": "^2.3.4",
-    "standard": "^5.4.1",
+    "eslint": "^4.6.1",
+    "eslint-config-yandex": "^1.0.6",
+    "mocha": "3.5.0",
+    "standard": "10.0.3",
     "webpack": "^3.5.5"
   },
   "standard": {

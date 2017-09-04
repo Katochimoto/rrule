@@ -1,14 +1,18 @@
 /* global it */
 
-var assert = require('assert')
-var RRule = require('../../')
-var DT = require('../dt')
+import assert from 'assert'
+import RRule from '../../lib/rrule'
+import '../dt'
 
 var assertDatesEqual = function (actual, expected, msg) {
   msg = msg ? ' [' + msg + '] ' : ''
 
-  if (!(actual instanceof Array)) actual = [actual]
-  if (!(expected instanceof Array)) expected = [expected]
+  if (!(actual instanceof Array)) {
+    actual = [actual]
+  }
+  if (!(expected instanceof Array)) {
+    expected = [expected]
+  }
 
   if (expected.length > 1) {
     assert.strictEqual(actual.length, expected.length, msg + 'number of recurrences')
@@ -24,7 +28,7 @@ var assertDatesEqual = function (actual, expected, msg) {
 }
 
 var extractTime = function (date) {
-  return date != null ? date.getTime() : void 0
+  return date !== null ? date.getTime() : void 0
 }
 
 /**
@@ -71,7 +75,9 @@ exports.parse = function (str) {
 }
 
 function testRecurring (msg, testObj, expectedDates, uit = it) {
-  var rule, method, args
+  var rule
+  var method
+  var args
 
   if (typeof testObj === 'function') {
     testObj = testObj()
@@ -105,8 +111,12 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
     assert.strictEqual(time < 100, true,
       rule + '\' method "' + method + '" should finish in 100 ms, but ' + time + ' ms')
 
-    if (!(actualDates instanceof Array)) actualDates = [actualDates]
-    if (!(expectedDates instanceof Array)) expectedDates = [expectedDates]
+    if (!(actualDates instanceof Array)) {
+      actualDates = [actualDates]
+    }
+    if (!(expectedDates instanceof Array)) {
+      expectedDates = [expectedDates]
+    }
 
     assertDatesEqual(actualDates, expectedDates)
 
@@ -188,7 +198,7 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
   })
 }
 
-exports.testRecurring = testRecurring;
+exports.testRecurring = testRecurring
 
 exports.testRecurring.skip = function (...args) {
   testRecurring(...args, it.skip)

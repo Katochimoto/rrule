@@ -1,0 +1,81 @@
+{
+    "rules": {
+        "indent": [
+            2,
+            2
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "semi": [
+            2,
+            "never"
+        ],
+        "array-bracket-spacing": [
+            2,
+            "never"
+        ],
+        "object-curly-spacing": [
+            2,
+            "never"
+        ],
+        "space-before-function-paren": [
+            2,
+            "always"
+        ],
+        "max-len": [
+            2,
+            200,
+            4
+        ],
+        "vars-on-top": [
+            0
+        ],
+        "no-inner-declarations": [
+            0
+        ],
+        "key-spacing": [
+            0
+        ],
+        "valid-jsdoc": [
+            2,
+            {
+                "prefer": {
+                    "return": "returns"
+                },
+                "requireReturn": false,
+                "requireParamDescription": false,
+                "requireReturnDescription": false
+            }
+        ]
+    },
+    "env": {
+        "es6": true,
+        "node": true,
+        "browser": true
+    },
+    "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended",
+        "yandex"
+    ],
+    "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+    },
+    "globals": {
+        "module": false,
+        "exports": false,
+        "require": false,
+        "describe": false,
+        "it": false,
+        "expect": false,
+        "beforeEach": false,
+        "afterEach": false,
+        "sinon": false
+    }
+}
