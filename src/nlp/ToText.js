@@ -12,7 +12,7 @@ const contains = function (arr, val) {
   return arr.indexOf(val) !== -1
 }
 
-export default function defineToText (RRule) {
+export function defineToText (RRule) {
 
   /**
    * @param {RRule} rrule

@@ -18,14 +18,14 @@
  *
  */
 
-import defineToText from './nlp/ToText'
+import {defineToText} from './nlp/ToText'
 import Parser from './nlp/Parser'
 
 import {
   ENGLISH
 } from './nlp/constant'
 
-export default function defineNlp(RRule) {
+export function defineNlp(RRule) {
   const ToText = defineToText(RRule);
 
   /**
