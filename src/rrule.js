@@ -26,15 +26,30 @@ function rrulestr (...args) {
   return rruleStr.parse(...args)
 }
 
+function nlpInit (nlp) {
+  RRule.fromText = nlp.fromText
+  RRule.parseText = nlp.parseText
+
+  RRule.prototype.isFullyConvertibleToText = function () {
+    return nlp.isFullyConvertibleToText(this)
+  }
+
+  RRule.prototype.toText = function (gettext, language) {
+    return nlp.toText(this, gettext, language)
+  }
+}
+
 RRule.RRule = RRule
 RRule.DateTime = DateTime
 RRule.RRuleSet = RRuleSet
 RRule.rrulestr = rrulestr
+RRule.nlpInit = nlpInit
 
 export {
   RRule as default,
   RRule,
   DateTime,
   RRuleSet,
-  rrulestr
+  rrulestr,
+  nlpInit
 }

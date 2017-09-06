@@ -2,7 +2,7 @@
 (function(RRule, nlp) {
   var getFormValues, getOptionsCode, makeRows;
 
-  nlp.defineNlp(RRule);
+  RRule.nlpInit(nlp.defineNlp(RRule));
 
   getFormValues = function($form) {
     var paramObj;

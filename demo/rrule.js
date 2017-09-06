@@ -1878,7 +1878,7 @@ RRuleSetMethods.forEach(function (method) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.rrulestr = exports.RRuleSet = exports.DateTime = exports.RRule = exports.default = undefined;
+exports.nlpInit = exports.rrulestr = exports.RRuleSet = exports.DateTime = exports.RRule = exports.default = undefined;
 
 var _RRule = __webpack_require__(2);
 
@@ -1921,16 +1921,31 @@ function rrulestr() {
   return rruleStr.parse.apply(rruleStr, arguments);
 }
 
+function nlpInit(nlp) {
+  _RRule2.default.fromText = nlp.fromText;
+  _RRule2.default.parseText = nlp.parseText;
+
+  _RRule2.default.prototype.isFullyConvertibleToText = function () {
+    return nlp.isFullyConvertibleToText(this);
+  };
+
+  _RRule2.default.prototype.toText = function (gettext, language) {
+    return nlp.toText(this, gettext, language);
+  };
+}
+
 _RRule2.default.RRule = _RRule2.default;
 _RRule2.default.DateTime = _DateTime2.default;
 _RRule2.default.RRuleSet = _RRuleSet2.default;
 _RRule2.default.rrulestr = rrulestr;
+_RRule2.default.nlpInit = nlpInit;
 
 exports.default = _RRule2.default;
 exports.RRule = _RRule2.default;
 exports.DateTime = _DateTime2.default;
 exports.RRuleSet = _RRuleSet2.default;
 exports.rrulestr = rrulestr;
+exports.nlpInit = nlpInit;
 
 /***/ }),
 /* 9 */

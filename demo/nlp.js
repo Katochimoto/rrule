@@ -530,17 +530,6 @@ function defineNlp(RRule) {
     return new ToText(rrule, gettext, language).toString();
   }
 
-  RRule.fromText = fromText;
-  RRule.parseText = parseText;
-
-  RRule.prototype.isFullyConvertibleToText = function () {
-    return isFullyConvertibleToText(this);
-  };
-
-  RRule.prototype.toText = function (gettext, language) {
-    return toText(this, gettext, language);
-  };
-
   return {
     fromText: fromText,
     parseText: parseText,
