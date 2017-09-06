@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   target: 'web',
   entry: {
-    rrule: './src/index.js'
+    rrule: './src/rrule.js',
+    nlp: './src/nlp.js'
   },
   output: {
     filename: '[name].js',

@@ -2,7 +2,10 @@
 
 import assert from 'assert'
 import RRule from '../../lib/rrule'
+import defineNlp from '../../lib/nlp'
 import '../dt'
+
+defineNlp(RRule);
 
 var assertDatesEqual = function (actual, expected, msg) {
   msg = msg ? ' [' + msg + '] ' : ''
