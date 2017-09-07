@@ -168,15 +168,15 @@ RRuleSet.prototype = {
     var res = iterResult._result
     dateutil.sort(res)
     switch (iterResult.method) {
-    case 'all':
-    case 'between':
-      return res
-    case 'before':
-      return (res.length && res[res.length - 1]) || null
-    case 'after':
-      return (res.length && res[0]) || null
-    default:
-      return null
+      case 'all':
+      case 'between':
+        return res
+      case 'before':
+        return (res.length && res[res.length - 1]) || null
+      case 'after':
+        return (res.length && res[0]) || null
+      default:
+        return null
     }
   },
 

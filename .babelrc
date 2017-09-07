@@ -1,7 +1,15 @@
 {
     "plugins": [
         "transform-es2015-spread",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        [
+            "module-resolver", {
+                "root": ["./src"],
+                "alias": {
+                    "rrule": "./rrule"
+                }
+            }
+        ]
     ],
     "presets": [
         "env"

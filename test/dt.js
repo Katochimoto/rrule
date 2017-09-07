@@ -1,5 +1,7 @@
 import DateTime from 'datetime2'
-import RRule from '../lib/rrule'
+import {
+  DateTime as RDateTime
+} from '../lib/rrule'
 
 DateTime.setTzdata(require('./tzdata.json'))
 DateTime.setDefaultTimezone('Europe/Moscow')
@@ -84,4 +86,4 @@ for (let name in actions) {
 
 Object.defineProperties(DT.prototype, actions)
 
-RRule.DateTime.setStrategy(DT)
+RDateTime.setStrategy(DT)

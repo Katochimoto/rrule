@@ -1,25 +1,28 @@
-export default function Time (hour, minute, second, millisecond) {
-  this.hour = hour
-  this.minute = minute
-  this.second = second
-  this.millisecond = millisecond || 0
-}
+export default class Time {
+  constructor (hour, minute, second, millisecond = 0) {
+    this.hour = hour
+    this.minute = minute
+    this.second = second
+    this.millisecond = millisecond
+  }
 
-Time.prototype = {
-  constructor: Time,
-  getHours: function () {
+  getHours () {
     return this.hour
-  },
-  getMinutes: function () {
+  }
+
+  getMinutes () {
     return this.minute
-  },
-  getSeconds: function () {
+  }
+
+  getSeconds () {
     return this.second
-  },
-  getMilliseconds: function () {
+  }
+
+  getMilliseconds () {
     return this.millisecond
-  },
-  getTime: function () {
+  }
+
+  getTime () {
     return ((this.hour * 60 * 60) + (this.minute * 60) + this.second) * 1000 +
       this.millisecond
   }

@@ -2,7 +2,9 @@ import * as dateutil from './dateutil'
 import Weekday from './Weekday'
 import Time from './Time'
 import DateTime from './DateTime'
-import IterResult, {CallbackIterResult} from './IterResult'
+import IterResult, {
+  CallbackIterResult
+} from './IterResult'
 import Iterinfo from './Iterinfo'
 
 import {
@@ -99,18 +101,18 @@ export default function RRule (options, noCache) {
     opts.byeaster !== null
   )) {
     switch (opts.freq) {
-    case RRule.YEARLY:
-      if (!opts.bymonth) {
-        opts.bymonth = opts.dtstart.getMonth() + 1
-      }
-      opts.bymonthday = opts.dtstart.getDate()
-      break
-    case RRule.MONTHLY:
-      opts.bymonthday = opts.dtstart.getDate()
-      break
-    case RRule.WEEKLY:
-      opts.byweekday = dateutil.getWeekday(opts.dtstart)
-      break
+      case RRule.YEARLY:
+        if (!opts.bymonth) {
+          opts.bymonth = opts.dtstart.getMonth() + 1
+        }
+        opts.bymonthday = opts.dtstart.getDate()
+        break
+      case RRule.MONTHLY:
+        opts.bymonthday = opts.dtstart.getDate()
+        break
+      case RRule.WEEKLY:
+        opts.byweekday = dateutil.getWeekday(opts.dtstart)
+        break
     }
   }
 
@@ -277,14 +279,6 @@ RRule.DEFAULT_OPTIONS = {
   byeaster: null
 }
 
-RRule.parseText = function (/* text, language */) {
-  throw new Error('Method "parseText" has been realized at "nlp" library.')
-}
-
-RRule.fromText = function (/* text, language */) {
-  throw new Error('Method "fromText" has been realized at "nlp" library.')
-}
-
 RRule.optionsToString = function (options) {
   var key
   var value
@@ -307,55 +301,55 @@ RRule.optionsToString = function (options) {
     }
 
     switch (key) {
-    case 'FREQ':
-      value = RRule.FREQUENCIES[options.freq]
-      break
-    case 'WKST':
-      value = value.toString()
-      break
-    case 'BYWEEKDAY':
-      /*
-      NOTE: BYWEEKDAY is a special case.
-      RRule() deconstructs the rule.options.byweekday array
-      into an array of Weekday arguments.
-      On the other hand, rule.origOptions is an array of Weekdays.
-      We need to handle both cases here.
-      It might be worth change RRule to keep the Weekdays.
+      case 'FREQ':
+        value = RRule.FREQUENCIES[options.freq]
+        break
+      case 'WKST':
+        value = value.toString()
+        break
+      case 'BYWEEKDAY':
+        /*
+        NOTE: BYWEEKDAY is a special case.
+        RRule() deconstructs the rule.options.byweekday array
+        into an array of Weekday arguments.
+        On the other hand, rule.origOptions is an array of Weekdays.
+        We need to handle both cases here.
+        It might be worth change RRule to keep the Weekdays.
 
-      Also, BYWEEKDAY (used by RRule) vs. BYDAY (RFC)
+        Also, BYWEEKDAY (used by RRule) vs. BYDAY (RFC)
 
-      */
-      key = 'BYDAY'
-      if (!(value instanceof Array)) {
-        value = [value]
-      }
-
-      for (var wday, j = 0; j < value.length; j++) {
-        wday = value[j]
-        if (wday instanceof Weekday) {
-          // good
-        } else if (wday instanceof Array) {
-          wday = new Weekday(wday[0], wday[1])
-        } else {
-          wday = new Weekday(wday)
+        */
+        key = 'BYDAY'
+        if (!(value instanceof Array)) {
+          value = [value]
         }
-        strValues[j] = wday.toString()
-      }
-      value = strValues
-      break
-    case 'DTSTART':
-    case 'UNTIL':
-      value = dateutil.timeToUntilString(value)
-      break
-    default:
-      if (value instanceof Array) {
-        for (j = 0; j < value.length; j++) {
-          strValues[j] = String(value[j])
+
+        for (var wday, j = 0; j < value.length; j++) {
+          wday = value[j]
+          if (wday instanceof Weekday) {
+            // good
+          } else if (wday instanceof Array) {
+            wday = new Weekday(wday[0], wday[1])
+          } else {
+            wday = new Weekday(wday)
+          }
+          strValues[j] = wday.toString()
         }
         value = strValues
-      } else {
-        value = String(value)
-      }
+        break
+      case 'DTSTART':
+      case 'UNTIL':
+        value = dateutil.timeToUntilString(value)
+        break
+      default:
+        if (value instanceof Array) {
+          for (j = 0; j < value.length; j++) {
+            strValues[j] = String(value[j])
+          }
+          value = strValues
+        } else {
+          value = String(value)
+        }
     }
     pairs.push([key, value])
   }
@@ -477,24 +471,6 @@ RRule.prototype = {
    */
   toString: function () {
     return RRule.optionsToString(this.origOptions)
-  },
-
-  /**
-   * Will convert all rules described in nlp:ToText
-   * to text.
-   * @param {*} gettext
-   * @param {*} language
-   * @returns {string}
-   */
-  toText: function (/* gettext, language */) {
-    throw new Error('Method "toText" has been realized at "nlp" library.')
-  },
-
-  /**
-   * @returns {boolean}
-   */
-  isFullyConvertibleToText: function () {
-    throw new Error('Method "isFullyConvertible" has been realized at "nlp" library.')
   },
 
   /**
@@ -970,67 +946,67 @@ RRule.parseString = function (rfcString) {
     key = attr[0]
     value = attr[1]
     switch (key) {
-    case 'FREQ':
-      options.freq = RRule[value]
-      break
-    case 'WKST':
-      options.wkst = RRule[value]
-      break
-    case 'COUNT':
-    case 'INTERVAL':
-    case 'BYSETPOS':
-    case 'BYMONTH':
-    case 'BYMONTHDAY':
-    case 'BYYEARDAY':
-    case 'BYWEEKNO':
-    case 'BYHOUR':
-    case 'BYMINUTE':
-    case 'BYSECOND':
-      if (value.indexOf(',') !== -1) {
-        value = value.split(',')
-        for (j = 0; j < value.length; j++) {
-          if (/^[+-]?\d+$/.test(value[j])) {
-            value[j] = Number(value[j])
+      case 'FREQ':
+        options.freq = RRule[value]
+        break
+      case 'WKST':
+        options.wkst = RRule[value]
+        break
+      case 'COUNT':
+      case 'INTERVAL':
+      case 'BYSETPOS':
+      case 'BYMONTH':
+      case 'BYMONTHDAY':
+      case 'BYYEARDAY':
+      case 'BYWEEKNO':
+      case 'BYHOUR':
+      case 'BYMINUTE':
+      case 'BYSECOND':
+        if (value.indexOf(',') !== -1) {
+          value = value.split(',')
+          for (j = 0; j < value.length; j++) {
+            if (/^[+-]?\d+$/.test(value[j])) {
+              value[j] = Number(value[j])
+            }
+          }
+        } else if (/^[+-]?\d+$/.test(value)) {
+          value = Number(value)
+        }
+        key = key.toLowerCase()
+        options[key] = value
+        break
+      case 'BYDAY': // => byweekday
+        var n
+        var wday
+        var day
+        var days = value.split(',')
+
+        options.byweekday = []
+        for (j = 0; j < days.length; j++) {
+          day = days[j]
+          if (day.length === 2) { // MO, TU, ...
+            wday = RRule[day] // wday instanceof Weekday
+            options.byweekday.push(wday)
+          } else { // -1MO, +3FR, 1SO, ...
+            day = day.match(/^([+-]?\d)([A-Z]{2})$/)
+            n = Number(day[1])
+            wday = day[2]
+            wday = RRule[wday].weekday
+            options.byweekday.push(new Weekday(wday, n))
           }
         }
-      } else if (/^[+-]?\d+$/.test(value)) {
-        value = Number(value)
-      }
-      key = key.toLowerCase()
-      options[key] = value
-      break
-    case 'BYDAY': // => byweekday
-      var n
-      var wday
-      var day
-      var days = value.split(',')
-
-      options.byweekday = []
-      for (j = 0; j < days.length; j++) {
-        day = days[j]
-        if (day.length === 2) { // MO, TU, ...
-          wday = RRule[day] // wday instanceof Weekday
-          options.byweekday.push(wday)
-        } else { // -1MO, +3FR, 1SO, ...
-          day = day.match(/^([+-]?\d)([A-Z]{2})$/)
-          n = Number(day[1])
-          wday = day[2]
-          wday = RRule[wday].weekday
-          options.byweekday.push(new Weekday(wday, n))
-        }
-      }
-      break
-    case 'DTSTART':
-      options.dtstart = dateutil.untilStringToDate(value)
-      break
-    case 'UNTIL':
-      options.until = dateutil.untilStringToDate(value)
-      break
-    case 'BYEASTER':
-      options.byeaster = Number(value)
-      break
-    default:
-      throw new Error(`Unknown RRULE property '${key}'`)
+        break
+      case 'DTSTART':
+        options.dtstart = dateutil.untilStringToDate(value)
+        break
+      case 'UNTIL':
+        options.until = dateutil.untilStringToDate(value)
+        break
+      case 'BYEASTER':
+        options.byeaster = Number(value)
+        break
+      default:
+        throw new Error(`Unknown RRULE property '${key}'`)
     }
   }
   return options

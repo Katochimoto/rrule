@@ -1,10 +1,7 @@
 /* global describe */
 
 import utils from './lib/utils'
-import RRule from '../lib/rrule'
-
-var RRuleSet = RRule.RRuleSet
-var rrulestr = RRule.rrulestr
+import {RRule, RRuleSet, rrulestr} from '../lib/rrule'
 
 var parse = utils.parse
 var datetime = utils.datetime

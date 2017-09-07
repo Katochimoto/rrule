@@ -1,11 +1,9 @@
 /* global it */
 
 import assert from 'assert'
-import RRule from '../../lib/rrule'
-import {defineNlp} from '../../lib/nlp'
+import {RRule, DateTime, RRuleSet} from '../../lib/rrule'
+import {isFullyConvertibleToText, toText} from '../../lib/nlp'
 import '../dt'
-
-RRule.nlpInit(defineNlp(RRule));
 
 var assertDatesEqual = function (actual, expected, msg) {
   msg = msg ? ' [' + msg + '] ' : ''
@@ -25,7 +23,7 @@ var assertDatesEqual = function (actual, expected, msg) {
   for (var exp, act, i = 0; i < expected.length; i++) {
     act = actual[i]
     exp = expected[i]
-    assert.strictEqual(exp instanceof RRule.DateTime ? exp.toString() : exp,
+    assert.strictEqual(exp instanceof DateTime ? exp.toString() : exp,
       act.toString(), msg + (i + 1) + '/' + expected.length)
   }
 }
@@ -38,20 +36,20 @@ exports.datetime = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new RRule.DateTime(y, m - 1, d, h, i, s)
+  return new DateTime(y, m - 1, d, h, i, s)
 }
 
 exports.datetimeUTC = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new RRule.DateTime(RRule.DateTime.UTC(y, m - 1, d, h, i, s)) // eslint-disable-line new-cap
+  return new DateTime(DateTime.UTC(y, m - 1, d, h, i, s)) // eslint-disable-line new-cap
 }
 
 /**
  * dateutil.parser.parse
  * @param {string} str
- * @returns {RRule.DateTime}
+ * @returns {DateTime}
  */
 exports.parse = function (str) {
   var parts = str.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/)
@@ -66,7 +64,7 @@ exports.parse = function (str) {
   h = h[0] === '0' ? h[1] : h
   i = i[0] === '0' ? i[1] : i
   s = s[0] === '0' ? s[1] : s
-  return new RRule.DateTime(
+  return new DateTime(
     Number(y),
     Number(m),
     Number(d),
@@ -85,7 +83,7 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
     testObj = testObj()
   }
 
-  if (testObj instanceof RRule || testObj instanceof RRule.RRuleSet) {
+  if (testObj instanceof RRule || testObj instanceof RRuleSet) {
     rule = testObj
     method = 'all'
     args = []
@@ -98,7 +96,7 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
   // Use text and string representation of the rrule as the message.
   if (rule instanceof RRule) {
     msg = msg + ' [' +
-      (rule.isFullyConvertibleToText() ? rule.toText() : 'no text repr') +
+      (isFullyConvertibleToText(rule) ? toText(rule) : 'no text repr') +
       ']' + ' [' + rule.toString() + ']'
   } else {
     msg = msg + ' ' + rule.toString()
@@ -140,15 +138,15 @@ function testRecurring (msg, testObj, expectedDates, uit = it) {
       }
     }
 
-    if (ctx.ALSO_TEST_NLP_FUNCTIONS && rule.isFullyConvertibleToText && rule.isFullyConvertibleToText()) {
+    if (ctx.ALSO_TEST_NLP_FUNCTIONS && isFullyConvertibleToText(rule)) {
       // Test fromText()/toText().
-      var text = rule.toText()
-      var text2 = rrule2.toText()
+      var text = toText(rule)
+      var text2 = toText(rrule2)
       rrule2 = RRule.fromText(text, rule.options.dtstart)
       assert.strictEqual(text2, text, 'toText() == fromText(toText()).toText()')
 
       // Test fromText()/toString().
-      text = rule.toText()
+      text = toText(rule)
       var rrule3 = RRule.fromText(text, rule.options.dtstart)
       assert.strictEqual(rrule3.toString(), string, 'toString() == fromText(toText()).toString()')
     }

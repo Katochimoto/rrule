@@ -1,19 +1,12 @@
 import DateTime from './DateTime'
 
-import {contains} from './utils'
-
 /**
  * This class helps us to emulate python's generators, sorta.
  * @param {*} method
  * @param {*} args
  */
-export default function IterResult (method, args) {
-  this.init(method, args)
-}
-
-IterResult.prototype = {
-  constructor: IterResult,
-  init: function (method, args) {
+export default class IterResult {
+  constructor (method, args) {
     this.method = method
     this.args = args
     this.minDate = null
@@ -30,7 +23,7 @@ IterResult.prototype = {
     } else if (method === 'after') {
       this.minDate = args.inc ? args.dt : new DateTime(args.dt.getTime() + 1)
     }
-  },
+  }
 
   /**
    * Possibly adds a date into the result.
@@ -40,7 +33,7 @@ IterResult.prototype = {
    * @returns {Boolean} true if it makes sense to continue the iteration
    *                   false if we're done.
    */
-  accept: function (date) {
+  accept (date) {
     var tooEarly = this.minDate && date < this.minDate
     var tooLate = this.maxDate && date > this.maxDate
 
@@ -64,38 +57,39 @@ IterResult.prototype = {
     }
 
     return this.add(date)
-  },
+  }
 
   /**
    *
    * @param {DateTime} date that is part of the result.
    * @returns {boolean} whether we are interested in more values.
    */
-  add: function (date) {
+  add (date) {
     this._result.push(date)
     return true
-  },
+  }
 
   /**
    * 'before' and 'after' return only one date, whereas 'all' and 'between' an array.
    * @returns {DateTime|array|null}
    */
-  getValue: function () {
+  getValue () {
     var res = this._result
     switch (this.method) {
-    case 'all':
-    case 'between':
-      return res
-    case 'before':
-    case 'after':
-      return res.length ? res[res.length - 1] : null
+      case 'all':
+      case 'between':
+        return res
+      case 'before':
+      case 'after':
+        return res.length ? res[res.length - 1] : null
     }
-  },
+  }
 
-  clone: function () {
+  clone () {
     return new IterResult(this.method, this.args)
   }
 }
+
 
 /**
  * IterResult subclass that calls a callback function on each add,
@@ -104,21 +98,26 @@ IterResult.prototype = {
  * @param {*} args
  * @param {*} iterator
  */
-export function CallbackIterResult (method, args, iterator) {
-  var allowedMethods = ['all', 'between']
-  if (!contains(allowedMethods, method)) {
-    throw new Error('Invalid method "' + method +
-      '". Only all and between works with iterator.')
+export class CallbackIterResult extends IterResult {
+  static get allowedMethods () {
+    return ['all', 'between']
   }
-  this.add = function (date) {
-    if (iterator(date, this._result.length)) {
-      this._result.push(date)
-      return true
+
+  constructor (method, args, iterator) {
+    if (CallbackIterResult.allowedMethods.indexOf(method) === -1) {
+      throw new Error(`Invalid method "${method}". Only all and between works with iterator.`)
     }
+
+    super(method, args, iterator)
+    this._iterator = iterator
+  }
+
+  add (date) {
+    if (this._iterator(date, this._result.length)) {
+      return super.add(date)
+    }
+
     return false
   }
-
-  this.init(method, args)
 }
 
-CallbackIterResult.prototype = IterResult.prototype

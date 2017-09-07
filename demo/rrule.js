@@ -1,112 +1,51 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["rrule"] = factory();
-	else
-		root["rrule"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.rrule = {})));
+}(this, (function (exports) { 'use strict';
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = DateTime;
-function DateTime() {
-  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-    args[_key] = arguments[_key];
-  }
+function DateTime () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
 
   if (args.length === 1 && args[0] instanceof DateTime) {
     this._date = new DateTime.Strategy(args[0]._date);
   } else {
-    this._date = new (Function.prototype.bind.apply(DateTime.Strategy, [null].concat(args)))();
+    this._date = new (Function.prototype.bind.apply( DateTime.Strategy, [ null ].concat( args) ));
   }
 }
 
 DateTime.Strategy = Date;
 
-DateTime.interface = ['getDate', 'getDay', 'getFullYear', 'getHours', 'getMinutes', 'getMonth', 'getSeconds', 'getTime', 'getTimezoneOffset', 'getUTCDate', 'getUTCFullYear', 'getUTCHours', 'getUTCMinutes', 'getUTCMonth', 'getUTCSeconds', 'toString', 'valueOf'].reduce(function (data, name) {
+DateTime.interface = [
+  'getDate',
+  'getDay',
+  'getFullYear',
+  'getHours',
+  'getMinutes',
+  'getMonth',
+  'getSeconds',
+  'getTime',
+  'getTimezoneOffset',
+  'getUTCDate',
+  'getUTCFullYear',
+  'getUTCHours',
+  'getUTCMinutes',
+  'getUTCMonth',
+  'getUTCSeconds',
+  'toString',
+  'valueOf'
+].reduce(function (data, name) {
   data[name] = {
-    value: function value() {
-      var _date;
+    value: function () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
 
-      return (_date = this._date)[name].apply(_date, arguments);
+      return (ref = this._date)[name].apply(ref, args)
+      var ref;
     }
   };
-  return data;
+  return data
 }, {});
 
 DateTime.prototype = {
@@ -116,62 +55,462 @@ DateTime.prototype = {
 Object.defineProperties(DateTime.prototype, DateTime.interface);
 
 DateTime.UTC = function () {
-  var _DateTime$Strategy;
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
 
-  return (_DateTime$Strategy = DateTime.Strategy).UTC.apply(_DateTime$Strategy, arguments); // eslint-disable-line new-cap
+  return (ref = DateTime.Strategy).UTC.apply(ref, args)
+  var ref; // eslint-disable-line new-cap
 };
 
 DateTime.parse = function () {
-  var _DateTime$Strategy2;
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
 
-  return (_DateTime$Strategy2 = DateTime.Strategy).parse.apply(_DateTime$Strategy2, arguments);
+  return (ref = DateTime.Strategy).parse.apply(ref, args)
+  var ref;
 };
 
 DateTime.now = function () {
-  return DateTime.Strategy.now();
+  return DateTime.Strategy.now()
 };
 
 DateTime.setStrategy = function (Strategy) {
   var instance = new Strategy();
   for (var name in DateTime.interface) {
     if (typeof instance[name] !== 'function') {
-      throw new Error('Method "' + name + '" is not defined in prototype');
+      throw new Error(("Method \"" + name + "\" is not defined in prototype"))
     }
   }
 
   ['UTC', 'parse', 'now'].forEach(function (name) {
     if (typeof Strategy[name] !== 'function') {
-      throw new Error('Method "' + name + '" is not defined');
+      throw new Error(("Method \"" + name + "\" is not defined"))
     }
   });
 
   DateTime.Strategy = Strategy;
 };
 
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/**
+ * General date-related utilities.
+ * Also handles several incompatibilities between JavaScript and Python
+ *
+ */
 
-"use strict";
+var MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.MAXYEAR>
+ */
+var MAXYEAR = 9999;
+
+/**
+ * Number of milliseconds of one day
+ */
+var ONE_DAY = 1000 * 60 * 60 * 24;
+
+/**
+ * Python: MO-SU: 0 - 6
+ * JS: SU-SAT 0 - 6
+ */
+var PY_WEEKDAYS = [6, 0, 1, 2, 3, 4, 5];
+
+/**
+ * Python uses 1-Jan-1 as the base for calculating ordinals but we don't
+ * want to confuse the JS engine with milliseconds > Number.MAX_NUMBER,
+ * therefore we use 1-Jan-1970 instead
+ */
+var ORDINAL_BASE = new DateTime(1970, 0, 1);
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.range = range;
-exports.repeat = repeat;
-exports.split = split;
-exports.pymod = pymod;
-exports.divmod = divmod;
-exports.plb = plb;
-exports.contains = contains;
+/**
+ *
+ * @param {DateTime} date
+ * @returns {number}
+ */
+
+
+/**
+ *
+ * @param {DateTime} year
+ * @returns {boolean}
+ */
+function isLeapYear (year) {
+  if (year instanceof DateTime) {
+    year = year.getFullYear();
+  }
+  return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)
+}
+
+/**
+ * @param {DateTime} date
+ * @returns {number} the date's timezone offset in ms
+ */
+function tzOffset (date) {
+  return date.getTimezoneOffset() * 60 * 1000
+}
+
+/**
+ * @see: <http://www.mcfedries.com/JavaScript/DaysBetween.asp>
+ * @param {*} date1
+ * @param {*} date2
+ * @returns {number}
+ */
+function daysBetween (date1, date2) {
+  // The number of milliseconds in one day
+  // Convert both dates to milliseconds
+  var msDate1 = date1.getTime() - tzOffset(date1);
+  var msDate2 = date2.getTime() - tzOffset(date2);
+  // Calculate the difference in milliseconds
+  var msDifference = Math.abs(msDate1 - msDate2);
+  // Convert back to days and return
+  return Math.round(msDifference / ONE_DAY)
+}
+
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.date.toordinal>
+ * @param {*} date
+ * @returns {number}
+ */
+function toOrdinal (date) {
+  return daysBetween(date, ORDINAL_BASE)
+}
+
+/**
+ * @see - <http://docs.python.org/library/datetime.html#datetime.date.fromordinal>
+ * @param {*} ordinal
+ * @returns {DateTime}
+ */
+function fromOrdinal (ordinal) {
+  var millisecsFromBase = ordinal * ONE_DAY;
+  return new DateTime(ORDINAL_BASE.getTime() -
+    tzOffset(ORDINAL_BASE) +
+    millisecsFromBase +
+    tzOffset(new DateTime(millisecsFromBase)))
+}
+
+/**
+ * @see: <http://docs.python.org/library/calendar.html#calendar.monthrange>
+ * @param {*} year
+ * @param {*} month
+ * @returns {array}
+ */
+function monthRange (year, month) {
+  var date = new DateTime(year, month, 1);
+  return [getWeekday(date), getMonthDays(date)]
+}
+
+/**
+ *
+ * @param {*} date
+ * @returns {number}
+ */
+function getMonthDays (date) {
+  var month = date.getMonth();
+  return month === 1 && isLeapYear(date) ?
+    29 : MONTH_DAYS[month]
+}
+
+/**
+ *
+ * @param {*} date
+ * @returns {number} python-like weekday
+ */
+function getWeekday (date) {
+  return PY_WEEKDAYS[date.getDay()]
+}
+
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.datetime.combine>
+ * @param {*} date
+ * @param {*} time
+ * @returns {DateTime}
+ */
+function combine (date, time) {
+  time = time || date;
+  return new DateTime(
+    date.getFullYear(), date.getMonth(), date.getDate(),
+    time.getHours(), time.getMinutes(), time.getSeconds(),
+    time.getMilliseconds())
+}
+
+/**
+ *
+ * @param {*} date
+ * @returns {DateTime}
+ */
+function clone (date) {
+  return new DateTime(date.getTime())
+}
+
+/**
+ *
+ * @param {*} dates
+ * @returns {DateTime}
+ */
+function cloneDates (dates) {
+  var clones = [];
+  for (var i = 0; i < dates.length; i++) {
+    clones.push(clone(dates[i]));
+  }
+  return clones
+}
+
+/**
+ * Sorts an array of Date or Time objects
+ * @param {*} dates
+ */
+function sort (dates) {
+  dates.sort(function (a, b) {
+    return a.getTime() - b.getTime()
+  });
+}
+
+/**
+ *
+ * @param {*} time
+ * @returns {string}
+ */
+function timeToUntilString (time) {
+  var comp;
+  var date = new DateTime(time);
+  var comps = [
+    date.getUTCFullYear(),
+    date.getUTCMonth() + 1,
+    date.getUTCDate(),
+    'T',
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+    'Z'
+  ];
+
+  for (var i = 0; i < comps.length; i++) {
+    comp = comps[i];
+    if (!/[TZ]/.test(comp) && comp < 10) {
+      comps[i] = '0' + String(comp);
+    }
+  }
+  return comps.join('')
+}
+
+/**
+ *
+ * @param {*} until
+ * @returns {DateTime}
+ */
+function untilStringToDate (until) {
+  var re = /^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})Z)?$/;
+  var bits = re.exec(until);
+  if (!bits) {
+    throw new Error('Invalid UNTIL value: ' + until)
+  }
+  return new DateTime(DateTime.UTC( // eslint-disable-line new-cap
+    bits[1],
+    bits[2] - 1,
+    bits[3],
+    bits[5] || 0,
+    bits[6] || 0,
+    bits[7] || 0))
+}
+
+var Weekday = function Weekday (weekday, n) {
+  if (n === 0) {
+    throw new Error('Can\'t create weekday with n == 0')
+  }
+  this.weekday = weekday;
+  this.n = n;
+};
+
+// __call__ - Cannot call the object directly, do it through
+// e.g. RRule.TH.nth(-1) instead,
+Weekday.prototype.nth = function nth (n) {
+  return this.n === n ? this : new Weekday(this.weekday, n)
+};
+
+// __eq__
+Weekday.prototype.equals = function equals (other) {
+  return this.weekday === other.weekday && this.n === other.n
+};
+
+// __repr__
+Weekday.prototype.toString = function toString () {
+  var s = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'][this.weekday];
+  if (this.n) {
+    s = (this.n > 0 ? '+' : '') + String(this.n) + s;
+  }
+  return s
+};
+
+Weekday.prototype.getJsWeekday = function getJsWeekday () {
+  return this.weekday === 6 ? 0 : this.weekday + 1
+};
+
+var Time = function Time (hour, minute, second, millisecond) {
+  if ( millisecond === void 0 ) millisecond = 0;
+
+  this.hour = hour;
+  this.minute = minute;
+  this.second = second;
+  this.millisecond = millisecond;
+};
+
+Time.prototype.getHours = function getHours () {
+  return this.hour
+};
+
+Time.prototype.getMinutes = function getMinutes () {
+  return this.minute
+};
+
+Time.prototype.getSeconds = function getSeconds () {
+  return this.second
+};
+
+Time.prototype.getMilliseconds = function getMilliseconds () {
+  return this.millisecond
+};
+
+Time.prototype.getTime = function getTime () {
+  return ((this.hour * 60 * 60) + (this.minute * 60) + this.second) * 1000 +
+    this.millisecond
+};
+
+/**
+ * This class helps us to emulate python's generators, sorta.
+ * @param {*} method
+ * @param {*} args
+ */
+var IterResult = function IterResult (method, args) {
+  this.method = method;
+  this.args = args;
+  this.minDate = null;
+  this.maxDate = null;
+  this._result = [];
+
+  if (method === 'between') {
+    this.maxDate = args.inc ?
+      args.before : new DateTime(args.before.getTime() - 1);
+    this.minDate = args.inc ?
+      args.after : new DateTime(args.after.getTime() + 1);
+  } else if (method === 'before') {
+    this.maxDate = args.inc ? args.dt : new DateTime(args.dt.getTime() - 1);
+  } else if (method === 'after') {
+    this.minDate = args.inc ? args.dt : new DateTime(args.dt.getTime() + 1);
+  }
+};
+
+/**
+ * Possibly adds a date into the result.
+ *
+ * @param {Date} date - the date isn't necessarly added to the result
+ *                    list (if it is too late/too early)
+ * @returns {Boolean} true if it makes sense to continue the iteration
+ *                 false if we're done.
+ */
+IterResult.prototype.accept = function accept (date) {
+  var tooEarly = this.minDate && date < this.minDate;
+  var tooLate = this.maxDate && date > this.maxDate;
+
+  if (this.method === 'between') {
+    if (tooEarly) {
+      return true
+    }
+    if (tooLate) {
+      return false
+    }
+  } else if (this.method === 'before') {
+    if (tooLate) {
+      return false
+    }
+  } else if (this.method === 'after') {
+    if (tooEarly) {
+      return true
+    }
+    this.add(date);
+    return false
+  }
+
+  return this.add(date)
+};
+
+/**
+ *
+ * @param {DateTime} date that is part of the result.
+ * @returns {boolean} whether we are interested in more values.
+ */
+IterResult.prototype.add = function add (date) {
+  this._result.push(date);
+  return true
+};
+
+/**
+ * 'before' and 'after' return only one date, whereas 'all' and 'between' an array.
+ * @returns {DateTime|array|null}
+ */
+IterResult.prototype.getValue = function getValue () {
+  var res = this._result;
+  switch (this.method) {
+    case 'all':
+    case 'between':
+      return res
+    case 'before':
+    case 'after':
+      return res.length ? res[res.length - 1] : null
+  }
+};
+
+IterResult.prototype.clone = function clone () {
+  return new IterResult(this.method, this.args)
+};
+
+/**
+ * IterResult subclass that calls a callback function on each add,
+ * and stops iterating when the callback returns false.
+ * @param {*} method
+ * @param {*} args
+ * @param {*} iterator
+ */
+var CallbackIterResult = (function (IterResult) {
+  function CallbackIterResult (method, args, iterator) {
+    if (CallbackIterResult.allowedMethods.indexOf(method) === -1) {
+      throw new Error(("Invalid method \"" + method + "\". Only all and between works with iterator."))
+    }
+
+    IterResult.call(this, method, args, iterator);
+    this._iterator = iterator;
+  }
+
+  if ( IterResult ) CallbackIterResult.__proto__ = IterResult;
+  CallbackIterResult.prototype = Object.create( IterResult && IterResult.prototype );
+  CallbackIterResult.prototype.constructor = CallbackIterResult;
+
+  var staticAccessors = { allowedMethods: {} };
+
+  staticAccessors.allowedMethods.get = function () {
+    return ['all', 'between']
+  };
+
+  CallbackIterResult.prototype.add = function add (date) {
+    if (this._iterator(date, this._result.length)) {
+      return IterResult.prototype.add.call(this, date);
+    }
+
+    return false
+  };
+
+  Object.defineProperties( CallbackIterResult, staticAccessors );
+
+  return CallbackIterResult;
+}(IterResult));
+
 /**
  * Simplified version of python's range()
  * @param {*} start
  * @param {*} end
  * @returns {array}
  */
-function range(start, end) {
+function range (start, end) {
   if (arguments.length === 1) {
     end = start;
     start = 0;
@@ -180,7 +519,7 @@ function range(start, end) {
   for (var i = start; i < end; i++) {
     rang.push(i);
   }
-  return rang;
+  return rang
 }
 
 /**
@@ -189,7 +528,7 @@ function range(start, end) {
  * @param {*} times
  * @returns {array}
  */
-function repeat(value, times) {
+function repeat (value, times) {
   var i = 0;
   var array = [];
 
@@ -202,7 +541,7 @@ function repeat(value, times) {
       array[i] = value;
     }
   }
-  return array;
+  return array
 }
 
 /**
@@ -212,9 +551,10 @@ function repeat(value, times) {
  * @param {*} num
  * @returns {array}
  */
-function split(str, sep, num) {
+function split (str, sep, num) {
   var splits = str.split(sep);
-  return num ? splits.slice(0, num).concat([splits.slice(num).join(sep)]) : splits;
+  return num ?
+    splits.slice(0, num).concat([splits.slice(num).join(sep)]) : splits
 }
 
 /**
@@ -232,10 +572,10 @@ function split(str, sep, num) {
  * @returns {number} a % b where the result is between 0 and b (either 0 <= x < b
  *     or b < x <= 0, depending on the sign of b).
  */
-function pymod(a, b) {
+function pymod (a, b) {
   var r = a % b;
   // If r and b differ in sign, add b to wrap the result to the correct sign.
-  return r * b < 0 ? r + b : r;
+  return (r * b < 0) ? r + b : r
 }
 
 /**
@@ -244,11 +584,11 @@ function pymod(a, b) {
  * @param {*} b
  * @returns {Object}
  */
-function divmod(a, b) {
+function divmod (a, b) {
   return {
     div: Math.floor(a / b),
     mod: pymod(a, b)
-  };
+  }
 }
 
 /**
@@ -258,8 +598,9 @@ function divmod(a, b) {
  * the fact that in Python an empty list's/tuple's
  * boolean value is False, whereas in JS it's true
  */
-function plb(obj) {
-  return obj instanceof Array && obj.length === 0 ? false : Boolean(obj);
+function plb (obj) {
+  return (obj instanceof Array && obj.length === 0) ?
+    false : Boolean(obj)
 }
 
 /**
@@ -268,51 +609,360 @@ function plb(obj) {
  * @param {*} val
  * @returns {boolean}
  */
-function contains(arr, val) {
-  return arr.indexOf(val) !== -1;
+function contains (arr, val) {
+  return arr.indexOf(val) !== -1
 }
 
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+// Every mask is 7 days longer to handle cross-year weekly periods.
 
-"use strict";
+var M365MASK = [].concat(
+  repeat(1, 31), repeat(2, 28), repeat(3, 31),
+  repeat(4, 30), repeat(5, 31), repeat(6, 30),
+  repeat(7, 31), repeat(8, 31), repeat(9, 30),
+  repeat(10, 31), repeat(11, 30), repeat(12, 31),
+  repeat(1, 7));
 
+var M366MASK = [].concat(
+  repeat(1, 31), repeat(2, 29), repeat(3, 31),
+  repeat(4, 30), repeat(5, 31), repeat(6, 30),
+  repeat(7, 31), repeat(8, 31), repeat(9, 30),
+  repeat(10, 31), repeat(11, 30), repeat(12, 31),
+  repeat(1, 7));
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = RRule;
+var M28 = range(1, 29);
+var M29 = range(1, 30);
+var M30 = range(1, 31);
+var M31 = range(1, 32);
 
-var _dateutil = __webpack_require__(3);
+var MDAY366MASK = [].concat(
+  M31, M29, M31,
+  M30, M31, M30,
+  M31, M31, M30,
+  M31, M30, M31,
+  M31.slice(0, 7));
 
-var dateutil = _interopRequireWildcard(_dateutil);
+var MDAY365MASK = [].concat(
+  M31, M28, M31,
+  M30, M31, M30,
+  M31, M31, M30,
+  M31, M30, M31,
+  M31.slice(0, 7));
 
-var _Weekday = __webpack_require__(4);
+M28 = range(-28, 0);
+M29 = range(-29, 0);
+M30 = range(-30, 0);
+M31 = range(-31, 0);
 
-var _Weekday2 = _interopRequireDefault(_Weekday);
+var NMDAY366MASK = [].concat(
+  M31, M29, M31,
+  M30, M31, M30,
+  M31, M31, M30,
+  M31, M30, M31,
+  M31.slice(0, 7));
 
-var _Time = __webpack_require__(5);
+var NMDAY365MASK = [].concat(
+  M31, M28, M31,
+  M30, M31, M30,
+  M31, M31, M30,
+  M31, M30, M31,
+  M31.slice(0, 7));
 
-var _Time2 = _interopRequireDefault(_Time);
+var M366RANGE = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+var M365RANGE = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
 
-var _DateTime = __webpack_require__(0);
+var WDAYMASK = (function () {
+  for (var wdaymask = [], i = 0; i < 55; i++) {
+    wdaymask = wdaymask.concat(range(7));
+  }
 
-var _DateTime2 = _interopRequireDefault(_DateTime);
+  return wdaymask
+}());
 
-var _IterResult = __webpack_require__(9);
+function Iterinfo (rrule) {
+  this.rrule = rrule;
+  this.lastyear = null;
+  this.lastmonth = null;
+  this.yearlen = null;
+  this.nextyearlen = null;
+  this.yearordinal = null;
+  this.yearweekday = null;
+  this.mmask = null;
+  this.mrange = null;
+  this.mdaymask = null;
+  this.nmdaymask = null;
+  this.wdaymask = null;
+  this.wnomask = null;
+  this.nwdaymask = null;
+  this.eastermask = null;
+}
 
-var _IterResult2 = _interopRequireDefault(_IterResult);
+Iterinfo.prototype.easter = function (y, offset) {
+  offset = offset || 0;
 
-var _Iterinfo = __webpack_require__(10);
+  var a = y % 19;
+  var b = Math.floor(y / 100);
+  var c = y % 100;
+  var d = Math.floor(b / 4);
+  var e = b % 4;
+  var f = Math.floor((b + 8) / 25);
+  var g = Math.floor((b - f + 1) / 3);
+  var h = Math.floor(19 * a + b - d - g + 15) % 30;
+  var i = Math.floor(c / 4);
+  var k = c % 4;
+  var l = Math.floor(32 + 2 * e + 2 * i - h - k) % 7;
+  var m = Math.floor((a + 11 * h + 22 * l) / 451);
+  var month = Math.floor((h + l - 7 * m + 114) / 31);
+  var day = (h + l - 7 * m + 114) % 31 + 1;
+  var date = DateTime.UTC(y, month - 1, day + offset); // eslint-disable-line new-cap
+  var yearStart = DateTime.UTC(y, 0, 1); // eslint-disable-line new-cap
 
-var _Iterinfo2 = _interopRequireDefault(_Iterinfo);
+  return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))]
+};
 
-var _utils = __webpack_require__(1);
+Iterinfo.prototype.rebuild = function (year, month) {
+  var this$1 = this;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var rr = this.rrule;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+  if (year !== this.lastyear) {
+    this.yearlen = isLeapYear(year) ? 366 : 365;
+    this.nextyearlen = isLeapYear(year + 1) ? 366 : 365;
+    var firstyday = new DateTime(year, 0, 1);
+
+    this.yearordinal = toOrdinal(firstyday);
+    this.yearweekday = getWeekday(firstyday);
+
+    var wday = getWeekday(new DateTime(year, 0, 1));
+
+    if (this.yearlen === 365) {
+      this.mmask = [].concat(M365MASK);
+      this.mdaymask = [].concat(MDAY365MASK);
+      this.nmdaymask = [].concat(NMDAY365MASK);
+      this.wdaymask = WDAYMASK.slice(wday);
+      this.mrange = [].concat(M365RANGE);
+    } else {
+      this.mmask = [].concat(M366MASK);
+      this.mdaymask = [].concat(MDAY366MASK);
+      this.nmdaymask = [].concat(NMDAY366MASK);
+      this.wdaymask = WDAYMASK.slice(wday);
+      this.mrange = [].concat(M366RANGE);
+    }
+
+    if (!plb(rr.options.byweekno)) {
+      this.wnomask = null;
+    } else {
+      this.wnomask = repeat(0, this.yearlen + 7);
+      var no1wkst;
+      var firstwkst;
+      var wyearlen;
+      no1wkst = firstwkst = pymod(7 - this.yearweekday + rr.options.wkst, 7);
+      if (no1wkst >= 4) {
+        no1wkst = 0;
+        // Number of days in the year, plus the days we got
+        // from last year.
+        wyearlen = this.yearlen + pymod(this.yearweekday - rr.options.wkst, 7);
+      } else {
+        // Number of days in the year, minus the days we
+        // left in last year.
+        wyearlen = this.yearlen - no1wkst;
+      }
+      var div = Math.floor(wyearlen / 7);
+      var mod = pymod(wyearlen, 7);
+      var numweeks = Math.floor(div + (mod / 4));
+      for (var n, i, j = 0; j < rr.options.byweekno.length; j++) {
+        n = rr.options.byweekno[j];
+        if (n < 0) {
+          n += numweeks + 1;
+        }
+        if (!(n > 0 && n <= numweeks)) {
+          continue
+        }
+        if (n > 1) {
+          i = no1wkst + (n - 1) * 7;
+          if (no1wkst !== firstwkst) {
+            i -= 7 - firstwkst;
+          }
+        } else {
+          i = no1wkst;
+        }
+        for (var k = 0; k < 7; k++) {
+          this$1.wnomask[i] = 1;
+          i++;
+          if (this$1.wdaymask[i] === rr.options.wkst) {
+            break
+          }
+        }
+      }
+
+      if (contains(rr.options.byweekno, 1)) {
+        // Check week number 1 of next year as well
+        // orig-TODO : Check -numweeks for next year.
+        i = no1wkst + numweeks * 7;
+        if (no1wkst !== firstwkst) {
+          i -= 7 - firstwkst;
+        }
+        if (i < this.yearlen) {
+          // If week starts in next year, we
+          // don't care about it.
+          for (j = 0; j < 7; j++) {
+            this$1.wnomask[i] = 1;
+            i += 1;
+            if (this$1.wdaymask[i] === rr.options.wkst) {
+              break
+            }
+          }
+        }
+      }
+
+      if (no1wkst) {
+        // Check last week number of last year as
+        // well. If no1wkst is 0, either the year
+        // started on week start, or week number 1
+        // got days from last year, so there are no
+        // days from last year's last week number in
+        // this year.
+        var lnumweeks;
+        if (!contains(rr.options.byweekno, -1)) {
+          var lyearweekday = getWeekday(new DateTime(year - 1, 0, 1));
+          var lno1wkst = pymod(7 - lyearweekday + rr.options.wkst, 7);
+          var lyearlen = isLeapYear(year - 1) ? 366 : 365;
+          if (lno1wkst >= 4) {
+            lno1wkst = 0;
+            lnumweeks = Math.floor(52 +
+              pymod(lyearlen + pymod(lyearweekday - rr.options.wkst, 7), 7) / 4);
+          } else {
+            lnumweeks = Math.floor(52 + pymod(this.yearlen - no1wkst, 7) / 4);
+          }
+        } else {
+          lnumweeks = -1;
+        }
+        if (contains(rr.options.byweekno, lnumweeks)) {
+          for (i = 0; i < no1wkst; i++) {
+            this$1.wnomask[i] = 1;
+          }
+        }
+      }
+    }
+  }
+
+  if (plb(rr.options.bynweekday) && (month !== this.lastmonth || year !== this.lastyear)) {
+    var ranges = [];
+    if (rr.options.freq === RRule.YEARLY) {
+      if (plb(rr.options.bymonth)) {
+        for (j = 0; j < rr.options.bymonth.length; j++) {
+          month = rr.options.bymonth[j];
+          ranges.push(this$1.mrange.slice(month - 1, month + 1));
+        }
+      } else {
+        ranges = [
+          [0, this.yearlen]
+        ];
+      }
+    } else if (rr.options.freq === RRule.MONTHLY) {
+      ranges = [this.mrange.slice(month - 1, month + 1)];
+    }
+    if (plb(ranges)) {
+      // Weekly frequency won't get here, so we may not
+      // care about cross-year weekly periods.
+      this.nwdaymask = repeat(0, this.yearlen);
+
+      for (j = 0; j < ranges.length; j++) {
+        var rang = ranges[j];
+        var first = rang[0];
+        var last = rang[1];
+        last -= 1;
+        for (k = 0; k < rr.options.bynweekday.length; k++) {
+          wday = rr.options.bynweekday[k][0];
+          n = rr.options.bynweekday[k][1];
+          if (n < 0) {
+            i = last + (n + 1) * 7;
+            i -= pymod(this$1.wdaymask[i] - wday, 7);
+          } else {
+            i = first + (n - 1) * 7;
+            i += pymod(7 - this$1.wdaymask[i] + wday, 7);
+          }
+          if (first <= i && i <= last) {
+            this$1.nwdaymask[i] = 1;
+          }
+        }
+      }
+    }
+
+    this.lastyear = year;
+    this.lastmonth = month;
+  }
+
+  if (rr.options.byeaster !== null) {
+    this.eastermask = this.easter(year, rr.options.byeaster);
+  }
+};
+
+Iterinfo.prototype.ydayset = function (/* year, month, day */) {
+  return [range(this.yearlen), 0, this.yearlen]
+};
+
+Iterinfo.prototype.mdayset = function (year, month /* , day */) {
+  var set = repeat(null, this.yearlen);
+  var start = this.mrange[month - 1];
+  var end = this.mrange[month];
+  for (var i = start; i < end; i++) {
+    set[i] = i;
+  }
+  return [set, start, end]
+};
+
+Iterinfo.prototype.wdayset = function (year, month, day) {
+  var this$1 = this;
+
+  // We need to handle cross-year weeks here.
+  var set = repeat(null, this.yearlen + 7);
+  var i = toOrdinal(new DateTime(year, month - 1, day)) - this.yearordinal;
+  var start = i;
+  for (var j = 0; j < 7; j++) {
+    set[i] = i;
+    ++i;
+    if (this$1.wdaymask[i] === this$1.rrule.options.wkst) {
+      break
+    }
+  }
+  return [set, start, i]
+};
+
+Iterinfo.prototype.ddayset = function (year, month, day) {
+  var set = repeat(null, this.yearlen);
+  var i = toOrdinal(new DateTime(year, month - 1, day)) - this.yearordinal;
+  set[i] = i;
+  return [set, i, i + 1]
+};
+
+Iterinfo.prototype.htimeset = function (hour, minute, second, millisecond) {
+  var set = [];
+  var rr = this.rrule;
+  for (var i = 0; i < rr.options.byminute.length; i++) {
+    minute = rr.options.byminute[i];
+    for (var j = 0; j < rr.options.bysecond.length; j++) {
+      second = rr.options.bysecond[j];
+      set.push(new Time(hour, minute, second, millisecond));
+    }
+  }
+  sort(set);
+  return set
+};
+
+Iterinfo.prototype.mtimeset = function (hour, minute, second, millisecond) {
+  var set = [];
+  var rr = this.rrule;
+  for (var j = 0; j < rr.options.bysecond.length; j++) {
+    second = rr.options.bysecond[j];
+    set.push(new Time(hour, minute, second, millisecond));
+  }
+  sort(set);
+  return set
+};
+
+Iterinfo.prototype.stimeset = function (hour, minute, second, millisecond) {
+  return [new Time(hour, minute, second, millisecond)]
+};
 
 /**
  * @see <http://labix.org/python-dateutil/#head-cf004ee9a75592797e076752b2a889c10f445418>
@@ -320,7 +970,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @param {Object} options The only required option is `freq`, one of RRule.YEARLY, RRule.MONTHLY, ...
  * @param {*} noCache
  */
-function RRule(options, noCache) {
+function RRule (options, noCache) {
+  var this$1 = this;
+
   options = options || {};
   // RFC string
   this._string = null;
@@ -329,9 +981,10 @@ function RRule(options, noCache) {
     before: [],
     after: [],
     between: []
+  };
 
-    // used by toString()
-  };this.origOptions = {};
+  // used by toString()
+  this.origOptions = {};
 
   var invalid = [];
   var keys = Object.keys(options);
@@ -340,22 +993,22 @@ function RRule(options, noCache) {
   // Shallow copy for origOptions and check for invalid
   keys.forEach(function (key) {
     this.origOptions[key] = options[key];
-    if (!(0, _utils.contains)(defaultKeys, key)) {
+    if (!contains(defaultKeys, key)) {
       invalid.push(key);
     }
   }, this);
 
   if (invalid.length) {
-    throw new Error('Invalid options: ' + invalid.join(', '));
+    throw new Error('Invalid options: ' + invalid.join(', '))
   }
 
   if (!RRule.FREQUENCIES[options.freq] && options.byeaster === null) {
-    throw new Error('Invalid frequency: ' + String(options.freq));
+    throw new Error('Invalid frequency: ' + String(options.freq))
   }
 
   // Merge in default options
   defaultKeys.forEach(function (key) {
-    if (!(0, _utils.contains)(keys, key)) {
+    if (!contains(keys, key)) {
       options[key] = RRule.DEFAULT_OPTIONS[key];
     }
   });
@@ -366,7 +1019,7 @@ function RRule(options, noCache) {
     opts.freq = RRule.YEARLY;
   }
   if (!opts.dtstart) {
-    opts.dtstart = new _DateTime2.default();
+    opts.dtstart = new DateTime();
   }
 
   var millisecondModulo = opts.dtstart.getTime() % 1000;
@@ -386,25 +1039,32 @@ function RRule(options, noCache) {
     for (var i = 0; i < opts.bysetpos.length; i++) {
       var v = opts.bysetpos[i];
       if (v === 0 || !(v >= -366 && v <= 366)) {
-        throw new Error('bysetpos must be between 1 and 366,' + ' or between -366 and -1');
+        throw new Error('bysetpos must be between 1 and 366,' +
+          ' or between -366 and -1')
       }
     }
   }
 
-  if (!((0, _utils.plb)(opts.byweekno) || (0, _utils.plb)(opts.byyearday) || (0, _utils.plb)(opts.bymonthday) || opts.byweekday !== null || opts.byeaster !== null)) {
+  if (!(
+    plb(opts.byweekno) ||
+    plb(opts.byyearday) ||
+    plb(opts.bymonthday) ||
+    opts.byweekday !== null ||
+    opts.byeaster !== null
+  )) {
     switch (opts.freq) {
       case RRule.YEARLY:
         if (!opts.bymonth) {
           opts.bymonth = opts.dtstart.getMonth() + 1;
         }
         opts.bymonthday = opts.dtstart.getDate();
-        break;
+        break
       case RRule.MONTHLY:
         opts.bymonthday = opts.dtstart.getDate();
-        break;
+        break
       case RRule.WEEKLY:
-        opts.byweekday = dateutil.getWeekday(opts.dtstart);
-        break;
+        opts.byweekday = getWeekday(opts.dtstart);
+        break
     }
   }
 
@@ -456,12 +1116,14 @@ function RRule(options, noCache) {
   } else if (typeof opts.byweekday === 'number') {
     opts.byweekday = [opts.byweekday];
     opts.bynweekday = null;
-  } else if (opts.byweekday instanceof _Weekday2.default) {
+  } else if (opts.byweekday instanceof Weekday) {
     if (!opts.byweekday.n || opts.freq > RRule.MONTHLY) {
       opts.byweekday = [opts.byweekday.weekday];
       opts.bynweekday = null;
     } else {
-      opts.bynweekday = [[opts.byweekday.weekday, opts.byweekday.n]];
+      opts.bynweekday = [
+        [opts.byweekday.weekday, opts.byweekday.n]
+      ];
       opts.byweekday = null;
     }
   } else {
@@ -479,27 +1141,27 @@ function RRule(options, noCache) {
         bynweekday.push([wday.weekday, wday.n]);
       }
     }
-    opts.byweekday = (0, _utils.plb)(byweekday) ? byweekday : null;
-    opts.bynweekday = (0, _utils.plb)(bynweekday) ? bynweekday : null;
+    opts.byweekday = plb(byweekday) ? byweekday : null;
+    opts.bynweekday = plb(bynweekday) ? bynweekday : null;
   }
 
   // byhour
   if (opts.byhour === null) {
-    opts.byhour = opts.freq < RRule.HOURLY ? [opts.dtstart.getHours()] : null;
+    opts.byhour = (opts.freq < RRule.HOURLY) ? [opts.dtstart.getHours()] : null;
   } else if (typeof opts.byhour === 'number') {
     opts.byhour = [opts.byhour];
   }
 
   // byminute
   if (opts.byminute === null) {
-    opts.byminute = opts.freq < RRule.MINUTELY ? [opts.dtstart.getMinutes()] : null;
+    opts.byminute = (opts.freq < RRule.MINUTELY) ? [opts.dtstart.getMinutes()] : null;
   } else if (typeof opts.byminute === 'number') {
     opts.byminute = [opts.byminute];
   }
 
   // bysecond
   if (opts.bysecond === null) {
-    opts.bysecond = opts.freq < RRule.SECONDLY ? [opts.dtstart.getSeconds()] : null;
+    opts.bysecond = (opts.freq < RRule.SECONDLY) ? [opts.dtstart.getSeconds()] : null;
   } else if (typeof opts.bysecond === 'number') {
     opts.bysecond = [opts.bysecond];
   }
@@ -517,17 +1179,20 @@ function RRule(options, noCache) {
           // python:
           // datetime.time(hour, minute, second,
           // tzinfo=self._tzinfo))
-          this.timeset.push(new _Time2.default(hour, minute, second, millisecondModulo));
+          this$1.timeset.push(new Time(hour, minute, second, millisecondModulo));
         }
       }
     }
-    dateutil.sort(this.timeset);
+    sort(this.timeset);
   }
 }
 
 // RRule class 'constants'
 
-RRule.FREQUENCIES = ['YEARLY', 'MONTHLY', 'WEEKLY', 'DAILY', 'HOURLY', 'MINUTELY', 'SECONDLY'];
+RRule.FREQUENCIES = [
+  'YEARLY', 'MONTHLY', 'WEEKLY', 'DAILY',
+  'HOURLY', 'MINUTELY', 'SECONDLY'
+];
 
 RRule.YEARLY = 0;
 RRule.MONTHLY = 1;
@@ -537,13 +1202,13 @@ RRule.HOURLY = 4;
 RRule.MINUTELY = 5;
 RRule.SECONDLY = 6;
 
-RRule.MO = new _Weekday2.default(0);
-RRule.TU = new _Weekday2.default(1);
-RRule.WE = new _Weekday2.default(2);
-RRule.TH = new _Weekday2.default(3);
-RRule.FR = new _Weekday2.default(4);
-RRule.SA = new _Weekday2.default(5);
-RRule.SU = new _Weekday2.default(6);
+RRule.MO = new Weekday(0);
+RRule.TU = new Weekday(1);
+RRule.WE = new Weekday(2);
+RRule.TH = new Weekday(3);
+RRule.FR = new Weekday(4);
+RRule.SA = new Weekday(5);
+RRule.SU = new Weekday(6);
 
 RRule.DEFAULT_OPTIONS = {
   freq: null,
@@ -566,14 +1231,6 @@ RRule.DEFAULT_OPTIONS = {
   byeaster: null
 };
 
-RRule.parseText = function () /* text, language */{
-  throw new Error('Method "parseText" has been realized at "nlp" library.');
-};
-
-RRule.fromText = function () /* text, language */{
-  throw new Error('Method "fromText" has been realized at "nlp" library.');
-};
-
 RRule.optionsToString = function (options) {
   var key;
   var value;
@@ -583,8 +1240,8 @@ RRule.optionsToString = function (options) {
   var defaultKeys = Object.keys(RRule.DEFAULT_OPTIONS);
 
   for (var i = 0; i < keys.length; i++) {
-    if (!(0, _utils.contains)(defaultKeys, keys[i])) {
-      continue;
+    if (!contains(defaultKeys, keys[i])) {
+      continue
     }
 
     key = keys[i].toUpperCase();
@@ -592,16 +1249,16 @@ RRule.optionsToString = function (options) {
     strValues = [];
 
     if (value === null || value instanceof Array && !value.length) {
-      continue;
+      continue
     }
 
     switch (key) {
       case 'FREQ':
         value = RRule.FREQUENCIES[options.freq];
-        break;
+        break
       case 'WKST':
         value = value.toString();
-        break;
+        break
       case 'BYWEEKDAY':
         /*
         NOTE: BYWEEKDAY is a special case.
@@ -610,8 +1267,10 @@ RRule.optionsToString = function (options) {
         On the other hand, rule.origOptions is an array of Weekdays.
         We need to handle both cases here.
         It might be worth change RRule to keep the Weekdays.
-         Also, BYWEEKDAY (used by RRule) vs. BYDAY (RFC)
-         */
+
+        Also, BYWEEKDAY (used by RRule) vs. BYDAY (RFC)
+
+        */
         key = 'BYDAY';
         if (!(value instanceof Array)) {
           value = [value];
@@ -619,21 +1278,21 @@ RRule.optionsToString = function (options) {
 
         for (var wday, j = 0; j < value.length; j++) {
           wday = value[j];
-          if (wday instanceof _Weekday2.default) {
+          if (wday instanceof Weekday) {
             // good
           } else if (wday instanceof Array) {
-            wday = new _Weekday2.default(wday[0], wday[1]);
+            wday = new Weekday(wday[0], wday[1]);
           } else {
-            wday = new _Weekday2.default(wday);
+            wday = new Weekday(wday);
           }
           strValues[j] = wday.toString();
         }
         value = strValues;
-        break;
+        break
       case 'DTSTART':
       case 'UNTIL':
-        value = dateutil.timeToUntilString(value);
-        break;
+        value = timeToUntilString(value);
+        break
       default:
         if (value instanceof Array) {
           for (j = 0; j < value.length; j++) {
@@ -652,7 +1311,7 @@ RRule.optionsToString = function (options) {
     var attr = pairs[i];
     strings.push(attr[0] + '=' + attr[1].toString());
   }
-  return strings.join(';');
+  return strings.join(';')
 };
 
 RRule.prototype = {
@@ -664,16 +1323,16 @@ RRule.prototype = {
    *                   to stop the iteration.
    * @returns {array} containing all recurrences.
    */
-  all: function all(iterator) {
+  all: function (iterator) {
     if (iterator) {
-      return this._iter(new _IterResult.CallbackIterResult('all', {}, iterator));
+      return this._iter(new CallbackIterResult('all', {}, iterator))
     } else {
       var result = this._cacheGet('all');
       if (result === false) {
-        result = this._iter(new _IterResult2.default('all', {}));
+        result = this._iter(new IterResult('all', {}));
         this._cacheAdd('all', result);
       }
-      return result;
+      return result
     }
   },
 
@@ -688,7 +1347,7 @@ RRule.prototype = {
    * @param {*} iterator
    * @returns {array}
    */
-  between: function between(after, before, inc, iterator) {
+  between: function (after, before, inc, iterator) {
     var args = {
       before: before,
       after: after,
@@ -696,14 +1355,14 @@ RRule.prototype = {
     };
 
     if (iterator) {
-      return this._iter(new _IterResult.CallbackIterResult('between', args, iterator));
+      return this._iter(new CallbackIterResult('between', args, iterator))
     }
     var result = this._cacheGet('between', args);
     if (result === false) {
-      result = this._iter(new _IterResult2.default('between', args));
+      result = this._iter(new IterResult('between', args));
       this._cacheAdd('between', result, args);
     }
-    return result;
+    return result
   },
 
   /**
@@ -714,17 +1373,17 @@ RRule.prototype = {
    * @param {*} inc
    * @returns {Date|null}
    */
-  before: function before(dt, inc) {
+  before: function (dt, inc) {
     var args = {
       dt: dt,
       inc: inc
     };
     var result = this._cacheGet('before', args);
     if (result === false) {
-      result = this._iter(new _IterResult2.default('before', args));
+      result = this._iter(new IterResult('before', args));
       this._cacheAdd('before', result, args);
     }
-    return result;
+    return result
   },
 
   /**
@@ -735,17 +1394,17 @@ RRule.prototype = {
    * @param {*} inc
    * @returns {Date|null}
    */
-  after: function after(dt, inc) {
+  after: function (dt, inc) {
     var args = {
       dt: dt,
       inc: inc
     };
     var result = this._cacheGet('after', args);
     if (result === false) {
-      result = this._iter(new _IterResult2.default('after', args));
+      result = this._iter(new IterResult('after', args));
       this._cacheAdd('after', result, args);
     }
-    return result;
+    return result
   },
 
   /**
@@ -753,8 +1412,8 @@ RRule.prototype = {
    * the whole recurrence, if this hasn't been done before.
    * @returns {number}
    */
-  count: function count() {
-    return this.all().length;
+  count: function () {
+    return this.all().length
   },
 
   /**
@@ -762,26 +1421,8 @@ RRule.prototype = {
    * @see <http://www.ietf.org/rfc/rfc2445.txt>
    * @returns {string}
    */
-  toString: function toString() {
-    return RRule.optionsToString(this.origOptions);
-  },
-
-  /**
-   * Will convert all rules described in nlp:ToText
-   * to text.
-   * @param {*} gettext
-   * @param {*} language
-   * @returns {string}
-   */
-  toText: function toText() /* gettext, language */{
-    throw new Error('Method "toText" has been realized at "nlp" library.');
-  },
-
-  /**
-   * @returns {boolean}
-   */
-  isFullyConvertibleToText: function isFullyConvertibleToText() {
-    throw new Error('Method "isFullyConvertible" has been realized at "nlp" library.');
+  toString: function () {
+    return RRule.optionsToString(this.origOptions)
   },
 
   /**
@@ -789,13 +1430,14 @@ RRule.prototype = {
    * @param {Array|DateTime} value - an array of dates, one date, or null
    * @param {?Object} args - _iter arguments
    */
-  _cacheAdd: function _cacheAdd(what, value, args) {
+  _cacheAdd: function (what, value, args) {
     if (!this._cache) {
-      return;
+      return
     }
 
     if (value) {
-      value = value instanceof _DateTime2.default ? dateutil.clone(value) : dateutil.cloneDates(value);
+      value = (value instanceof DateTime) ?
+        clone(value) : cloneDates(value);
     }
 
     if (what === 'all') {
@@ -815,21 +1457,23 @@ RRule.prototype = {
    *         []    - cached, but zero occurrences (all/between)
    *         [Date1, DateN] - cached (all/between)
    */
-  _cacheGet: function _cacheGet(what, args) {
+  _cacheGet: function (what, args) {
+    var this$1 = this;
+
     if (!this._cache) {
-      return false;
+      return false
     }
 
     var cached = false;
     var argsKeys = args ? Object.keys(args) : [];
-    var findCacheDiff = function findCacheDiff(item) {
+    var findCacheDiff = function (item) {
       for (var key, i = 0; i < argsKeys.length; i++) {
         key = argsKeys[i];
         if (String(args[key]) !== String(item[key])) {
-          return true;
+          return true
         }
       }
-      return false;
+      return false
     };
 
     if (what === 'all') {
@@ -838,42 +1482,47 @@ RRule.prototype = {
       // Let's see whether we've already called the
       // 'what' method with the same 'args'
       for (var item, i = 0; i < this._cache[what].length; i++) {
-        item = this._cache[what][i];
+        item = this$1._cache[what][i];
         if (argsKeys.length && findCacheDiff(item)) {
-          continue;
+          continue
         }
         cached = item._value;
-        break;
+        break
       }
     }
 
     if (!cached && this._cache.all) {
       // Not in the cache, but we already know all the occurrences,
       // so we can find the correct dates from the cached ones.
-      var iterResult = new _IterResult2.default(what, args);
+      var iterResult = new IterResult(what, args);
       for (i = 0; i < this._cache.all.length; i++) {
-        if (!iterResult.accept(this._cache.all[i])) {
-          break;
+        if (!iterResult.accept(this$1._cache.all[i])) {
+          break
         }
       }
       cached = iterResult.getValue();
       this._cacheAdd(what, cached, args);
     }
 
-    return cached instanceof Array ? dateutil.cloneDates(cached) : cached instanceof Date ? dateutil.clone(cached) : cached;
+    return cached instanceof Array ?
+      cloneDates(cached) :
+      (cached instanceof Date ? clone(cached) : cached)
   },
 
   /**
    * @returns {RRule} a RRule instance with the same freq and options as this one (cache is not cloned)
    */
-  clone: function clone() {
-    return new RRule(this.origOptions);
+  clone: function () {
+    return new RRule(this.origOptions)
   },
 
-  _iter: function _iter(iterResult) {
+  _iter: function (iterResult) {
+    var this$1 = this;
+
     /* Since JavaScript doesn't have the python's yield operator (<1.7),
        we use the IterResult object that tells us when to stop iterating.
-     */
+
+    */
 
     var dtstart = this.options.dtstart;
     var dtstartMillisecondModulo = this.options.dtstart % 1000;
@@ -884,7 +1533,7 @@ RRule.prototype = {
     var hour = dtstart.getHours();
     var minute = dtstart.getMinutes();
     var second = dtstart.getSeconds();
-    var weekday = dateutil.getWeekday(dtstart);
+    var weekday = getWeekday(dtstart);
 
     // Some local variables to speed things up a bit
     var freq = this.options.freq;
@@ -903,7 +1552,7 @@ RRule.prototype = {
     var byminute = this.options.byminute;
     var bysecond = this.options.bysecond;
 
-    var ii = new _Iterinfo2.default(this);
+    var ii = new Iterinfo(this);
     ii.rebuild(year, month);
 
     var getdayset = {};
@@ -926,7 +1575,9 @@ RRule.prototype = {
       gettimeset[RRule.MINUTELY] = ii.mtimeset;
       gettimeset[RRule.SECONDLY] = ii.stimeset;
       gettimeset = gettimeset[freq];
-      if (freq >= RRule.HOURLY && (0, _utils.plb)(byhour) && !(0, _utils.contains)(byhour, hour) || freq >= RRule.MINUTELY && (0, _utils.plb)(byminute) && !(0, _utils.contains)(byminute, minute) || freq >= RRule.SECONDLY && (0, _utils.plb)(bysecond) && !(0, _utils.contains)(bysecond, minute)) {
+      if ((freq >= RRule.HOURLY && plb(byhour) && !contains(byhour, hour)) ||
+        (freq >= RRule.MINUTELY && plb(byminute) && !contains(byminute, minute)) ||
+        (freq >= RRule.SECONDLY && plb(bysecond) && !contains(bysecond, minute))) {
         timeset = [];
       } else {
         timeset = gettimeset.call(ii, hour, minute, second, dtstartMillisecondModulo);
@@ -949,8 +1600,7 @@ RRule.prototype = {
     var fixday;
     var filtered;
 
-    while (true) {
-      // eslint-disable-line no-constant-condition
+    while (true) { // eslint-disable-line no-constant-condition
       // Get dayset with the right frequency
       tmp = getdayset.call(ii, year, month, day);
       dayset = tmp[0];
@@ -962,7 +1612,21 @@ RRule.prototype = {
       for (j = start; j < end; j++) {
         i = dayset[j];
 
-        filtered = (0, _utils.plb)(bymonth) && !(0, _utils.contains)(bymonth, ii.mmask[i]) || (0, _utils.plb)(byweekno) && !ii.wnomask[i] || (0, _utils.plb)(byweekday) && !(0, _utils.contains)(byweekday, ii.wdaymask[i]) || (0, _utils.plb)(ii.nwdaymask) && !ii.nwdaymask[i] || byeaster !== null && !(0, _utils.contains)(ii.eastermask, i) || ((0, _utils.plb)(bymonthday) || (0, _utils.plb)(bynmonthday)) && !(0, _utils.contains)(bymonthday, ii.mdaymask[i]) && !(0, _utils.contains)(bynmonthday, ii.nmdaymask[i]) || (0, _utils.plb)(byyearday) && (i < ii.yearlen && !(0, _utils.contains)(byyearday, i + 1) && !(0, _utils.contains)(byyearday, -ii.yearlen + i) || i >= ii.yearlen && !(0, _utils.contains)(byyearday, i + 1 - ii.yearlen) && !(0, _utils.contains)(byyearday, -ii.nextyearlen + i - ii.yearlen));
+        filtered = (plb(bymonth) && !contains(bymonth, ii.mmask[i])) ||
+          (plb(byweekno) && !ii.wnomask[i]) ||
+          (plb(byweekday) && !contains(byweekday, ii.wdaymask[i])) ||
+          (plb(ii.nwdaymask) && !ii.nwdaymask[i]) ||
+          (byeaster !== null && !contains(ii.eastermask, i)) ||
+          ((plb(bymonthday) || plb(bynmonthday)) &&
+            !contains(bymonthday, ii.mdaymask[i]) &&
+            !contains(bynmonthday, ii.nmdaymask[i])) ||
+          (plb(byyearday) &&
+            ((i < ii.yearlen &&
+                !contains(byyearday, i + 1) &&
+                !contains(byyearday, -ii.yearlen + i)) ||
+              (i >= ii.yearlen &&
+                !contains(byyearday, i + 1 - ii.yearlen) &&
+                !contains(byyearday, -ii.nextyearlen + i - ii.yearlen))));
 
         if (filtered) {
           dayset[i] = null;
@@ -970,7 +1634,7 @@ RRule.prototype = {
       }
 
       // Output results
-      if ((0, _utils.plb)(bysetpos) && (0, _utils.plb)(timeset)) {
+      if (plb(bysetpos) && plb(timeset)) {
         var daypos;
         var timepos;
         var poslist = [];
@@ -980,10 +1644,10 @@ RRule.prototype = {
 
           if (pos < 0) {
             daypos = Math.floor(pos / timeset.length);
-            timepos = (0, _utils.pymod)(pos, timeset.length);
+            timepos = pymod(pos, timeset.length);
           } else {
             daypos = Math.floor((pos - 1) / timeset.length);
-            timepos = (0, _utils.pymod)(pos - 1, timeset.length);
+            timepos = pymod((pos - 1), timeset.length);
           }
 
           try {
@@ -991,7 +1655,7 @@ RRule.prototype = {
             for (k = start; k < end; k++) {
               var val = dayset[k];
               if (val === null) {
-                continue;
+                continue
               }
               tmp.push(val);
             }
@@ -1003,11 +1667,11 @@ RRule.prototype = {
             }
 
             var time = timeset[timepos];
-            var date = dateutil.fromOrdinal(ii.yearordinal + i);
-            var res = dateutil.combine(date, time);
+            var date = fromOrdinal(ii.yearordinal + i);
+            var res = combine(date, time);
             // XXX: can this ever be in the array?
             // - compare the actual date instead?
-            if (!(0, _utils.contains)(poslist, res)) {
+            if (!contains(poslist, res)) {
               poslist.push(res);
             }
           } catch (e) {
@@ -1015,22 +1679,22 @@ RRule.prototype = {
           }
         }
 
-        dateutil.sort(poslist);
+        sort(poslist);
         for (j = 0; j < poslist.length; j++) {
           res = poslist[j];
           if (until && res > until) {
-            this._len = total;
-            return iterResult.getValue();
+            this$1._len = total;
+            return iterResult.getValue()
           } else if (res >= dtstart) {
             ++total;
             if (!iterResult.accept(res)) {
-              return iterResult.getValue();
+              return iterResult.getValue()
             }
             if (count) {
               --count;
               if (!count) {
-                this._len = total;
-                return iterResult.getValue();
+                this$1._len = total;
+                return iterResult.getValue()
               }
             }
           }
@@ -1039,23 +1703,23 @@ RRule.prototype = {
         for (j = start; j < end; j++) {
           i = dayset[j];
           if (i !== null) {
-            date = dateutil.fromOrdinal(ii.yearordinal + i);
+            date = fromOrdinal(ii.yearordinal + i);
             for (k = 0; k < timeset.length; k++) {
               time = timeset[k];
-              res = dateutil.combine(date, time);
+              res = combine(date, time);
               if (until && res > until) {
-                this._len = total;
-                return iterResult.getValue();
+                this$1._len = total;
+                return iterResult.getValue()
               } else if (res >= dtstart) {
                 ++total;
                 if (!iterResult.accept(res)) {
-                  return iterResult.getValue();
+                  return iterResult.getValue()
                 }
                 if (count) {
                   --count;
                   if (!count) {
-                    this._len = total;
-                    return iterResult.getValue();
+                    this$1._len = total;
+                    return iterResult.getValue()
                   }
                 }
               }
@@ -1068,25 +1732,25 @@ RRule.prototype = {
       fixday = false;
       if (freq === RRule.YEARLY) {
         year += interval;
-        if (year > dateutil.MAXYEAR) {
-          this._len = total;
-          return iterResult.getValue();
+        if (year > MAXYEAR) {
+          this$1._len = total;
+          return iterResult.getValue()
         }
         ii.rebuild(year, month);
       } else if (freq === RRule.MONTHLY) {
         month += interval;
         if (month > 12) {
           div = Math.floor(month / 12);
-          mod = (0, _utils.pymod)(month, 12);
+          mod = pymod(month, 12);
           month = mod;
           year += div;
           if (month === 0) {
             month = 12;
             --year;
           }
-          if (year > dateutil.MAXYEAR) {
-            this._len = total;
-            return iterResult.getValue();
+          if (year > MAXYEAR) {
+            this$1._len = total;
+            return iterResult.getValue()
           }
         }
         ii.rebuild(year, month);
@@ -1106,10 +1770,9 @@ RRule.prototype = {
           // Jump to one iteration before next day
           hour += Math.floor((23 - hour) / interval) * interval;
         }
-        while (true) {
-          // eslint-disable-line no-constant-condition
+        while (true) { // eslint-disable-line no-constant-condition
           hour += interval;
-          dm = (0, _utils.divmod)(hour, 24);
+          dm = divmod(hour, 24);
           div = dm.div;
           mod = dm.mod;
           if (div) {
@@ -1117,27 +1780,27 @@ RRule.prototype = {
             day += div;
             fixday = true;
           }
-          if (!(0, _utils.plb)(byhour) || (0, _utils.contains)(byhour, hour)) {
-            break;
+          if (!plb(byhour) || contains(byhour, hour)) {
+            break
           }
         }
         timeset = gettimeset.call(ii, hour, minute, second);
       } else if (freq === RRule.MINUTELY) {
         if (filtered) {
           // Jump to one iteration before next day
-          minute += Math.floor((1439 - (hour * 60 + minute)) / interval) * interval;
+          minute += Math.floor(
+            (1439 - (hour * 60 + minute)) / interval) * interval;
         }
 
-        while (true) {
-          // eslint-disable-line no-constant-condition
+        while (true) { // eslint-disable-line no-constant-condition
           minute += interval;
-          dm = (0, _utils.divmod)(minute, 60);
+          dm = divmod(minute, 60);
           div = dm.div;
           mod = dm.mod;
           if (div) {
             minute = mod;
             hour += div;
-            dm = (0, _utils.divmod)(hour, 24);
+            dm = divmod(hour, 24);
             div = dm.div;
             mod = dm.mod;
             if (div) {
@@ -1147,32 +1810,33 @@ RRule.prototype = {
               filtered = false;
             }
           }
-          if ((!(0, _utils.plb)(byhour) || (0, _utils.contains)(byhour, hour)) && (!(0, _utils.plb)(byminute) || (0, _utils.contains)(byminute, minute))) {
-            break;
+          if ((!plb(byhour) || contains(byhour, hour)) &&
+            (!plb(byminute) || contains(byminute, minute))) {
+            break
           }
         }
         timeset = gettimeset.call(ii, hour, minute, second);
       } else if (freq === RRule.SECONDLY) {
         if (filtered) {
           // Jump to one iteration before next day
-          second += Math.floor((86399 - (hour * 3600 + minute * 60 + second)) / interval) * interval;
+          second += Math.floor(
+            (86399 - (hour * 3600 + minute * 60 + second)) / interval) * interval;
         }
-        while (true) {
-          // eslint-disable-line no-constant-condition
+        while (true) { // eslint-disable-line no-constant-condition
           second += interval;
-          dm = (0, _utils.divmod)(second, 60);
+          dm = divmod(second, 60);
           div = dm.div;
           mod = dm.mod;
           if (div) {
             second = mod;
             minute += div;
-            dm = (0, _utils.divmod)(minute, 60);
+            dm = divmod(minute, 60);
             div = dm.div;
             mod = dm.mod;
             if (div) {
               minute = mod;
               hour += div;
-              dm = (0, _utils.divmod)(hour, 24);
+              dm = divmod(hour, 24);
               div = dm.div;
               mod = dm.mod;
               if (div) {
@@ -1182,15 +1846,17 @@ RRule.prototype = {
               }
             }
           }
-          if ((!(0, _utils.plb)(byhour) || (0, _utils.contains)(byhour, hour)) && (!(0, _utils.plb)(byminute) || (0, _utils.contains)(byminute, minute)) && (!(0, _utils.plb)(bysecond) || (0, _utils.contains)(bysecond, second))) {
-            break;
+          if ((!plb(byhour) || contains(byhour, hour)) &&
+            (!plb(byminute) || contains(byminute, minute)) &&
+            (!plb(bysecond) || contains(bysecond, second))) {
+            break
           }
         }
         timeset = gettimeset.call(ii, hour, minute, second);
       }
 
       if (fixday && day > 28) {
-        var daysinmonth = dateutil.monthRange(year, month - 1)[1];
+        var daysinmonth = monthRange(year, month - 1)[1];
         if (day > daysinmonth) {
           while (day > daysinmonth) {
             day -= daysinmonth;
@@ -1198,12 +1864,12 @@ RRule.prototype = {
             if (month === 13) {
               month = 1;
               ++year;
-              if (year > dateutil.MAXYEAR) {
-                this._len = total;
-                return iterResult.getValue();
+              if (year > MAXYEAR) {
+                this$1._len = total;
+                return iterResult.getValue()
               }
             }
-            daysinmonth = dateutil.monthRange(year, month - 1)[1];
+            daysinmonth = monthRange(year, month - 1)[1];
           }
           ii.rebuild(year, month);
         }
@@ -1211,14 +1877,16 @@ RRule.prototype = {
     }
   }
 
-  /**
-   * @param {string} rfcString
-   * @returns {Object}
-   */
-};RRule.parseString = function (rfcString) {
+};
+
+/**
+ * @param {string} rfcString
+ * @returns {Object}
+ */
+RRule.parseString = function (rfcString) {
   rfcString = rfcString.replace(/^\s+|\s+$/, '');
   if (!rfcString.length) {
-    return null;
+    return null
   }
 
   var i;
@@ -1236,10 +1904,10 @@ RRule.prototype = {
     switch (key) {
       case 'FREQ':
         options.freq = RRule[value];
-        break;
+        break
       case 'WKST':
         options.wkst = RRule[value];
-        break;
+        break
       case 'COUNT':
       case 'INTERVAL':
       case 'BYSETPOS':
@@ -1262,9 +1930,8 @@ RRule.prototype = {
         }
         key = key.toLowerCase();
         options[key] = value;
-        break;
-      case 'BYDAY':
-        // => byweekday
+        break
+      case 'BYDAY': // => byweekday
         var n;
         var wday;
         var day;
@@ -1273,34 +1940,32 @@ RRule.prototype = {
         options.byweekday = [];
         for (j = 0; j < days.length; j++) {
           day = days[j];
-          if (day.length === 2) {
-            // MO, TU, ...
+          if (day.length === 2) { // MO, TU, ...
             wday = RRule[day]; // wday instanceof Weekday
             options.byweekday.push(wday);
-          } else {
-            // -1MO, +3FR, 1SO, ...
+          } else { // -1MO, +3FR, 1SO, ...
             day = day.match(/^([+-]?\d)([A-Z]{2})$/);
             n = Number(day[1]);
             wday = day[2];
             wday = RRule[wday].weekday;
-            options.byweekday.push(new _Weekday2.default(wday, n));
+            options.byweekday.push(new Weekday(wday, n));
           }
         }
-        break;
+        break
       case 'DTSTART':
-        options.dtstart = dateutil.untilStringToDate(value);
-        break;
+        options.dtstart = untilStringToDate(value);
+        break
       case 'UNTIL':
-        options.until = dateutil.untilStringToDate(value);
-        break;
+        options.until = untilStringToDate(value);
+        break
       case 'BYEASTER':
         options.byeaster = Number(value);
-        break;
+        break
       default:
-        throw new Error('Unknown RRULE property \'' + key + '\'');
+        throw new Error(("Unknown RRULE property '" + key + "'"))
     }
   }
-  return options;
+  return options
 };
 
 /**
@@ -1308,359 +1973,8 @@ RRule.prototype = {
  * @returns {RRule}
  */
 RRule.fromString = function (string) {
-  return new RRule(RRule.parseString(string));
+  return new RRule(RRule.parseString(string))
 };
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ORDINAL_BASE = exports.PY_WEEKDAYS = exports.ONE_DAY = exports.MAXYEAR = exports.MONTH_DAYS = undefined;
-exports.getYearDay = getYearDay;
-exports.isLeapYear = isLeapYear;
-exports.tzOffset = tzOffset;
-exports.daysBetween = daysBetween;
-exports.toOrdinal = toOrdinal;
-exports.fromOrdinal = fromOrdinal;
-exports.monthRange = monthRange;
-exports.getMonthDays = getMonthDays;
-exports.getWeekday = getWeekday;
-exports.combine = combine;
-exports.clone = clone;
-exports.cloneDates = cloneDates;
-exports.sort = sort;
-exports.timeToUntilString = timeToUntilString;
-exports.untilStringToDate = untilStringToDate;
-
-var _DateTime = __webpack_require__(0);
-
-var _DateTime2 = _interopRequireDefault(_DateTime);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var MONTH_DAYS = exports.MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-/**
- * @see: <http://docs.python.org/library/datetime.html#datetime.MAXYEAR>
- */
-/**
- * General date-related utilities.
- * Also handles several incompatibilities between JavaScript and Python
- *
- */
-
-var MAXYEAR = exports.MAXYEAR = 9999;
-
-/**
- * Number of milliseconds of one day
- */
-var ONE_DAY = exports.ONE_DAY = 1000 * 60 * 60 * 24;
-
-/**
- * Python: MO-SU: 0 - 6
- * JS: SU-SAT 0 - 6
- */
-var PY_WEEKDAYS = exports.PY_WEEKDAYS = [6, 0, 1, 2, 3, 4, 5];
-
-/**
- * Python uses 1-Jan-1 as the base for calculating ordinals but we don't
- * want to confuse the JS engine with milliseconds > Number.MAX_NUMBER,
- * therefore we use 1-Jan-1970 instead
- */
-var ORDINAL_BASE = exports.ORDINAL_BASE = new _DateTime2.default(1970, 0, 1);
-
-/**
- *
- * @param {DateTime} date
- * @returns {number}
- */
-function getYearDay(date) {
-  var dateNoTime = new _DateTime2.default(date.getFullYear(), date.getMonth(), date.getDate());
-  return Math.ceil((dateNoTime - new _DateTime2.default(date.getFullYear(), 0, 1)) / ONE_DAY) + 1;
-}
-
-/**
- *
- * @param {DateTime} year
- * @returns {boolean}
- */
-function isLeapYear(year) {
-  if (year instanceof _DateTime2.default) {
-    year = year.getFullYear();
-  }
-  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
-}
-
-/**
- * @param {DateTime} date
- * @returns {number} the date's timezone offset in ms
- */
-function tzOffset(date) {
-  return date.getTimezoneOffset() * 60 * 1000;
-}
-
-/**
- * @see: <http://www.mcfedries.com/JavaScript/DaysBetween.asp>
- * @param {*} date1
- * @param {*} date2
- * @returns {number}
- */
-function daysBetween(date1, date2) {
-  // The number of milliseconds in one day
-  // Convert both dates to milliseconds
-  var msDate1 = date1.getTime() - tzOffset(date1);
-  var msDate2 = date2.getTime() - tzOffset(date2);
-  // Calculate the difference in milliseconds
-  var msDifference = Math.abs(msDate1 - msDate2);
-  // Convert back to days and return
-  return Math.round(msDifference / ONE_DAY);
-}
-
-/**
- * @see: <http://docs.python.org/library/datetime.html#datetime.date.toordinal>
- * @param {*} date
- * @returns {number}
- */
-function toOrdinal(date) {
-  return daysBetween(date, ORDINAL_BASE);
-}
-
-/**
- * @see - <http://docs.python.org/library/datetime.html#datetime.date.fromordinal>
- * @param {*} ordinal
- * @returns {DateTime}
- */
-function fromOrdinal(ordinal) {
-  var millisecsFromBase = ordinal * ONE_DAY;
-  return new _DateTime2.default(ORDINAL_BASE.getTime() - tzOffset(ORDINAL_BASE) + millisecsFromBase + tzOffset(new _DateTime2.default(millisecsFromBase)));
-}
-
-/**
- * @see: <http://docs.python.org/library/calendar.html#calendar.monthrange>
- * @param {*} year
- * @param {*} month
- * @returns {array}
- */
-function monthRange(year, month) {
-  var date = new _DateTime2.default(year, month, 1);
-  return [getWeekday(date), getMonthDays(date)];
-}
-
-/**
- *
- * @param {*} date
- * @returns {number}
- */
-function getMonthDays(date) {
-  var month = date.getMonth();
-  return month === 1 && isLeapYear(date) ? 29 : MONTH_DAYS[month];
-}
-
-/**
- *
- * @param {*} date
- * @returns {number} python-like weekday
- */
-function getWeekday(date) {
-  return PY_WEEKDAYS[date.getDay()];
-}
-
-/**
- * @see: <http://docs.python.org/library/datetime.html#datetime.datetime.combine>
- * @param {*} date
- * @param {*} time
- * @returns {DateTime}
- */
-function combine(date, time) {
-  time = time || date;
-  return new _DateTime2.default(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
-}
-
-/**
- *
- * @param {*} date
- * @returns {DateTime}
- */
-function clone(date) {
-  return new _DateTime2.default(date.getTime());
-}
-
-/**
- *
- * @param {*} dates
- * @returns {DateTime}
- */
-function cloneDates(dates) {
-  var clones = [];
-  for (var i = 0; i < dates.length; i++) {
-    clones.push(clone(dates[i]));
-  }
-  return clones;
-}
-
-/**
- * Sorts an array of Date or Time objects
- * @param {*} dates
- */
-function sort(dates) {
-  dates.sort(function (a, b) {
-    return a.getTime() - b.getTime();
-  });
-}
-
-/**
- *
- * @param {*} time
- * @returns {string}
- */
-function timeToUntilString(time) {
-  var comp;
-  var date = new _DateTime2.default(time);
-  var comps = [date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(), 'T', date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), 'Z'];
-
-  for (var i = 0; i < comps.length; i++) {
-    comp = comps[i];
-    if (!/[TZ]/.test(comp) && comp < 10) {
-      comps[i] = '0' + String(comp);
-    }
-  }
-  return comps.join('');
-}
-
-/**
- *
- * @param {*} until
- * @returns {DateTime}
- */
-function untilStringToDate(until) {
-  var re = /^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})Z)?$/;
-  var bits = re.exec(until);
-  if (!bits) {
-    throw new Error('Invalid UNTIL value: ' + until);
-  }
-  return new _DateTime2.default(_DateTime2.default.UTC( // eslint-disable-line new-cap
-  bits[1], bits[2] - 1, bits[3], bits[5] || 0, bits[6] || 0, bits[7] || 0));
-}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Weekday;
-function Weekday(weekday, n) {
-  if (n === 0) {
-    throw new Error('Can\'t create weekday with n == 0');
-  }
-  this.weekday = weekday;
-  this.n = n;
-}
-
-Weekday.prototype = {
-  constructor: Weekday,
-  // __call__ - Cannot call the object directly, do it through
-  // e.g. RRule.TH.nth(-1) instead,
-  nth: function nth(n) {
-    return this.n === n ? this : new Weekday(this.weekday, n);
-  },
-
-  // __eq__
-  equals: function equals(other) {
-    return this.weekday === other.weekday && this.n === other.n;
-  },
-
-  // __repr__
-  toString: function toString() {
-    var s = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'][this.weekday];
-    if (this.n) {
-      s = (this.n > 0 ? '+' : '') + String(this.n) + s;
-    }
-    return s;
-  },
-
-  getJsWeekday: function getJsWeekday() {
-    return this.weekday === 6 ? 0 : this.weekday + 1;
-  }
-
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Time;
-function Time(hour, minute, second, millisecond) {
-  this.hour = hour;
-  this.minute = minute;
-  this.second = second;
-  this.millisecond = millisecond || 0;
-}
-
-Time.prototype = {
-  constructor: Time,
-  getHours: function getHours() {
-    return this.hour;
-  },
-  getMinutes: function getMinutes() {
-    return this.minute;
-  },
-  getSeconds: function getSeconds() {
-    return this.second;
-  },
-  getMilliseconds: function getMilliseconds() {
-    return this.millisecond;
-  },
-  getTime: function getTime() {
-    return (this.hour * 60 * 60 + this.minute * 60 + this.second) * 1000 + this.millisecond;
-  }
-};
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = RRuleSet;
-
-var _RRule = __webpack_require__(2);
-
-var _RRule2 = _interopRequireDefault(_RRule);
-
-var _DateTime = __webpack_require__(0);
-
-var _DateTime2 = _interopRequireDefault(_DateTime);
-
-var _dateutil = __webpack_require__(3);
-
-var dateutil = _interopRequireWildcard(_dateutil);
-
-var _utils = __webpack_require__(1);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  *
@@ -1669,7 +1983,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @constructor
  */
 
-function RRuleSet(noCache) {
+function RRuleSet (noCache) {
   // Let RRuleSet cacheable
   this._cache = noCache ? null : {
     all: false,
@@ -1689,36 +2003,36 @@ RRuleSet.prototype = {
   /**
    * @param {RRule} rrule
    */
-  rrule: function rrule(_rrule) {
-    if (!(_rrule instanceof _RRule2.default)) {
-      throw new TypeError(String(_rrule) + ' is not RRule instance');
+  rrule: function (rrule) {
+    if (!(rrule instanceof RRule)) {
+      throw new TypeError(String(rrule) + ' is not RRule instance')
     }
-    if (!(0, _utils.contains)(this._rrule.map(String), String(_rrule))) {
-      this._rrule.push(_rrule);
+    if (!contains(this._rrule.map(String), String(rrule))) {
+      this._rrule.push(rrule);
     }
   },
 
   /**
    * @param {Date} date
    */
-  rdate: function rdate(date) {
-    if (!(date instanceof _DateTime2.default)) {
-      throw new TypeError(String(date) + ' is not Date instance');
+  rdate: function (date) {
+    if (!(date instanceof DateTime)) {
+      throw new TypeError(String(date) + ' is not Date instance')
     }
-    if (!(0, _utils.contains)(this._rdate.map(Number), Number(date))) {
+    if (!contains(this._rdate.map(Number), Number(date))) {
       this._rdate.push(date);
-      dateutil.sort(this._rdate);
+      sort(this._rdate);
     }
   },
 
   /**
    * @param {RRule} rrule
    */
-  exrule: function exrule(rrule) {
-    if (!(rrule instanceof _RRule2.default)) {
-      throw new TypeError(String(rrule) + ' is not RRule instance');
+  exrule: function (rrule) {
+    if (!(rrule instanceof RRule)) {
+      throw new TypeError(String(rrule) + ' is not RRule instance')
     }
-    if (!(0, _utils.contains)(this._exrule.map(String), String(rrule))) {
+    if (!contains(this._exrule.map(String), String(rrule))) {
       this._exrule.push(rrule);
     }
   },
@@ -1726,17 +2040,17 @@ RRuleSet.prototype = {
   /**
    * @param {Date} date
    */
-  exdate: function exdate(date) {
-    if (!(date instanceof _DateTime2.default)) {
-      throw new TypeError(String(date) + ' is not Date instance');
+  exdate: function (date) {
+    if (!(date instanceof DateTime)) {
+      throw new TypeError(String(date) + ' is not Date instance')
     }
-    if (!(0, _utils.contains)(this._exdate.map(Number), Number(date))) {
+    if (!contains(this._exdate.map(Number), Number(date))) {
       this._exdate.push(date);
-      dateutil.sort(this._exdate);
+      sort(this._exdate);
     }
   },
 
-  valueOf: function valueOf() {
+  valueOf: function () {
     var result = [];
     if (this._rrule.length) {
       this._rrule.forEach(function (rrule) {
@@ -1745,7 +2059,7 @@ RRuleSet.prototype = {
     }
     if (this._rdate.length) {
       result.push('RDATE:' + this._rdate.map(function (rdate) {
-        return dateutil.timeToUntilString(rdate);
+        return timeToUntilString(rdate)
       }).join(','));
     }
     if (this._exrule.length) {
@@ -1755,10 +2069,10 @@ RRuleSet.prototype = {
     }
     if (this._exdate.length) {
       result.push('EXDATE:' + this._exdate.map(function (exdate) {
-        return dateutil.timeToUntilString(exdate);
+        return timeToUntilString(exdate)
       }).join(','));
     }
-    return result;
+    return result
   },
 
   /**
@@ -1766,16 +2080,18 @@ RRuleSet.prototype = {
    *   ["RRULE:FREQ=YEARLY;COUNT=2;BYDAY=TU;DTSTART=19970902T010000Z","RRULE:FREQ=YEARLY;COUNT=1;BYDAY=TH;DTSTART=19970902T010000Z"]
    * @returns {string}
    */
-  toString: function toString() {
-    return JSON.stringify(this.valueOf());
+  toString: function () {
+    return JSON.stringify(this.valueOf())
   },
 
-  _iter: function _iter(iterResult) {
+  _iter: function (iterResult) {
+    var this$1 = this;
+
     var _exdateHash = {};
     var _exrule = this._exrule;
     var _accept = iterResult.accept;
 
-    function evalExdate(after, before) {
+    function evalExdate (after, before) {
       _exrule.forEach(function (rrule) {
         rrule.between(after, before, true).forEach(function (date) {
           _exdateHash[Number(date)] = true;
@@ -1790,13 +2106,13 @@ RRuleSet.prototype = {
     iterResult.accept = function (date) {
       var dt = Number(date);
       if (!_exdateHash[dt]) {
-        evalExdate(new _DateTime2.default(dt - 1), new _DateTime2.default(dt + 1));
+        evalExdate(new DateTime(dt - 1), new DateTime(dt + 1));
         if (!_exdateHash[dt]) {
           _exdateHash[dt] = true;
-          return _accept.call(this, date);
+          return _accept.call(this, date)
         }
       }
-      return true;
+      return true
     };
 
     if (iterResult.method === 'between') {
@@ -1805,15 +2121,15 @@ RRuleSet.prototype = {
         var dt = Number(date);
         if (!_exdateHash[dt]) {
           _exdateHash[dt] = true;
-          return _accept.call(this, date);
+          return _accept.call(this, date)
         }
-        return true;
+        return true
       };
     }
 
     for (var i = 0; i < this._rdate.length; i++) {
-      if (!iterResult.accept(new _DateTime2.default(this._rdate[i]))) {
-        break;
+      if (!iterResult.accept(new DateTime(this$1._rdate[i]))) {
+        break
       }
     }
 
@@ -1822,17 +2138,17 @@ RRuleSet.prototype = {
     });
 
     var res = iterResult._result;
-    dateutil.sort(res);
+    sort(res);
     switch (iterResult.method) {
       case 'all':
       case 'between':
-        return res;
+        return res
       case 'before':
-        return res.length && res[res.length - 1] || null;
+        return (res.length && res[res.length - 1]) || null
       case 'after':
-        return res.length && res[0] || null;
+        return (res.length && res[0]) || null
       default:
-        return null;
+        return null
     }
   },
 
@@ -1840,655 +2156,42 @@ RRuleSet.prototype = {
    * Create a new RRuleSet Object completely base on current instance
    * @returns {RRuleSet}
    */
-  clone: function clone() {
+  clone: function () {
+    var this$1 = this;
+
     var rrs = new RRuleSet(Boolean(this._cache));
     var i;
     for (i = 0; i < this._rrule.length; i++) {
-      rrs.rrule(this._rrule[i].clone());
+      rrs.rrule(this$1._rrule[i].clone());
     }
     for (i = 0; i < this._rdate.length; i++) {
-      rrs.rdate(new _DateTime2.default(this._rdate[i]));
+      rrs.rdate(new DateTime(this$1._rdate[i]));
     }
     for (i = 0; i < this._exrule.length; i++) {
-      rrs.exrule(this._exrule[i].clone());
+      rrs.exrule(this$1._exrule[i].clone());
     }
     for (i = 0; i < this._exdate.length; i++) {
-      rrs.exdate(new _DateTime2.default(this._exdate[i]));
+      rrs.exdate(new DateTime(this$1._exdate[i]));
     }
-    return rrs;
+    return rrs
   }
+};
 
-  /**
-   * Inherts method from RRule
-   *  add Read interface and set RRuleSet cacheable
-   */
-};var RRuleSetMethods = ['all', 'between', 'before', 'after', 'count', '_cacheAdd', '_cacheGet'];
+/**
+ * Inherts method from RRule
+ *  add Read interface and set RRuleSet cacheable
+ */
+var RRuleSetMethods = ['all', 'between', 'before', 'after', 'count', '_cacheAdd', '_cacheGet'];
 RRuleSetMethods.forEach(function (method) {
-  RRuleSet.prototype[method] = _RRule2.default.prototype[method];
+  RRuleSet.prototype[method] = RRule.prototype[method];
 });
-
-/***/ }),
-/* 7 */,
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.nlpInit = exports.rrulestr = exports.RRuleSet = exports.DateTime = exports.RRule = exports.default = undefined;
-
-var _RRule = __webpack_require__(2);
-
-var _RRule2 = _interopRequireDefault(_RRule);
-
-var _DateTime = __webpack_require__(0);
-
-var _DateTime2 = _interopRequireDefault(_DateTime);
-
-var _RRuleSet = __webpack_require__(6);
-
-var _RRuleSet2 = _interopRequireDefault(_RRuleSet);
-
-var _RRuleStr = __webpack_require__(12);
-
-var _RRuleStr2 = _interopRequireDefault(_RRuleStr);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Only one RRuleStr instance for all rrule string parsing work.
-/**
- * rrule.js - Library for working with recurrence rules for calendar dates.
- * https://github.com/jakubroztocil/rrule
- *
- * Copyright 2010, Jakub Roztocil and Lars Schoning
- * Licenced under the BSD licence.
- * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
- *
- * Based on:
- * python-dateutil - Extensions to the standard Python datetime module.
- * Copyright (c) 2003-2011 - Gustavo Niemeyer <gustavo@niemeyer.net>
- * Copyright (c) 2012 - Tomi Pieviläinen <tomi.pievilainen@iki.fi>
- * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
- *
- */
-
-var rruleStr = new _RRuleStr2.default();
-
-function rrulestr() {
-  return rruleStr.parse.apply(rruleStr, arguments);
-}
-
-function nlpInit(nlp) {
-  _RRule2.default.fromText = nlp.fromText;
-  _RRule2.default.parseText = nlp.parseText;
-
-  _RRule2.default.prototype.isFullyConvertibleToText = function () {
-    return nlp.isFullyConvertibleToText(this);
-  };
-
-  _RRule2.default.prototype.toText = function (gettext, language) {
-    return nlp.toText(this, gettext, language);
-  };
-}
-
-_RRule2.default.RRule = _RRule2.default;
-_RRule2.default.DateTime = _DateTime2.default;
-_RRule2.default.RRuleSet = _RRuleSet2.default;
-_RRule2.default.rrulestr = rrulestr;
-_RRule2.default.nlpInit = nlpInit;
-
-exports.default = _RRule2.default;
-exports.RRule = _RRule2.default;
-exports.DateTime = _DateTime2.default;
-exports.RRuleSet = _RRuleSet2.default;
-exports.rrulestr = rrulestr;
-exports.nlpInit = nlpInit;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = IterResult;
-exports.CallbackIterResult = CallbackIterResult;
-
-var _DateTime = __webpack_require__(0);
-
-var _DateTime2 = _interopRequireDefault(_DateTime);
-
-var _utils = __webpack_require__(1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * This class helps us to emulate python's generators, sorta.
- * @param {*} method
- * @param {*} args
- */
-function IterResult(method, args) {
-  this.init(method, args);
-}
-
-IterResult.prototype = {
-  constructor: IterResult,
-  init: function init(method, args) {
-    this.method = method;
-    this.args = args;
-    this.minDate = null;
-    this.maxDate = null;
-    this._result = [];
-
-    if (method === 'between') {
-      this.maxDate = args.inc ? args.before : new _DateTime2.default(args.before.getTime() - 1);
-      this.minDate = args.inc ? args.after : new _DateTime2.default(args.after.getTime() + 1);
-    } else if (method === 'before') {
-      this.maxDate = args.inc ? args.dt : new _DateTime2.default(args.dt.getTime() - 1);
-    } else if (method === 'after') {
-      this.minDate = args.inc ? args.dt : new _DateTime2.default(args.dt.getTime() + 1);
-    }
-  },
-
-  /**
-   * Possibly adds a date into the result.
-   *
-   * @param {Date} date - the date isn't necessarly added to the result
-   *                      list (if it is too late/too early)
-   * @returns {Boolean} true if it makes sense to continue the iteration
-   *                   false if we're done.
-   */
-  accept: function accept(date) {
-    var tooEarly = this.minDate && date < this.minDate;
-    var tooLate = this.maxDate && date > this.maxDate;
-
-    if (this.method === 'between') {
-      if (tooEarly) {
-        return true;
-      }
-      if (tooLate) {
-        return false;
-      }
-    } else if (this.method === 'before') {
-      if (tooLate) {
-        return false;
-      }
-    } else if (this.method === 'after') {
-      if (tooEarly) {
-        return true;
-      }
-      this.add(date);
-      return false;
-    }
-
-    return this.add(date);
-  },
-
-  /**
-   *
-   * @param {DateTime} date that is part of the result.
-   * @returns {boolean} whether we are interested in more values.
-   */
-  add: function add(date) {
-    this._result.push(date);
-    return true;
-  },
-
-  /**
-   * 'before' and 'after' return only one date, whereas 'all' and 'between' an array.
-   * @returns {DateTime|array|null}
-   */
-  getValue: function getValue() {
-    var res = this._result;
-    switch (this.method) {
-      case 'all':
-      case 'between':
-        return res;
-      case 'before':
-      case 'after':
-        return res.length ? res[res.length - 1] : null;
-    }
-  },
-
-  clone: function clone() {
-    return new IterResult(this.method, this.args);
-  }
-
-  /**
-   * IterResult subclass that calls a callback function on each add,
-   * and stops iterating when the callback returns false.
-   * @param {*} method
-   * @param {*} args
-   * @param {*} iterator
-   */
-};function CallbackIterResult(method, args, iterator) {
-  var allowedMethods = ['all', 'between'];
-  if (!(0, _utils.contains)(allowedMethods, method)) {
-    throw new Error('Invalid method "' + method + '". Only all and between works with iterator.');
-  }
-  this.add = function (date) {
-    if (iterator(date, this._result.length)) {
-      this._result.push(date);
-      return true;
-    }
-    return false;
-  };
-
-  this.init(method, args);
-}
-
-CallbackIterResult.prototype = IterResult.prototype;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Iterinfo;
-
-var _RRule = __webpack_require__(2);
-
-var _RRule2 = _interopRequireDefault(_RRule);
-
-var _DateTime = __webpack_require__(0);
-
-var _DateTime2 = _interopRequireDefault(_DateTime);
-
-var _Time = __webpack_require__(5);
-
-var _Time2 = _interopRequireDefault(_Time);
-
-var _dateutil = __webpack_require__(3);
-
-var dateutil = _interopRequireWildcard(_dateutil);
-
-var _utils = __webpack_require__(1);
-
-var _constant = __webpack_require__(11);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Iterinfo(rrule) {
-  this.rrule = rrule;
-  this.lastyear = null;
-  this.lastmonth = null;
-  this.yearlen = null;
-  this.nextyearlen = null;
-  this.yearordinal = null;
-  this.yearweekday = null;
-  this.mmask = null;
-  this.mrange = null;
-  this.mdaymask = null;
-  this.nmdaymask = null;
-  this.wdaymask = null;
-  this.wnomask = null;
-  this.nwdaymask = null;
-  this.eastermask = null;
-}
-
-Iterinfo.prototype.easter = function (y, offset) {
-  offset = offset || 0;
-
-  var a = y % 19;
-  var b = Math.floor(y / 100);
-  var c = y % 100;
-  var d = Math.floor(b / 4);
-  var e = b % 4;
-  var f = Math.floor((b + 8) / 25);
-  var g = Math.floor((b - f + 1) / 3);
-  var h = Math.floor(19 * a + b - d - g + 15) % 30;
-  var i = Math.floor(c / 4);
-  var k = c % 4;
-  var l = Math.floor(32 + 2 * e + 2 * i - h - k) % 7;
-  var m = Math.floor((a + 11 * h + 22 * l) / 451);
-  var month = Math.floor((h + l - 7 * m + 114) / 31);
-  var day = (h + l - 7 * m + 114) % 31 + 1;
-  var date = _DateTime2.default.UTC(y, month - 1, day + offset); // eslint-disable-line new-cap
-  var yearStart = _DateTime2.default.UTC(y, 0, 1); // eslint-disable-line new-cap
-
-  return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))];
-};
-
-Iterinfo.prototype.rebuild = function (year, month) {
-  var rr = this.rrule;
-
-  if (year !== this.lastyear) {
-    this.yearlen = dateutil.isLeapYear(year) ? 366 : 365;
-    this.nextyearlen = dateutil.isLeapYear(year + 1) ? 366 : 365;
-    var firstyday = new _DateTime2.default(year, 0, 1);
-
-    this.yearordinal = dateutil.toOrdinal(firstyday);
-    this.yearweekday = dateutil.getWeekday(firstyday);
-
-    var wday = dateutil.getWeekday(new _DateTime2.default(year, 0, 1));
-
-    if (this.yearlen === 365) {
-      this.mmask = [].concat(_constant.M365MASK);
-      this.mdaymask = [].concat(_constant.MDAY365MASK);
-      this.nmdaymask = [].concat(_constant.NMDAY365MASK);
-      this.wdaymask = _constant.WDAYMASK.slice(wday);
-      this.mrange = [].concat(_constant.M365RANGE);
-    } else {
-      this.mmask = [].concat(_constant.M366MASK);
-      this.mdaymask = [].concat(_constant.MDAY366MASK);
-      this.nmdaymask = [].concat(_constant.NMDAY366MASK);
-      this.wdaymask = _constant.WDAYMASK.slice(wday);
-      this.mrange = [].concat(_constant.M366RANGE);
-    }
-
-    if (!(0, _utils.plb)(rr.options.byweekno)) {
-      this.wnomask = null;
-    } else {
-      this.wnomask = (0, _utils.repeat)(0, this.yearlen + 7);
-      var no1wkst;
-      var firstwkst;
-      var wyearlen;
-      no1wkst = firstwkst = (0, _utils.pymod)(7 - this.yearweekday + rr.options.wkst, 7);
-      if (no1wkst >= 4) {
-        no1wkst = 0;
-        // Number of days in the year, plus the days we got
-        // from last year.
-        wyearlen = this.yearlen + (0, _utils.pymod)(this.yearweekday - rr.options.wkst, 7);
-      } else {
-        // Number of days in the year, minus the days we
-        // left in last year.
-        wyearlen = this.yearlen - no1wkst;
-      }
-      var div = Math.floor(wyearlen / 7);
-      var mod = (0, _utils.pymod)(wyearlen, 7);
-      var numweeks = Math.floor(div + mod / 4);
-      for (var n, i, j = 0; j < rr.options.byweekno.length; j++) {
-        n = rr.options.byweekno[j];
-        if (n < 0) {
-          n += numweeks + 1;
-        }
-        if (!(n > 0 && n <= numweeks)) {
-          continue;
-        }
-        if (n > 1) {
-          i = no1wkst + (n - 1) * 7;
-          if (no1wkst !== firstwkst) {
-            i -= 7 - firstwkst;
-          }
-        } else {
-          i = no1wkst;
-        }
-        for (var k = 0; k < 7; k++) {
-          this.wnomask[i] = 1;
-          i++;
-          if (this.wdaymask[i] === rr.options.wkst) {
-            break;
-          }
-        }
-      }
-
-      if ((0, _utils.contains)(rr.options.byweekno, 1)) {
-        // Check week number 1 of next year as well
-        // orig-TODO : Check -numweeks for next year.
-        i = no1wkst + numweeks * 7;
-        if (no1wkst !== firstwkst) {
-          i -= 7 - firstwkst;
-        }
-        if (i < this.yearlen) {
-          // If week starts in next year, we
-          // don't care about it.
-          for (j = 0; j < 7; j++) {
-            this.wnomask[i] = 1;
-            i += 1;
-            if (this.wdaymask[i] === rr.options.wkst) {
-              break;
-            }
-          }
-        }
-      }
-
-      if (no1wkst) {
-        // Check last week number of last year as
-        // well. If no1wkst is 0, either the year
-        // started on week start, or week number 1
-        // got days from last year, so there are no
-        // days from last year's last week number in
-        // this year.
-        var lnumweeks;
-        if (!(0, _utils.contains)(rr.options.byweekno, -1)) {
-          var lyearweekday = dateutil.getWeekday(new _DateTime2.default(year - 1, 0, 1));
-          var lno1wkst = (0, _utils.pymod)(7 - lyearweekday + rr.options.wkst, 7);
-          var lyearlen = dateutil.isLeapYear(year - 1) ? 366 : 365;
-          if (lno1wkst >= 4) {
-            lno1wkst = 0;
-            lnumweeks = Math.floor(52 + (0, _utils.pymod)(lyearlen + (0, _utils.pymod)(lyearweekday - rr.options.wkst, 7), 7) / 4);
-          } else {
-            lnumweeks = Math.floor(52 + (0, _utils.pymod)(this.yearlen - no1wkst, 7) / 4);
-          }
-        } else {
-          lnumweeks = -1;
-        }
-        if ((0, _utils.contains)(rr.options.byweekno, lnumweeks)) {
-          for (i = 0; i < no1wkst; i++) {
-            this.wnomask[i] = 1;
-          }
-        }
-      }
-    }
-  }
-
-  if ((0, _utils.plb)(rr.options.bynweekday) && (month !== this.lastmonth || year !== this.lastyear)) {
-    var ranges = [];
-    if (rr.options.freq === _RRule2.default.YEARLY) {
-      if ((0, _utils.plb)(rr.options.bymonth)) {
-        for (j = 0; j < rr.options.bymonth.length; j++) {
-          month = rr.options.bymonth[j];
-          ranges.push(this.mrange.slice(month - 1, month + 1));
-        }
-      } else {
-        ranges = [[0, this.yearlen]];
-      }
-    } else if (rr.options.freq === _RRule2.default.MONTHLY) {
-      ranges = [this.mrange.slice(month - 1, month + 1)];
-    }
-    if ((0, _utils.plb)(ranges)) {
-      // Weekly frequency won't get here, so we may not
-      // care about cross-year weekly periods.
-      this.nwdaymask = (0, _utils.repeat)(0, this.yearlen);
-
-      for (j = 0; j < ranges.length; j++) {
-        var rang = ranges[j];
-        var first = rang[0];
-        var last = rang[1];
-        last -= 1;
-        for (k = 0; k < rr.options.bynweekday.length; k++) {
-          wday = rr.options.bynweekday[k][0];
-          n = rr.options.bynweekday[k][1];
-          if (n < 0) {
-            i = last + (n + 1) * 7;
-            i -= (0, _utils.pymod)(this.wdaymask[i] - wday, 7);
-          } else {
-            i = first + (n - 1) * 7;
-            i += (0, _utils.pymod)(7 - this.wdaymask[i] + wday, 7);
-          }
-          if (first <= i && i <= last) {
-            this.nwdaymask[i] = 1;
-          }
-        }
-      }
-    }
-
-    this.lastyear = year;
-    this.lastmonth = month;
-  }
-
-  if (rr.options.byeaster !== null) {
-    this.eastermask = this.easter(year, rr.options.byeaster);
-  }
-};
-
-Iterinfo.prototype.ydayset = function () /* year, month, day */{
-  return [(0, _utils.range)(this.yearlen), 0, this.yearlen];
-};
-
-Iterinfo.prototype.mdayset = function (year, month /* , day */) {
-  var set = (0, _utils.repeat)(null, this.yearlen);
-  var start = this.mrange[month - 1];
-  var end = this.mrange[month];
-  for (var i = start; i < end; i++) {
-    set[i] = i;
-  }
-  return [set, start, end];
-};
-
-Iterinfo.prototype.wdayset = function (year, month, day) {
-  // We need to handle cross-year weeks here.
-  var set = (0, _utils.repeat)(null, this.yearlen + 7);
-  var i = dateutil.toOrdinal(new _DateTime2.default(year, month - 1, day)) - this.yearordinal;
-  var start = i;
-  for (var j = 0; j < 7; j++) {
-    set[i] = i;
-    ++i;
-    if (this.wdaymask[i] === this.rrule.options.wkst) {
-      break;
-    }
-  }
-  return [set, start, i];
-};
-
-Iterinfo.prototype.ddayset = function (year, month, day) {
-  var set = (0, _utils.repeat)(null, this.yearlen);
-  var i = dateutil.toOrdinal(new _DateTime2.default(year, month - 1, day)) - this.yearordinal;
-  set[i] = i;
-  return [set, i, i + 1];
-};
-
-Iterinfo.prototype.htimeset = function (hour, minute, second, millisecond) {
-  var set = [];
-  var rr = this.rrule;
-  for (var i = 0; i < rr.options.byminute.length; i++) {
-    minute = rr.options.byminute[i];
-    for (var j = 0; j < rr.options.bysecond.length; j++) {
-      second = rr.options.bysecond[j];
-      set.push(new _Time2.default(hour, minute, second, millisecond));
-    }
-  }
-  dateutil.sort(set);
-  return set;
-};
-
-Iterinfo.prototype.mtimeset = function (hour, minute, second, millisecond) {
-  var set = [];
-  var rr = this.rrule;
-  for (var j = 0; j < rr.options.bysecond.length; j++) {
-    second = rr.options.bysecond[j];
-    set.push(new _Time2.default(hour, minute, second, millisecond));
-  }
-  dateutil.sort(set);
-  return set;
-};
-
-Iterinfo.prototype.stimeset = function (hour, minute, second, millisecond) {
-  return [new _Time2.default(hour, minute, second, millisecond)];
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.WDAYMASK = exports.M365RANGE = exports.M366RANGE = exports.NMDAY365MASK = exports.NMDAY366MASK = exports.MDAY365MASK = exports.MDAY366MASK = exports.M366MASK = exports.M365MASK = undefined;
-
-var _utils = __webpack_require__(1);
-
-// Every mask is 7 days longer to handle cross-year weekly periods.
-
-var M365MASK = exports.M365MASK = [].concat((0, _utils.repeat)(1, 31), (0, _utils.repeat)(2, 28), (0, _utils.repeat)(3, 31), (0, _utils.repeat)(4, 30), (0, _utils.repeat)(5, 31), (0, _utils.repeat)(6, 30), (0, _utils.repeat)(7, 31), (0, _utils.repeat)(8, 31), (0, _utils.repeat)(9, 30), (0, _utils.repeat)(10, 31), (0, _utils.repeat)(11, 30), (0, _utils.repeat)(12, 31), (0, _utils.repeat)(1, 7));
-
-var M366MASK = exports.M366MASK = [].concat((0, _utils.repeat)(1, 31), (0, _utils.repeat)(2, 29), (0, _utils.repeat)(3, 31), (0, _utils.repeat)(4, 30), (0, _utils.repeat)(5, 31), (0, _utils.repeat)(6, 30), (0, _utils.repeat)(7, 31), (0, _utils.repeat)(8, 31), (0, _utils.repeat)(9, 30), (0, _utils.repeat)(10, 31), (0, _utils.repeat)(11, 30), (0, _utils.repeat)(12, 31), (0, _utils.repeat)(1, 7));
-
-var M28 = (0, _utils.range)(1, 29);
-var M29 = (0, _utils.range)(1, 30);
-var M30 = (0, _utils.range)(1, 31);
-var M31 = (0, _utils.range)(1, 32);
-
-var MDAY366MASK = exports.MDAY366MASK = [].concat(M31, M29, M31, M30, M31, M30, M31, M31, M30, M31, M30, M31, M31.slice(0, 7));
-
-var MDAY365MASK = exports.MDAY365MASK = [].concat(M31, M28, M31, M30, M31, M30, M31, M31, M30, M31, M30, M31, M31.slice(0, 7));
-
-M28 = (0, _utils.range)(-28, 0);
-M29 = (0, _utils.range)(-29, 0);
-M30 = (0, _utils.range)(-30, 0);
-M31 = (0, _utils.range)(-31, 0);
-
-var NMDAY366MASK = exports.NMDAY366MASK = [].concat(M31, M29, M31, M30, M31, M30, M31, M31, M30, M31, M30, M31, M31.slice(0, 7));
-
-var NMDAY365MASK = exports.NMDAY365MASK = [].concat(M31, M28, M31, M30, M31, M30, M31, M31, M30, M31, M30, M31, M31.slice(0, 7));
-
-var M366RANGE = exports.M366RANGE = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
-var M365RANGE = exports.M365RANGE = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
-
-var WDAYMASK = exports.WDAYMASK = function () {
-  for (var wdaymask = [], i = 0; i < 55; i++) {
-    wdaymask = wdaymask.concat((0, _utils.range)(7));
-  }
-
-  return wdaymask;
-}();
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = RRuleStr;
-
-var _RRule = __webpack_require__(2);
-
-var _RRule2 = _interopRequireDefault(_RRule);
-
-var _RRuleSet = __webpack_require__(6);
-
-var _RRuleSet2 = _interopRequireDefault(_RRuleSet);
-
-var _Weekday = __webpack_require__(4);
-
-var _Weekday2 = _interopRequireDefault(_Weekday);
-
-var _dateutil = __webpack_require__(3);
-
-var dateutil = _interopRequireWildcard(_dateutil);
-
-var _utils = __webpack_require__(1);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * RRuleStr
  *  To parse a set of rrule strings
  */
 
-function RRuleStr() {}
+function RRuleStr () {}
 
 RRuleStr.DEFAULT_OPTIONS = {
   dtstart: null,
@@ -2501,13 +2204,13 @@ RRuleStr.DEFAULT_OPTIONS = {
 };
 
 RRuleStr._freqMap = {
-  'YEARLY': _RRule2.default.YEARLY,
-  'MONTHLY': _RRule2.default.MONTHLY,
-  'WEEKLY': _RRule2.default.WEEKLY,
-  'DAILY': _RRule2.default.DAILY,
-  'HOURLY': _RRule2.default.HOURLY,
-  'MINUTELY': _RRule2.default.MINUTELY,
-  'SECONDLY': _RRule2.default.SECONDLY
+  'YEARLY': RRule.YEARLY,
+  'MONTHLY': RRule.MONTHLY,
+  'WEEKLY': RRule.WEEKLY,
+  'DAILY': RRule.DAILY,
+  'HOURLY': RRule.HOURLY,
+  'MINUTELY': RRule.MINUTELY,
+  'SECONDLY': RRule.SECONDLY
 };
 
 RRuleStr._weekdayMap = {
@@ -2523,33 +2226,33 @@ RRuleStr._weekdayMap = {
 RRuleStr.prototype = {
   constructor: RRuleStr,
 
-  _handleInt: function _handleInt(rrkwargs, name, value /* , options */) {
+  _handleInt: function (rrkwargs, name, value /* , options */) {
     rrkwargs[name.toLowerCase()] = parseInt(value, 10);
   },
 
-  _handleIntList: function _handleIntList(rrkwargs, name, value /* , options */) {
+  _handleIntList: function (rrkwargs, name, value /* , options */) {
     rrkwargs[name.toLowerCase()] = value.split(',').map(function (x) {
-      return parseInt(x, 10);
+      return parseInt(x, 10)
     });
   },
 
-  _handleFREQ: function _handleFREQ(rrkwargs, name, value /* , options */) {
+  _handleFREQ: function (rrkwargs, name, value /* , options */) {
     rrkwargs['freq'] = RRuleStr._freqMap[value];
   },
 
-  _handleUNTIL: function _handleUNTIL(rrkwargs, name, value /* , options */) {
+  _handleUNTIL: function (rrkwargs, name, value /* , options */) {
     try {
-      rrkwargs['until'] = dateutil.untilStringToDate(value);
+      rrkwargs['until'] = untilStringToDate(value);
     } catch (error) {
-      throw new Error('invalid until date');
+      throw new Error('invalid until date')
     }
   },
 
-  _handleWKST: function _handleWKST(rrkwargs, name, value /* , options */) {
+  _handleWKST: function (rrkwargs, name, value /* , options */) {
     rrkwargs['wkst'] = RRuleStr._weekdayMap[value];
   },
 
-  _handleBYWEEKDAY: function _handleBYWEEKDAY(rrkwargs, name, value /* , options */) {
+  _handleBYWEEKDAY: function (rrkwargs, name, value /* , options */) {
     // Two ways to specify this: +1MO or MO(+1)
     var splt;
     var i;
@@ -2571,7 +2274,7 @@ RRuleStr.prototype = {
         // # If it's of the form +1MO
         for (j = 0; j < wday.length; j++) {
           if ('+-0123456789'.indexOf(wday[j]) === -1) {
-            break;
+            break
           }
         }
         n = wday.slice(0, j) || null;
@@ -2582,13 +2285,15 @@ RRuleStr.prototype = {
         }
       }
 
-      var weekday = new _Weekday2.default(RRuleStr._weekdayMap[w], n);
+      var weekday = new Weekday(RRuleStr._weekdayMap[w], n);
       l.push(weekday);
     }
     rrkwargs['byweekday'] = l;
   },
 
-  _parseRfcRRule: function _parseRfcRRule(line, options) {
+  _parseRfcRRule: function (line, options) {
+    var this$1 = this;
+
     options = options || {};
     options.dtstart = options.dtstart || null;
     options.cache = options.cache || false;
@@ -2604,7 +2309,7 @@ RRuleStr.prototype = {
       value = parts[1];
 
       if (name !== 'RRULE') {
-        throw new Error('unknown parameter name');
+        throw new Error('unknown parameter name')
       }
     } else {
       value = line;
@@ -2620,19 +2325,21 @@ RRuleStr.prototype = {
       value = parts[1].toUpperCase();
 
       try {
-        this['_handle' + name](rrkwargs, name, value, {
+        this$1['_handle' + name](rrkwargs, name, value, {
           ignoretz: options.ignoretz,
           tzinfos: options.tzinfos
         });
       } catch (error) {
-        throw new Error('unknown parameter \'' + name + '\':' + value);
+        throw new Error(("unknown parameter '" + name + "':" + value))
       }
     }
     rrkwargs.dtstart = rrkwargs.dtstart || options.dtstart;
-    return new _RRule2.default(rrkwargs, !options.cache);
+    return new RRule(rrkwargs, !options.cache)
   },
 
-  _parseRfc: function _parseRfc(s, options) {
+  _parseRfc: function (s, options) {
+    var this$1 = this;
+
     if (options.compatible) {
       options.forceset = true;
       options.unfold = true;
@@ -2640,7 +2347,7 @@ RRuleStr.prototype = {
 
     s = s && s.toUpperCase().trim();
     if (!s) {
-      throw new Error('Invalid empty string');
+      throw new Error('Invalid empty string')
     }
 
     var i = 0;
@@ -2683,30 +2390,31 @@ RRuleStr.prototype = {
     var datestrs;
     var datestr;
 
-    if (!options.forceset && lines.length === 1 && (s.indexOf(':') === -1 || s.indexOf('RRULE:') === 0)) {
+    if (!options.forceset && lines.length === 1 && (s.indexOf(':') === -1 ||
+        s.indexOf('RRULE:') === 0)) {
       return this._parseRfcRRule(lines[0], {
         cache: options.cache,
         dtstart: options.dtstart,
         ignoretz: options.ignoretz,
         tzinfos: options.tzinfos
-      });
+      })
     } else {
       for (i = 0; i < lines.length; i++) {
         line = lines[i];
         if (!line) {
-          continue;
+          continue
         }
         if (line.indexOf(':') === -1) {
           name = 'RRULE';
           value = line;
         } else {
-          parts = (0, _utils.split)(line, ':', 1);
+          parts = split(line, ':', 1);
           name = parts[0];
           value = parts[1];
         }
         parms = name.split(';');
         if (!parms) {
-          throw new Error('empty property name');
+          throw new Error('empty property name')
         }
         name = parms[0];
         parms = parms.slice(1);
@@ -2714,42 +2422,43 @@ RRuleStr.prototype = {
         if (name === 'RRULE') {
           for (j = 0; j < parms.length; j++) {
             parm = parms[j];
-            throw new Error('unsupported RRULE parm: ' + parm);
+            throw new Error('unsupported RRULE parm: ' + parm)
           }
           rrulevals.push(value);
         } else if (name === 'RDATE') {
           for (j = 0; j < parms.length; j++) {
             parm = parms[j];
             if (parm !== 'VALUE=DATE-TIME') {
-              throw new Error('unsupported RDATE parm: ' + parm);
+              throw new Error('unsupported RDATE parm: ' + parm)
             }
           }
           rdatevals.push(value);
         } else if (name === 'EXRULE') {
           for (j = 0; j < parms.length; j++) {
             parm = parms[j];
-            throw new Error('unsupported EXRULE parm: ' + parm);
+            throw new Error('unsupported EXRULE parm: ' + parm)
           }
           exrulevals.push(value);
         } else if (name === 'EXDATE') {
           for (j = 0; j < parms.length; j++) {
             parm = parms[j];
             if (parm !== 'VALUE=DATE-TIME') {
-              throw new Error('unsupported RDATE parm: ' + parm);
+              throw new Error('unsupported RDATE parm: ' + parm)
             }
           }
           exdatevals.push(value);
         } else if (name === 'DTSTART') {
-          dtstart = dateutil.untilStringToDate(value);
+          dtstart = untilStringToDate(value);
         } else {
-          throw new Error('unsupported property: ' + name);
+          throw new Error('unsupported property: ' + name)
         }
       }
 
-      if (options.forceset || rrulevals.length > 1 || rdatevals.length || exrulevals.length || exdatevals.length) {
-        rset = new _RRuleSet2.default(!options.cache);
+      if (options.forceset || rrulevals.length > 1 || rdatevals.length ||
+        exrulevals.length || exdatevals.length) {
+        rset = new RRuleSet(!options.cache);
         for (j = 0; j < rrulevals.length; j++) {
-          rset.rrule(this._parseRfcRRule(rrulevals[j], {
+          rset.rrule(this$1._parseRfcRRule(rrulevals[j], {
             dtstart: options.dtstart || dtstart,
             ignoretz: options.ignoretz,
             tzinfos: options.tzinfos
@@ -2759,11 +2468,11 @@ RRuleStr.prototype = {
           datestrs = rdatevals[j].split(',');
           for (k = 0; k < datestrs.length; k++) {
             datestr = datestrs[k];
-            rset.rdate(dateutil.untilStringToDate(datestr));
+            rset.rdate(untilStringToDate(datestr));
           }
         }
         for (j = 0; j < exrulevals.length; j++) {
-          rset.exrule(this._parseRfcRRule(exrulevals[j], {
+          rset.exrule(this$1._parseRfcRRule(exrulevals[j], {
             dtstart: options.dtstart || dtstart,
             ignoretz: options.ignoretz,
             tzinfos: options.tzinfos
@@ -2773,26 +2482,26 @@ RRuleStr.prototype = {
           datestrs = exdatevals[j].split(',');
           for (k = 0; k < datestrs.length; k++) {
             datestr = datestrs[k];
-            rset.exdate(dateutil.untilStringToDate(datestr));
+            rset.exdate(untilStringToDate(datestr));
           }
         }
 
         if (options.campatiable && options.dtstart) {
           rset.rdate(dtstart);
         }
-        return rset;
+        return rset
       } else {
         return this._parseRfcRRule(rrulevals[0], {
           dtstart: options.dtstart || dtstart,
           cache: options.cache,
           ignoretz: options.ignoretz,
           tzinfos: options.tzinfos
-        });
+        })
       }
     }
   },
 
-  parse: function parse(s, options) {
+  parse: function (s, options) {
     options = options || {};
 
     var invalid = [];
@@ -2800,36 +2509,73 @@ RRuleStr.prototype = {
     var defaultKeys = Object.keys(RRuleStr.DEFAULT_OPTIONS);
 
     keys.forEach(function (key) {
-      if (!(0, _utils.contains)(defaultKeys, key)) {
+      if (!contains(defaultKeys, key)) {
         invalid.push(key);
       }
     }, this);
 
     if (invalid.length) {
-      throw new Error('Invalid options: ' + invalid.join(', '));
+      throw new Error('Invalid options: ' + invalid.join(', '))
     }
 
     // Merge in default options
     defaultKeys.forEach(function (key) {
-      if (!(0, _utils.contains)(keys, key)) {
+      if (!contains(keys, key)) {
         options[key] = RRuleStr.DEFAULT_OPTIONS[key];
       }
     });
 
-    return this._parseRfc(s, options);
+    return this._parseRfc(s, options)
   }
 };
 
 RRuleStr.prototype._handleDTSTART = function (rrkwargs, name, value /* , options */) {
-  rrkwargs[name.toLowerCase()] = dateutil.untilStringToDate(value);
+  rrkwargs[name.toLowerCase()] = untilStringToDate(value);
 };
 
 RRuleStr.prototype._handleBYDAY = RRuleStr.prototype._handleBYWEEKDAY;
 RRuleStr.prototype._handleINTERVAL = RRuleStr.prototype._handleInt;
-RRuleStr.prototype._handleCOUNT = RRuleStr.prototype._handleInt;['_handleBYSETPOS', '_handleBYMONTH', '_handleBYMONTHDAY', '_handleBYYEARDAY', '_handleBYEASTER', '_handleBYWEEKNO', '_handleBYHOUR', '_handleBYMINUTE', '_handleBYSECOND'].forEach(function (method) {
+RRuleStr.prototype._handleCOUNT = RRuleStr.prototype._handleInt
+
+;[
+  '_handleBYSETPOS', '_handleBYMONTH', '_handleBYMONTHDAY',
+  '_handleBYYEARDAY', '_handleBYEASTER', '_handleBYWEEKNO',
+  '_handleBYHOUR', '_handleBYMINUTE', '_handleBYSECOND'
+].forEach(function (method) {
   RRuleStr.prototype[method] = RRuleStr.prototype._handleIntList;
 });
 
-/***/ })
-/******/ ]);
-});
+/**
+ * rrule.js - Library for working with recurrence rules for calendar dates.
+ * https://github.com/jakubroztocil/rrule
+ *
+ * Copyright 2010, Jakub Roztocil and Lars Schoning
+ * Licenced under the BSD licence.
+ * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
+ *
+ * Based on:
+ * python-dateutil - Extensions to the standard Python datetime module.
+ * Copyright (c) 2003-2011 - Gustavo Niemeyer <gustavo@niemeyer.net>
+ * Copyright (c) 2012 - Tomi Pieviläinen <tomi.pievilainen@iki.fi>
+ * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
+ *
+ */
+
+// Only one RRuleStr instance for all rrule string parsing work.
+var rruleStr = new RRuleStr();
+
+function rrulestr () {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  return rruleStr.parse.apply(rruleStr, args)
+}
+
+exports.RRule = RRule;
+exports.DateTime = DateTime;
+exports.RRuleSet = RRuleSet;
+exports.rrulestr = rrulestr;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
