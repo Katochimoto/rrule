@@ -26,9 +26,10 @@ function rrulestr (...args) {
   return rruleStr.parse(...args)
 }
 
-export {
+export default {
   RRule,
   RDateTime,
   RRuleSet,
   rrulestr
-}
+};
+
