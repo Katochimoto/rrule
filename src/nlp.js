@@ -18,16 +18,15 @@
  *
  */
 
-import {
-  RRule
-} from 'rrule'
-
+import _rrule from 'rrule'
 import Parser from './nlp/Parser'
 import ToText from './nlp/ToText'
 
 import {
   ENGLISH
 } from './nlp/constant'
+
+const RRule = _rrule.RRule
 
 /**
  * Will be able to convert some of the below described rules from

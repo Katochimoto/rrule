@@ -31,5 +31,4 @@ export default {
   RDateTime,
   RRuleSet,
   rrulestr
-};
-
+}

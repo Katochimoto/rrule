@@ -1,10 +1,10 @@
-import {
-  RRule
-} from 'rrule'
+import _rrule from 'rrule'
 
 import {
   ENGLISH
 } from './constant'
+
+const RRule = _rrule.RRule
 
 /**
  * Return true if a value is in an array
