@@ -7,7 +7,7 @@
  * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
  *
  * Based on:
- * python-dateutil - Extensions to the standard Python datetime module.
+ * python-dateutil - Extensions to the standard Python RDateTime module.
  * Copyright (c) 2003-2011 - Gustavo Niemeyer <gustavo@niemeyer.net>
  * Copyright (c) 2012 - Tomi Pieviläinen <tomi.pievilainen@iki.fi>
  * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
@@ -15,7 +15,7 @@
  */
 
 import RRule from './rrule/RRule'
-import DateTime from './rrule/DateTime'
+import RDateTime from './rrule/RDateTime'
 import RRuleSet from './rrule/RRuleSet'
 import RRuleStr from './rrule/RRuleStr'
 
@@ -28,7 +28,7 @@ function rrulestr (...args) {
 
 export {
   RRule,
-  DateTime,
+  RDateTime,
   RRuleSet,
   rrulestr
 }

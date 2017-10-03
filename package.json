@@ -32,7 +32,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.0",
     "babel-register": "6.26.0",
-    "datetime2": "2.0.7",
+    "datetime2": "2.0.1",
     "eslint": "4.6.1",
     "eslint-config-yandex": "1.0.6",
     "mocha": "3.5.0",

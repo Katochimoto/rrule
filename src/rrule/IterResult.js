@@ -1,4 +1,4 @@
-import DateTime from './DateTime'
+import RDateTime from './RDateTime'
 
 /**
  * This class helps us to emulate python's generators, sorta.
@@ -15,13 +15,13 @@ export default class IterResult {
 
     if (method === 'between') {
       this.maxDate = args.inc ?
-        args.before : new DateTime(args.before.getTime() - 1)
+        args.before : new RDateTime(args.before.getTime() - 1)
       this.minDate = args.inc ?
-        args.after : new DateTime(args.after.getTime() + 1)
+        args.after : new RDateTime(args.after.getTime() + 1)
     } else if (method === 'before') {
-      this.maxDate = args.inc ? args.dt : new DateTime(args.dt.getTime() - 1)
+      this.maxDate = args.inc ? args.dt : new RDateTime(args.dt.getTime() - 1)
     } else if (method === 'after') {
-      this.minDate = args.inc ? args.dt : new DateTime(args.dt.getTime() + 1)
+      this.minDate = args.inc ? args.dt : new RDateTime(args.dt.getTime() + 1)
     }
   }
 
@@ -61,7 +61,7 @@ export default class IterResult {
 
   /**
    *
-   * @param {DateTime} date that is part of the result.
+   * @param {RDateTime} date that is part of the result.
    * @returns {boolean} whether we are interested in more values.
    */
   add (date) {
@@ -71,7 +71,7 @@ export default class IterResult {
 
   /**
    * 'before' and 'after' return only one date, whereas 'all' and 'between' an array.
-   * @returns {DateTime|array|null}
+   * @returns {RDateTime|array|null}
    */
   getValue () {
     var res = this._result

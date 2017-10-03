@@ -1,6 +1,6 @@
 import DateTime from 'datetime2'
 import {
-  DateTime as RDateTime
+  RDateTime
 } from '../lib/rrule'
 
 DateTime.setTzdata(require('./tzdata.json'))

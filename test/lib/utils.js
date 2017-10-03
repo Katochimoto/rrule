@@ -1,7 +1,7 @@
 /* global it */
 
 import assert from 'assert'
-import {RRule, DateTime, RRuleSet} from '../../lib/rrule'
+import {RRule, RDateTime, RRuleSet} from '../../lib/rrule'
 import {isFullyConvertibleToText, toText} from '../../lib/nlp'
 import '../dt'
 
@@ -23,7 +23,7 @@ var assertDatesEqual = function (actual, expected, msg) {
   for (var exp, act, i = 0; i < expected.length; i++) {
     act = actual[i]
     exp = expected[i]
-    assert.strictEqual(exp instanceof DateTime ? exp.toString() : exp,
+    assert.strictEqual(exp instanceof RDateTime ? exp.toString() : exp,
       act.toString(), msg + (i + 1) + '/' + expected.length)
   }
 }
@@ -36,20 +36,20 @@ exports.datetime = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new DateTime(y, m - 1, d, h, i, s)
+  return new RDateTime(y, m - 1, d, h, i, s)
 }
 
 exports.datetimeUTC = function (y, m, d, h, i, s) {
   h = h || 0
   i = i || 0
   s = s || 0
-  return new DateTime(DateTime.UTC(y, m - 1, d, h, i, s)) // eslint-disable-line new-cap
+  return new RDateTime(RDateTime.UTC(y, m - 1, d, h, i, s)) // eslint-disable-line new-cap
 }
 
 /**
  * dateutil.parser.parse
  * @param {string} str
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 exports.parse = function (str) {
   var parts = str.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/)
@@ -64,7 +64,7 @@ exports.parse = function (str) {
   h = h[0] === '0' ? h[1] : h
   i = i[0] === '0' ? i[1] : i
   s = s[0] === '0' ? s[1] : s
-  return new DateTime(
+  return new RDateTime(
     Number(y),
     Number(m),
     Number(d),

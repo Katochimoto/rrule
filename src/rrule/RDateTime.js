@@ -1,14 +1,14 @@
-export default function DateTime (...args) {
-  if (args.length === 1 && args[0] instanceof DateTime) {
-    this._date = new DateTime.Strategy(args[0]._date)
+export default function RDateTime (...args) {
+  if (args.length === 1 && args[0] instanceof RDateTime) {
+    this._date = new RDateTime.Strategy(args[0]._date)
   } else {
-    this._date = new DateTime.Strategy(...args)
+    this._date = new RDateTime.Strategy(...args)
   }
 }
 
-DateTime.Strategy = Date
+RDateTime.Strategy = Date
 
-DateTime.interface = [
+RDateTime.interface = [
   'getDate',
   'getDay',
   'getFullYear',
@@ -35,27 +35,27 @@ DateTime.interface = [
   return data
 }, {})
 
-DateTime.prototype = {
-  constructor: DateTime
+RDateTime.prototype = {
+  constructor: RDateTime
 }
 
-Object.defineProperties(DateTime.prototype, DateTime.interface)
+Object.defineProperties(RDateTime.prototype, RDateTime.interface)
 
-DateTime.UTC = function (...args) {
-  return DateTime.Strategy.UTC(...args) // eslint-disable-line new-cap
+RDateTime.UTC = function (...args) {
+  return RDateTime.Strategy.UTC(...args) // eslint-disable-line new-cap
 }
 
-DateTime.parse = function (...args) {
-  return DateTime.Strategy.parse(...args)
+RDateTime.parse = function (...args) {
+  return RDateTime.Strategy.parse(...args)
 }
 
-DateTime.now = function () {
-  return DateTime.Strategy.now()
+RDateTime.now = function () {
+  return RDateTime.Strategy.now()
 }
 
-DateTime.setStrategy = function (Strategy) {
+RDateTime.setStrategy = function (Strategy) {
   const instance = new Strategy()
-  for (let name in DateTime.interface) {
+  for (let name in RDateTime.interface) {
     if (typeof instance[name] !== 'function') {
       throw new Error(`Method "${name}" is not defined in prototype`)
     }
@@ -67,5 +67,5 @@ DateTime.setStrategy = function (Strategy) {
     }
   })
 
-  DateTime.Strategy = Strategy
+  RDateTime.Strategy = Strategy
 }

@@ -1,5 +1,5 @@
 import RRule from './RRule'
-import DateTime from './DateTime'
+import RDateTime from './RDateTime'
 import * as dateutil from './dateutil'
 
 import {
@@ -46,7 +46,7 @@ RRuleSet.prototype = {
    * @param {Date} date
    */
   rdate: function (date) {
-    if (!(date instanceof DateTime)) {
+    if (!(date instanceof RDateTime)) {
       throw new TypeError(String(date) + ' is not Date instance')
     }
     if (!contains(this._rdate.map(Number), Number(date))) {
@@ -71,7 +71,7 @@ RRuleSet.prototype = {
    * @param {Date} date
    */
   exdate: function (date) {
-    if (!(date instanceof DateTime)) {
+    if (!(date instanceof RDateTime)) {
       throw new TypeError(String(date) + ' is not Date instance')
     }
     if (!contains(this._exdate.map(Number), Number(date))) {
@@ -134,7 +134,7 @@ RRuleSet.prototype = {
     iterResult.accept = function (date) {
       var dt = Number(date)
       if (!_exdateHash[dt]) {
-        evalExdate(new DateTime(dt - 1), new DateTime(dt + 1))
+        evalExdate(new RDateTime(dt - 1), new RDateTime(dt + 1))
         if (!_exdateHash[dt]) {
           _exdateHash[dt] = true
           return _accept.call(this, date)
@@ -156,7 +156,7 @@ RRuleSet.prototype = {
     }
 
     for (var i = 0; i < this._rdate.length; i++) {
-      if (!iterResult.accept(new DateTime(this._rdate[i]))) {
+      if (!iterResult.accept(new RDateTime(this._rdate[i]))) {
         break
       }
     }
@@ -191,13 +191,13 @@ RRuleSet.prototype = {
       rrs.rrule(this._rrule[i].clone())
     }
     for (i = 0; i < this._rdate.length; i++) {
-      rrs.rdate(new DateTime(this._rdate[i]))
+      rrs.rdate(new RDateTime(this._rdate[i]))
     }
     for (i = 0; i < this._exrule.length; i++) {
       rrs.exrule(this._exrule[i].clone())
     }
     for (i = 0; i < this._exdate.length; i++) {
-      rrs.exdate(new DateTime(this._exdate[i]))
+      rrs.exdate(new RDateTime(this._exdate[i]))
     }
     return rrs
   }

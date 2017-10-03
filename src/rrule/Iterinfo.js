@@ -1,5 +1,5 @@
 import RRule from './RRule'
-import DateTime from './DateTime'
+import RDateTime from './RDateTime'
 import Time from './Time'
 import * as dateutil from './dateutil'
 
@@ -58,8 +58,8 @@ Iterinfo.prototype.easter = function (y, offset) {
   var m = Math.floor((a + 11 * h + 22 * l) / 451)
   var month = Math.floor((h + l - 7 * m + 114) / 31)
   var day = (h + l - 7 * m + 114) % 31 + 1
-  var date = DateTime.UTC(y, month - 1, day + offset) // eslint-disable-line new-cap
-  var yearStart = DateTime.UTC(y, 0, 1) // eslint-disable-line new-cap
+  var date = RDateTime.UTC(y, month - 1, day + offset) // eslint-disable-line new-cap
+  var yearStart = RDateTime.UTC(y, 0, 1) // eslint-disable-line new-cap
 
   return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))]
 }
@@ -70,12 +70,12 @@ Iterinfo.prototype.rebuild = function (year, month) {
   if (year !== this.lastyear) {
     this.yearlen = dateutil.isLeapYear(year) ? 366 : 365
     this.nextyearlen = dateutil.isLeapYear(year + 1) ? 366 : 365
-    var firstyday = new DateTime(year, 0, 1)
+    var firstyday = new RDateTime(year, 0, 1)
 
     this.yearordinal = dateutil.toOrdinal(firstyday)
     this.yearweekday = dateutil.getWeekday(firstyday)
 
-    var wday = dateutil.getWeekday(new DateTime(year, 0, 1))
+    var wday = dateutil.getWeekday(new RDateTime(year, 0, 1))
 
     if (this.yearlen === 365) {
       this.mmask = [].concat(M365MASK)
@@ -166,7 +166,7 @@ Iterinfo.prototype.rebuild = function (year, month) {
         // this year.
         var lnumweeks
         if (!contains(rr.options.byweekno, -1)) {
-          var lyearweekday = dateutil.getWeekday(new DateTime(year - 1, 0, 1))
+          var lyearweekday = dateutil.getWeekday(new RDateTime(year - 1, 0, 1))
           var lno1wkst = pymod(7 - lyearweekday + rr.options.wkst, 7)
           var lyearlen = dateutil.isLeapYear(year - 1) ? 366 : 365
           if (lno1wkst >= 4) {
@@ -257,7 +257,7 @@ Iterinfo.prototype.mdayset = function (year, month /* , day */) {
 Iterinfo.prototype.wdayset = function (year, month, day) {
   // We need to handle cross-year weeks here.
   var set = repeat(null, this.yearlen + 7)
-  var i = dateutil.toOrdinal(new DateTime(year, month - 1, day)) - this.yearordinal
+  var i = dateutil.toOrdinal(new RDateTime(year, month - 1, day)) - this.yearordinal
   var start = i
   for (var j = 0; j < 7; j++) {
     set[i] = i
@@ -271,7 +271,7 @@ Iterinfo.prototype.wdayset = function (year, month, day) {
 
 Iterinfo.prototype.ddayset = function (year, month, day) {
   var set = repeat(null, this.yearlen)
-  var i = dateutil.toOrdinal(new DateTime(year, month - 1, day)) - this.yearordinal
+  var i = dateutil.toOrdinal(new RDateTime(year, month - 1, day)) - this.yearordinal
   set[i] = i
   return [set, i, i + 1]
 }

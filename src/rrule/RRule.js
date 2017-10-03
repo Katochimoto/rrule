@@ -1,7 +1,7 @@
 import * as dateutil from './dateutil'
 import Weekday from './Weekday'
 import Time from './Time'
-import DateTime from './DateTime'
+import RDateTime from './RDateTime'
 import IterResult, {
   CallbackIterResult
 } from './IterResult'
@@ -67,7 +67,7 @@ export default function RRule (options, noCache) {
     opts.freq = RRule.YEARLY
   }
   if (!opts.dtstart) {
-    opts.dtstart = new DateTime()
+    opts.dtstart = new RDateTime()
   }
 
   var millisecondModulo = opts.dtstart.getTime() % 1000
@@ -225,7 +225,7 @@ export default function RRule (options, noCache) {
         for (var k = 0; k < opts.bysecond.length; k++) {
           var second = opts.bysecond[k]
           // python:
-          // datetime.time(hour, minute, second,
+          // RDateTime.time(hour, minute, second,
           // tzinfo=self._tzinfo))
           this.timeset.push(new Time(hour, minute, second, millisecondModulo))
         }
@@ -414,7 +414,7 @@ RRule.prototype = {
   },
 
   /**
-   * Returns the last recurrence before the given datetime instance.
+   * Returns the last recurrence before the given RDateTime instance.
    * The inc keyword defines what happens if dt is an occurrence.
    * With inc == True, if dt itself is an occurrence, it will be returned.
    * @param {*} dt
@@ -435,7 +435,7 @@ RRule.prototype = {
   },
 
   /**
-   * Returns the first recurrence after the given datetime instance.
+   * Returns the first recurrence after the given RDateTime instance.
    * The inc keyword defines what happens if dt is an occurrence.
    * With inc == True, if dt itself is an occurrence, it will be returned.
    * @param {*} dt
@@ -475,7 +475,7 @@ RRule.prototype = {
 
   /**
    * @param {String} what - all/before/after/between
-   * @param {Array|DateTime} value - an array of dates, one date, or null
+   * @param {Array|RDateTime} value - an array of dates, one date, or null
    * @param {?Object} args - _iter arguments
    */
   _cacheAdd: function (what, value, args) {
@@ -484,7 +484,7 @@ RRule.prototype = {
     }
 
     if (value) {
-      value = (value instanceof DateTime) ?
+      value = (value instanceof RDateTime) ?
         dateutil.clone(value) : dateutil.cloneDates(value)
     }
 

@@ -4,12 +4,12 @@
  *
  */
 
-import DateTime from './DateTime'
+import RDateTime from './RDateTime'
 
 export const MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 /**
- * @see: <http://docs.python.org/library/datetime.html#datetime.MAXYEAR>
+ * @see: <http://docs.python.org/library/RDateTime.html#RDateTime.MAXYEAR>
  */
 export const MAXYEAR = 9999
 
@@ -29,35 +29,35 @@ export const PY_WEEKDAYS = [6, 0, 1, 2, 3, 4, 5]
  * want to confuse the JS engine with milliseconds > Number.MAX_NUMBER,
  * therefore we use 1-Jan-1970 instead
  */
-export const ORDINAL_BASE = new DateTime(1970, 0, 1)
+export const ORDINAL_BASE = new RDateTime(1970, 0, 1)
 
 
 /**
  *
- * @param {DateTime} date
+ * @param {RDateTime} date
  * @returns {number}
  */
 export function getYearDay (date) {
-  var dateNoTime = new DateTime(
+  var dateNoTime = new RDateTime(
     date.getFullYear(), date.getMonth(), date.getDate())
   return Math.ceil(
-    (dateNoTime - new DateTime(date.getFullYear(), 0, 1)) / ONE_DAY) + 1
+    (dateNoTime - new RDateTime(date.getFullYear(), 0, 1)) / ONE_DAY) + 1
 }
 
 /**
  *
- * @param {DateTime} year
+ * @param {RDateTime} year
  * @returns {boolean}
  */
 export function isLeapYear (year) {
-  if (year instanceof DateTime) {
+  if (year instanceof RDateTime) {
     year = year.getFullYear()
   }
   return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)
 }
 
 /**
- * @param {DateTime} date
+ * @param {RDateTime} date
  * @returns {number} the date's timezone offset in ms
  */
 export function tzOffset (date) {
@@ -82,7 +82,7 @@ export function daysBetween (date1, date2) {
 }
 
 /**
- * @see: <http://docs.python.org/library/datetime.html#datetime.date.toordinal>
+ * @see: <http://docs.python.org/library/RDateTime.html#RDateTime.date.toordinal>
  * @param {*} date
  * @returns {number}
  */
@@ -91,16 +91,16 @@ export function toOrdinal (date) {
 }
 
 /**
- * @see - <http://docs.python.org/library/datetime.html#datetime.date.fromordinal>
+ * @see - <http://docs.python.org/library/RDateTime.html#RDateTime.date.fromordinal>
  * @param {*} ordinal
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 export function fromOrdinal (ordinal) {
   var millisecsFromBase = ordinal * ONE_DAY
-  return new DateTime(ORDINAL_BASE.getTime() -
+  return new RDateTime(ORDINAL_BASE.getTime() -
     tzOffset(ORDINAL_BASE) +
     millisecsFromBase +
-    tzOffset(new DateTime(millisecsFromBase)))
+    tzOffset(new RDateTime(millisecsFromBase)))
 }
 
 /**
@@ -110,7 +110,7 @@ export function fromOrdinal (ordinal) {
  * @returns {array}
  */
 export function monthRange (year, month) {
-  var date = new DateTime(year, month, 1)
+  var date = new RDateTime(year, month, 1)
   return [getWeekday(date), getMonthDays(date)]
 }
 
@@ -135,14 +135,14 @@ export function getWeekday (date) {
 }
 
 /**
- * @see: <http://docs.python.org/library/datetime.html#datetime.datetime.combine>
+ * @see: <http://docs.python.org/library/RDateTime.html#RDateTime.RDateTime.combine>
  * @param {*} date
  * @param {*} time
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 export function combine (date, time) {
   time = time || date
-  return new DateTime(
+  return new RDateTime(
     date.getFullYear(), date.getMonth(), date.getDate(),
     time.getHours(), time.getMinutes(), time.getSeconds(),
     time.getMilliseconds())
@@ -151,16 +151,16 @@ export function combine (date, time) {
 /**
  *
  * @param {*} date
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 export function clone (date) {
-  return new DateTime(date.getTime())
+  return new RDateTime(date.getTime())
 }
 
 /**
  *
  * @param {*} dates
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 export function cloneDates (dates) {
   var clones = []
@@ -187,7 +187,7 @@ export function sort (dates) {
  */
 export function timeToUntilString (time) {
   var comp
-  var date = new DateTime(time)
+  var date = new RDateTime(time)
   var comps = [
     date.getUTCFullYear(),
     date.getUTCMonth() + 1,
@@ -211,7 +211,7 @@ export function timeToUntilString (time) {
 /**
  *
  * @param {*} until
- * @returns {DateTime}
+ * @returns {RDateTime}
  */
 export function untilStringToDate (until) {
   var re = /^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})Z)?$/
@@ -219,7 +219,7 @@ export function untilStringToDate (until) {
   if (!bits) {
     throw new Error('Invalid UNTIL value: ' + until)
   }
-  return new DateTime(DateTime.UTC( // eslint-disable-line new-cap
+  return new RDateTime(RDateTime.UTC( // eslint-disable-line new-cap
     bits[1],
     bits[2] - 1,
     bits[3],
