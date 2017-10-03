@@ -19,8 +19,7 @@
   "scripts": {
     "start": "rollup src/rrule.js --o lib/rrule.js --f umd -n rrule --config rollup.config.js; rollup src/nlp.js --o lib/nlp.js --f umd -n nlp --globals rrule:rrule --config rollup.config.js",
     "demo": "rollup src/rrule.js --o demo/rrule.js --f umd -n rrule --config rollup.config.js; rollup src/nlp.js --o demo/nlp.js --f umd -n nlp --globals rrule:rrule --config rollup.config.js",
-    "test": "eslint . --color; mocha --compilers js:babel-register",
-    "postinstall": "npm run start"
+    "test": "eslint . --color; mocha --compilers js:babel-register"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
