@@ -1,6 +1,12 @@
 export default function RDateTime (...args) {
-  if (args.length === 1 && args[0] instanceof RDateTime) {
-    this._date = new RDateTime.Strategy(args[0]._date)
+  if (args.length === 1) {
+    if (args[0] instanceof RDateTime) {
+      this._date = new RDateTime.Strategy(args[0]._date)
+    } else if (args[0] instanceof RDateTime.Strategy) {
+      this._date = args[0]
+    } else {
+      this._date = new RDateTime.Strategy(...args)
+    }
   } else {
     this._date = new RDateTime.Strategy(...args)
   }
